@@ -59,14 +59,30 @@ az network vnet subnet create --vnet-name HUB-VNET --name O-UNTRUST --resource-g
 az network vnet subnet create --vnet-name HUB-VNET --name O-TRUST --resource-group RG-PLB-TEST --address-prefixes 10.0.1.0/24
 </pre>
 
-**Create the Public IPs - When utilizing Public IPs with Standar SKU, an NSG is required on the Subnet/vNIC **
+**Create the Public IPs - When utilizing Public IPs with Standard SKU, an NSG is required on the Subnet/vNIC. Two public IPs will be created. 1) fxp0 - management interface 2) ge0 - UNTRUST/Interface facing interface **
 <pre lang="...">
-## fxp0 = Out of band management interface
-az network public-ip create --name VSRX1-fxp0 --allocation-method Static --resource-group RG-PLB-TEST --location eastus --sku Standard
-az network public-ip create --name VSRX1-ge0 --allocation-method Static --resource-group RG-PLB-TEST --location eastus --sku Standard
+* fxp0 = Out of band management interface on vSRXs
 
-az network public-ip create --name VSRX2-fxp0 --allocation-method Static --resource-group RG-PLB-TEST --location eastus --sku Standard
-az network public-ip create --name VSRX2-ge0 --allocation-method Static --resource-group RG-PLB-TEST --location eastus --sku Standard
+az network public-ip create --name VSRX1-PIP-1 --allocation-method Static --resource-group RG-PLB-TEST --location eastus --sku Standard
+az network public-ip create --name VSRX1-PIP-2 --allocation-method Static --resource-group RG-PLB-TEST --location eastus --sku Standard
 
+az network public-ip create --name VSRX2-PIP-1 --allocation-method Static --resource-group RG-PLB-TEST --location eastus --sku Standard
+az network public-ip create --name VSRX2-PIP-2 --allocation-method Static --resource-group RG-PLB-TEST --location eastus --sku Standard
+</pre>
 
+**Create the vNICs**
+<pre lang="...">
+VSRX1
+az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX1-fxp0 --vnet-name HUB-VNET --subnet MGMT --public-ip-address  VSRX1-PIP-1 --private-ip-address 10.0.254.4
+
+az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX1-ge0 --vnet-name HUB-VNET --subnet MGMT --public-ip-address  VSRX1-PIP-2 --private-ip-address 10.0.0.4
+
+az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX1-ge1 --vnet-name HUB-VNET --subnet MGMT --private-ip-address 10.0.1.4
+
+VSRX2
+az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX2-fxp0 --vnet-name HUB-VNET --subnet MGMT --public-ip-address  VSRX2-PIP-1 --private-ip-address 10.0.254.5
+
+az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX2-ge0 --vnet-name HUB-VNET --subnet MGMT --public-ip-address  VSRX2-PIP-2 --private-ip-address 10.0.0.5
+
+az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX2-ge1 --vnet-name HUB-VNET --subnet MGMT --private-ip-address 10.0.1.5
 </pre>
