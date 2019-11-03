@@ -13,15 +13,23 @@ This lab will illustrate how to create an Azure Public load balancer, distribute
 ![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/Juniper_vSRX_HA_with_Public_LB/default-topo.png)
 
 
-**Build Resource Groups, VNETs and Subnets**
+**Elements required**
 <pre lang="...">
-Elements required:
   - Resource Group 
   - Azure public Load balancer
+    - Public IP address
+    - Backed Pools
+    - Health Probes
+    - Load Balancing Rules
   - 2 x Juniper vSRX NVA Firewalls - Each with:
     - vNIC1 - Mapped to management subnet
     - vNIC2 - Mapped to UNTRUST subnet
     - vNIC3 - Mapped to TRUST subnet
+    - Destination NAT policies
+    - Source NAT policies
+    - TRUST & UNTRUST security zones
+    - Custom routing instance (Type virtual-router)
+    - Secutity policies 
   - 2 x VNETs
     - HUB VNET
       - IP Range - 10.0.0.0/16
@@ -30,9 +38,7 @@ Elements required:
       - TRUST Subnet - O-TRUST 10.0.99.0/24
     - Spoke VNET - 10.80.0.0/16
       - VM Workloads Subnet 10.80.0.99/24
-    - Hub to Spoke VNET Peering  
-  
-  
-    
+    - Hub to Spoke VNET Peering
+    - 
 </pre>
   
