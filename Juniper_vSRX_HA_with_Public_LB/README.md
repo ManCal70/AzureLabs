@@ -25,8 +25,8 @@ This lab will illustrate how to create an Azure Public load balancer, distribute
     - vNIC1 - Mapped to management subnet
     - vNIC2 - Mapped to UNTRUST subnet
     - vNIC3 - Mapped to TRUST subnet
-    - Destination NAT policies
-    - Source NAT policies
+    - Destination NAT policies - For incoming applications
+    - Source NAT policies - For flow affinity to backe ends
     - TRUST & UNTRUST security zones
     - Custom routing instance (Type virtual-router)
     - Secutity policies 
@@ -39,6 +39,5 @@ This lab will illustrate how to create an Azure Public load balancer, distribute
     - Spoke VNET - 10.80.0.0/16
       - VM Workloads Subnet 10.80.0.99/24
     - Hub to Spoke VNET Peering
-    - 
 </pre>
   
