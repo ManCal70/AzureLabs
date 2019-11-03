@@ -87,9 +87,9 @@ az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX
 
 **Create the vSRX firewall VM**
 <pre lang="...">
-az vm create --resource-group RG-PLB-TEST --location useast --name VSRX1 --size Standard_DS3_v2 --nics VSRX1-fxp0 VSRX1-ge0 VSRX1-ge1 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username <pick a unername> --admin-password <enter a password>
+az vm create --resource-group RG-PLB-TEST --location useast --name VSRX1 --size Standard_DS3_v2 --nics VSRX1-fxp0 VSRX1-ge0 VSRX1-ge1 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234
 
-az vm create --resource-group RG-PLB-TEST --location useast --name VSRX2 --size Standard_DS3_v2 --nics VSRX2-fxp0 VSRX2-ge0 VSRX2-ge1  --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username <pick a unername> --admin-password <enter a password>
+az vm create --resource-group RG-PLB-TEST --location useast --name VSRX2 --size Standard_DS3_v2 --nics VSRX2-fxp0 VSRX2-ge0 VSRX2-ge1  --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234
 </pre>
 
 **Create the Azure Public load balancer**
