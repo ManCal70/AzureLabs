@@ -52,3 +52,14 @@ az group create --name RG-PLB-TEST --location eastus
 az group create --name HUB-VNET --resource-group TG-PLB-TEST --location eastus -address-prefix 10.0.0.0/16
 </pre>
 
+**Create the Subnets**
+<pre lang="...">
+az network vnet subnet create --vnet-name HUB-VNET --name MGMT --resource-group RG-PLB-TEST --address-prefixes 10.0.254.0/24
+az network vnet subnet create --vnet-name HUB-VNET --name O-UNTRUST --resource-group RG-PLB-TEST --address-prefixes 10.0.0.0/24
+az network vnet subnet create --vnet-name HUB-VNET --name O-TRUST --resource-group RG-PLB-TEST --address-prefixes 10.0.1.0/24
+</pre>
+
+**Create the Public IPs**
+<pre lang="...">
+az network public-ip create --name $vmname-PIP-1 --allocation-method Static --resource-group $grpname --location $location --sku Standard
+</pre>
