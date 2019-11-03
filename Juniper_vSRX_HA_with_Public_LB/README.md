@@ -59,7 +59,14 @@ az network vnet subnet create --vnet-name HUB-VNET --name O-UNTRUST --resource-g
 az network vnet subnet create --vnet-name HUB-VNET --name O-TRUST --resource-group RG-PLB-TEST --address-prefixes 10.0.1.0/24
 </pre>
 
-**Create the Public IPs**
+**Create the Public IPs - When utilizing Public IPs with Standar SKU, an NSG is required on the Subnet/vNIC **
 <pre lang="...">
-az network public-ip create --name $vmname-PIP-1 --allocation-method Static --resource-group $grpname --location $location --sku Standard
+## fxp0 = Out of band management interface
+az network public-ip create --name VSRX1-fxp0 --allocation-method Static --resource-group RG-PLB-TEST --location eastus --sku Standard
+az network public-ip create --name VSRX1-ge0 --allocation-method Static --resource-group RG-PLB-TEST --location eastus --sku Standard
+
+az network public-ip create --name VSRX2-fxp0 --allocation-method Static --resource-group RG-PLB-TEST --location eastus --sku Standard
+az network public-ip create --name VSRX2-ge0 --allocation-method Static --resource-group RG-PLB-TEST --location eastus --sku Standard
+
+
 </pre>
