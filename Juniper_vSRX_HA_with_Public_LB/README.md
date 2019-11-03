@@ -49,7 +49,7 @@ az group create --name RG-PLB-TEST --location eastus
 
 **Create the Hub VNET**
 <pre lang="...">
-az group create --name HUB-VNET --resource-group TG-PLB-TEST --location eastus -address-prefix 10.0.0.0/16
+az network vnet create --name HUB-VNET --resource-group RG-PLB-TEST --location eastus --address-prefix 10.0.0.0/16
 </pre>
 
 **Create the Subnets**
@@ -66,30 +66,35 @@ az network public-ip create --name VSRX1-PIP-2 --allocation-method Static --reso
 
 az network public-ip create --name VSRX2-PIP-1 --allocation-method Static --resource-group RG-PLB-TEST --location eastus --sku Standard
 az network public-ip create --name VSRX2-PIP-2 --allocation-method Static --resource-group RG-PLB-TEST --location eastus --sku Standard
-Az Load Balancer Public IP
-az network public-ip create --name AZ-PUB-LB --allocation-method Static --resource-group RG-PLB-TEST --location eastus --sku Standard
+
+**Az Load Balancer Public IP**
+az network public-ip create --name AZ-PUB-LB-PIP --allocation-method Static --resource-group RG-PLB-TEST --location eastus --sku Standard
 </pre>
 
 **Create the vNICs**
 * fxp0 = Out of band management interface on vSRXs
 <pre lang="...">
-VSRX1
+**VSRX1**
 az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX1-fxp0 --vnet-name HUB-VNET --subnet MGMT --public-ip-address  VSRX1-PIP-1 --private-ip-address 10.0.254.4
-az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX1-ge0 --vnet-name HUB-VNET --subnet MGMT --public-ip-address  VSRX1-PIP-2 --private-ip-address 10.0.0.4
-az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX1-ge1 --vnet-name HUB-VNET --subnet MGMT --private-ip-address 10.0.1.4
+az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX1-ge0 --vnet-name HUB-VNET --subnet O-UNTRUST --public-ip-address  VSRX1-PIP-2 --private-ip-address 10.0.0.4
+az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX1-ge1 --vnet-name HUB-VNET --subnet O-TRUST --private-ip-address 10.0.1.4
 
-VSRX2
+**VSRX2**
 az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX2-fxp0 --vnet-name HUB-VNET --subnet MGMT --public-ip-address  VSRX2-PIP-1 --private-ip-address 10.0.254.5
-az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX2-ge0 --vnet-name HUB-VNET --subnet MGMT --public-ip-address  VSRX2-PIP-2 --private-ip-address 10.0.0.5
-az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX2-ge1 --vnet-name HUB-VNET --subnet MGMT --private-ip-address 10.0.1.5
+az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX2-ge0 --vnet-name HUB-VNET --subnet O-UNTRUST --public-ip-address  VSRX2-PIP-2 --private-ip-address 10.0.0.5
+az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX2-ge1 --vnet-name HUB-VNET --subnet O-TRUST --private-ip-address 10.0.1.5
 </pre>
 
 **Create the vSRX firewall VM**
 <pre lang="...">
-az vm create --resource-group RG-PLB-TEST --location useast --name VSRX1 --size Standard_DS3_v2 --nics $vnic1 $vnic2 $vnic3  --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username <pick a unername> --admin-password <enter a password>
+az vm create --resource-group RG-PLB-TEST --location useast --name VSRX1 --size Standard_DS3_v2 --nics VSRX1-fxp0 VSRX1-ge0 VSRX1-ge1 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username <pick a unername> --admin-password <enter a password>
+
+az vm create --resource-group RG-PLB-TEST --location useast --name VSRX2 --size Standard_DS3_v2 --nics VSRX2-fxp0 VSRX2-ge0 VSRX2-ge1  --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username <pick a unername> --admin-password <enter a password>
 </pre>
 
 **Create the Azure Public load balancer**
 <pre lang="...">
-az group create --name RG-PLB-TEST --location eastus
+az network lb create -resource-group RG-PLB-TEST -name AZ-PUB-LB --sku Standard
+az network lb frontend-ip create --resource-group RG-PLB-TEST --name PUB-FE-IP --lb-name AZ-PUB-LB --public-ip-address AZ-PUB-LB-PIP
+
 </pre>
