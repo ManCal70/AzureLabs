@@ -39,5 +39,16 @@ This lab will illustrate how to create an Azure Public load balancer, distribute
     - Spoke VNET - 10.80.0.0/16
       - VM Workloads Subnet 10.80.0.99/24
     - Hub to Spoke VNET Peering
+    - Ubuntu Virtual machine + Apache2
 </pre>
-  
+
+**Create the Resource Group**
+<pre lang="...">
+az group create --name RG-PLB-TEST --location eastus
+</pre>
+
+**Create the Hub VNET**
+<pre lang="...">
+az group create --name HUB-VNET --resource-group TG-PLB-TEST --location eastus -address-prefix 10.0.0.0/16
+</pre>
+
