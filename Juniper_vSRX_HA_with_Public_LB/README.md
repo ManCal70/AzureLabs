@@ -87,13 +87,16 @@ az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX
 
 **Create the vSRX firewall VM**
 <pre lang="...">
-az vm create --resource-group RG-PLB-TEST --location useast --name VSRX1 --size Standard_DS3_v2 --nics VSRX1-fxp0 VSRX1-ge0 VSRX1-ge1 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234
+**Accept the Juniper Networks license agreement**
+Get-AzureRmMarketplaceTerms -Publisher juniper-networks -Product vsrx-next-generation-firewall -Name vsrx-byol-azure-image | Set-AzureRmMarketplaceTerms -Accept
 
-az vm create --resource-group RG-PLB-TEST --location useast --name VSRX2 --size Standard_DS3_v2 --nics VSRX2-fxp0 VSRX2-ge0 VSRX2-ge1  --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234
+az vm create --resource-group RG-PLB-TEST --location eastus --name VSRX1 --size Standard_DS3_v2 --nics VSRX1-fxp0 VSRX1-ge0 VSRX1-ge1 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234
+
+az vm create --resource-group RG-PLB-TEST --location eastus --name VSRX2 --size Standard_DS3_v2 --nics VSRX2-fxp0 VSRX2-ge0 VSRX2-ge1  --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234
 </pre>
 
 **Create the Azure Public load balancer**
-<pre lang="...">
+<pre lang=>
 az network lb create -resource-group RG-PLB-TEST -name AZ-PUB-LB --sku Standard
 az network lb frontend-ip create --resource-group RG-PLB-TEST --name PUB-FE-IP --lb-name AZ-PUB-LB --public-ip-address AZ-PUB-LB-PIP
 
