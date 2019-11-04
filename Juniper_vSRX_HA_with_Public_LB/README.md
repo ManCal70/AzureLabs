@@ -94,8 +94,8 @@ az vm create --resource-group RG-PLB-TEST --location eastus --name VSRX2 --size 
 </pre>
 
 **Create the Azure Public load balancer**
-<pre lang=>
-az network lb create -resource-group RG-PLB-TEST -name AZ-PUB-LB --sku Standard
+<pre lang= >
+az network lb create --resource-group RG-PLB-TEST --name AZ-PUB-LB --sku Standard --public-ip-address AZ-PUB-LB-PIP --frontend-ip-name PUB-FE-IP --backend-pool-name PUB-BE-POOL
 az network lb frontend-ip create --resource-group RG-PLB-TEST --name PUB-FE-IP --lb-name AZ-PUB-LB --public-ip-address AZ-PUB-LB-PIP
 
 </pre>
