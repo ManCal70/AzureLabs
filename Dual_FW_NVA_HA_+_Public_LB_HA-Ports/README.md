@@ -79,13 +79,13 @@ az network public-ip create --name AZ-PUB-LB-PIP --allocation-method Static --re
 az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX1-fxp0 --vnet-name HUB-VNET --subnet MGMT --public-ip-address  VSRX1-PIP-1 --private-ip-address 10.0.254.4
 az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX1-ge0 --vnet-name HUB-VNET --subnet O-UNTRUST --public-ip-address  VSRX1-PIP-2 --private-ip-address 10.0.0.4
 az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX1-ge1 --vnet-name HUB-VNET --subnet O-TRUST --private-ip-address 10.0.1.4
-
 **VSRX2**
 az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX2-fxp0 --vnet-name HUB-VNET --subnet MGMT --public-ip-address  VSRX2-PIP-1 --private-ip-address 10.0.254.5
 az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX2-ge0 --vnet-name HUB-VNET --subnet O-UNTRUST --public-ip-address  VSRX2-PIP-2 --private-ip-address 10.0.0.5
 az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX2-ge1 --vnet-name HUB-VNET --subnet O-TRUST --private-ip-address 10.0.1.5
+**Web Server VM**
+az network nic create --resource-group RG-PLB-TEST --location eastus --name WEB-eth0 --vnet-name HUB-VNET --subnet O-TRUST --private-ip-address 10.0.1.10
 </pre>
-
 **Create the vSRX firewall VM**
 <pre lang=>
 **Accept the Juniper Networks license agreement**
@@ -94,9 +94,12 @@ az vm create --resource-group RG-PLB-TEST --location eastus --name VSRX1 --size 
 az vm create --resource-group RG-PLB-TEST --location eastus --name VSRX2 --size Standard_DS3_v2 --nics VSRX2-fxp0 VSRX2-ge0 VSRX2-ge1 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234
 </pre>
 
+**Create a test Web server VM**
+<pre lang=>
+az vm create -n WEB-SERVER -g RG-PLB-TEST --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics WEB-eth0
+</pre>
 **Create the Azure Public load balancer**
 <pre lang= >
 az network lb create --resource-group RG-PLB-TEST --name AZ-PUB-LB --sku Standard --public-ip-address AZ-PUB-LB-PIP --frontend-ip-name PUB-FE-IP --backend-pool-name PUB-BE-POOL
 az network lb frontend-ip create --resource-group RG-PLB-TEST --name PUB-FE-IP --lb-name AZ-PUB-LB --public-ip-address AZ-PUB-LB-PIP
-
 </pre>
