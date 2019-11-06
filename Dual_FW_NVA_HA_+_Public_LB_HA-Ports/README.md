@@ -148,6 +148,17 @@ set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST the
 set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST then log session-close
 </pre>
 
+**View of the vSRX session table**
+<pre lang= >
+
+<b>show security flow session</b> 
+Session ID: 111891, Policy name: self-traffic-policy/1, Timeout: 1798, Valid
+  In: <b>168.63.129.16/57166</b> --> 10.0.0.4/22;tcp, Conn Tag: 0x0, If: ge-0/0/0.0, Pkts: 3, Bytes: 132, 
+  Out: 10.0.0.4/22 --> 168.63.129.16/57166;tcp, Conn Tag: 0x0, If: .local..7, Pkts: 2, Bytes: 112, 
+Total sessions: 1
+
+</pre>
 **Test connection to the backend Web server via the Public LB IP address**
+
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/Dual_FW_NVA_HA_%2B_Public_LB_HA-Ports/apache.png)</kbd>
 
