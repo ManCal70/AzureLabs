@@ -111,8 +111,10 @@ az network nic ip-config update -g RG-PLB-TEST --nic-name VSRX2-ge0 -n ipconfig1
 </pre>
 
 **vSRX configuraitons- Both vSRX will have identical configs**
+<pre lang= >
 <b>Destination NAT</b>
 set security nat destination pool DST-NAT-POOL-1 address 10.0.1.10/32 >><b>IP address of Web server</b>
 set security nat destination rule-set DST-RS1 from interface ge-0/0/0.0 >><b>Ingress interface of traffic</b>
 set security nat destination rule-set DST-RS1 rule DST-R1 match destination-address 52.146.57.174/32 >><b>Public IP of LB</b>
+</pre>
 
