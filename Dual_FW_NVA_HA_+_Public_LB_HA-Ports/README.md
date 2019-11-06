@@ -100,15 +100,15 @@ az vm create -n WEB-SERVER -g RG-PLB-TEST --image UbuntuLTS --admin-username lab
 </pre>
 **Create the Azure Public load balancer**
 <pre lang= >
-***Create the lb***
+----------------------------------- Create the lb -----------------------------------
 az network lb create --resource-group RG-PLB-TEST --name AZ-PUB-LB --sku Standard --public-ip-address AZ-PUB-LB-PIP
-***Create the backend pool***
+----------------------------------- Create the backend pool***
 az network lb address-pool create --lb-name AZ-PUB-LB --name PLB1-BEPOOL --resource-group RG-PLB-TEST
-***Create the probe***
+----------------------------------- Create the probe***
 az network lb probe create --resource-group RG-PLB-TEST --name BE-PROBE1 --protocol tcp --port 22 --interval 30 --threshold 2 --lb-name AZ-PUB-LB
-***Create a LB rule***
-az network lb rule create --resource-group RG-PLB-TEST --name LB-RULE-1 --frontend-ip-name AZ-PUB-LB-PIP --backend-pool-name PLB1-BEPOOL --probe-name BE-PROBE1 --protocol Tcp --frontend-port 80 --backend-port 80 --lb-name AZ-PUB-LB
-***Add the VSRX1-ge0 & VSRX2-ge0 vNICs to the LB backend pool***
+----------------------------------- Create a LB rule***
+az network lb rule create --resource-group RG-PLB-TEST --name LB-RULE-1 --backend-pool-name PLB1-BEPOOL --probe-name BE-PROBE1 --protocol Tcp --frontend-port 80 --backend-port 80 --lb-name AZ-PUB-LB --floating-ip true --output table
+----------------------------------- Add the VSRX1-ge0 & VSRX2-ge0 vNICs to the LB backend pool***
 az network nic ip-config update -g RG-PLB-TEST --nic-name VSRX1-ge0 -n ipconfig1 --lb-address-pool PLB1-BEPOOL --vnet-name hub-vnet --subnet O-UNTRUST --lb-name AZ-PUB-LB
 az network nic ip-config update -g RG-PLB-TEST --nic-name VSRX2-ge0 -n ipconfig1 --lb-address-pool PLB1-BEPOOL --vnet-name hub-vnet --subnet O-UNTRUST --lb-name AZ-PUB-LB
 </pre>
