@@ -148,3 +148,6 @@ set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST the
 set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST then log session-close
 </pre>
 
+
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/Dual_FW_NVA_HA_%2B_Public_LB_HA-Ports/default-topo.png)</kbd>
+
