@@ -4,7 +4,7 @@
 <b>In the following lab we will:</b>
 <pre lang= >
 1- Create a resource group for all of the objects (LB, FW, VNET,...)
-2- Create a VNET
+2- Create a VNET w/ IP range
 3- Create 3 Subnets (Management, TRUST, and UNTRUST)
 4- Create public IP address objects for required elements
 5- Create nNICs for the firewalls (vSRX) and web server (Ubuntu + Apache)
