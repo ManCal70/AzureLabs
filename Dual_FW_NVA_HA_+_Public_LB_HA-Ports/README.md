@@ -115,6 +115,18 @@ az network nic ip-config update -g RG-PLB-TEST --nic-name VSRX2-ge0 -n ipconfig1
 <b>Destination NAT</b>
 set security nat destination pool DST-NAT-POOL-1 address 10.0.1.10/32 >><b>IP address of Web server</b>
 set security nat destination rule-set DST-RS1 from interface ge-0/0/0.0 >><b>Ingress interface of traffic</b>
-set security nat destination rule-set DST-RS1 rule DST-R1 match destination-address 52.146.57.174/32 >><b>Public IP of LB</b>
+set security nat destination rule-set DST-RS1 rule DST-R1 match destination-address 52.xx.xx.xx/32 >><b>Public IP of LB</b>
+<b>Source NAT (SNAT) for return flow affinity</b>
+set security nat source rule-set SNAT-FOR-DNAT-TO-WORK from zone UNTRUST
+set security nat source rule-set SNAT-FOR-DNAT-TO-WORK to zone TRUST
+set security nat source rule-set SNAT-FOR-DNAT-TO-WORK rule SNAT-R1 match destination-address 10.0.1.0/24
+set security nat source rule-set SNAT-FOR-DNAT-TO-WORK rule SNAT-R1 then source-nat interface
+<b>Security policies to allow incoming HTTP traffic to the Web server</b>
+set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST match source-address any
+set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST match destination-address 10.0.1.10/32
+set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST match application junos-http
+set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST then permit
+set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST then log session-init
+set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST then log session-close
 </pre>
 
