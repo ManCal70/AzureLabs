@@ -100,6 +100,13 @@ az vm create -n WEB-SERVER -g RG-PLB-TEST --image UbuntuLTS --admin-username lab
 </pre>
 **Create the Azure Public load balancer**
 <pre lang= >
-az network lb create --resource-group RG-PLB-TEST --name AZ-PUB-LB --sku Standard --public-ip-address AZ-PUB-LB-PIP --frontend-ip-name PUB-FE-IP --backend-pool-name PUB-BE-POOL
-az network lb frontend-ip create --resource-group RG-PLB-TEST --name PUB-FE-IP --lb-name AZ-PUB-LB --public-ip-address AZ-PUB-LB-PIP
+***Create the lb***
+az network lb create --resource-group RG-PLB-TEST --name AZ-PUB-LB --sku Standard --public-ip-address AZ-PUB-LB-PIP
+***Create the backend pool***
+az network lb address-pool create --lb-name AZ-PUB-LB --name PLB1-BEPOOL --resource-group RG-PLB-TEST
+***Create the probe***
+az network lb probe create --resource-group RG-PLB-TEST --name BE-PROBE1 --protocol tcp --port 22 --interval 30 --threshold 2 --lb-name AZ-PUB-LB
+***Create a LB rule***
+az network lb rule create --resource-group RG-PLB-TEST --name LB-RULE-1 --frontend-ip-name AZ-PUB-LB-PIP --backend-pool-name PLB1-BEPOOL --probe-name BE-PROBE1 --protocol Tcp --frontend-port 80 --backend-port 80 --lb-name AZ-PUB-LB
+
 </pre>
