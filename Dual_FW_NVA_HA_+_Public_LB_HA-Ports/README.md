@@ -1,7 +1,8 @@
 # Azure Lab - Dual NVA Firewalls (Juniper vSRX) Active/Active + Azure Public LB & Floating IP 
 ### *Similar design will work with multiple 3rd party NVA vendors. 
-<pre lang= >
+
 <b>In the following lab we will:</b>
+<pre lang= >
 1- Create a resource group for all of the objects (LB, FW, VNET,...)
 2- Create a VNET
 3- Create 3 Subnets (Management, TRUST, and UNTRUST)
