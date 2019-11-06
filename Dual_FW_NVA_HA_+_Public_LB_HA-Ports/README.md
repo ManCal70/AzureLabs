@@ -16,7 +16,7 @@
 </pre>
 
 ### Key details
-The Azure public load balancer can be configured in two ways. 
+The Azure public load balancer can be configured in two ways (This lab is focused on #2): 
 <br>1- Default rule config - Azure PLB will translate the destination IP address of incoming packets to that of one of the backend pool VMs.
 <br>2- HA Ports rule config - This setting will NOT translate the incoming packets destination IP. This means the packets preserve its 5 tuples when being load balanced between the back end firewalls. This post will focus on HA ports configuration. 
 
