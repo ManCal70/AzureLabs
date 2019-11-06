@@ -67,23 +67,21 @@ az network public-ip create --name VSRX1-PIP-2 --allocation-method Static --reso
 
 az network public-ip create --name VSRX2-PIP-1 --allocation-method Static --resource-group RG-PLB-TEST --location eastus --sku Standard
 az network public-ip create --name VSRX2-PIP-2 --allocation-method Static --resource-group RG-PLB-TEST --location eastus --sku Standard
-
 **Az Load Balancer Public IP**
 az network public-ip create --name AZ-PUB-LB-PIP --allocation-method Static --resource-group RG-PLB-TEST --location eastus --sku Standard
 </pre>
-
 **Create the vNICs**
 * fxp0 = Out of band management interface on vSRXs
 <pre lang>
-<p>VSRX1</p>
+<b>VSRX1</b>
 az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX1-fxp0 --vnet-name HUB-VNET --subnet MGMT --public-ip-address  VSRX1-PIP-1 --private-ip-address 10.0.254.4
 az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX1-ge0 --vnet-name HUB-VNET --subnet O-UNTRUST --public-ip-address  VSRX1-PIP-2 --private-ip-address 10.0.0.4
 az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX1-ge1 --vnet-name HUB-VNET --subnet O-TRUST --private-ip-address 10.0.1.4
-<p>VSRX2</p>
+<b>VSRX2</b>
 az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX2-fxp0 --vnet-name HUB-VNET --subnet MGMT --public-ip-address  VSRX2-PIP-1 --private-ip-address 10.0.254.5
 az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX2-ge0 --vnet-name HUB-VNET --subnet O-UNTRUST --public-ip-address  VSRX2-PIP-2 --private-ip-address 10.0.0.5
 az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX2-ge1 --vnet-name HUB-VNET --subnet O-TRUST --private-ip-address 10.0.1.5
-**Web Server VM**
+<b>Web Server VM</b>
 az network nic create --resource-group RG-PLB-TEST --location eastus --name WEB-eth0 --vnet-name HUB-VNET --subnet O-TRUST --private-ip-address 10.0.1.10
 </pre>
 **Create the vSRX firewall VM**
@@ -93,19 +91,18 @@ Get-AzureRmMarketplaceTerms -Publisher juniper-networks -Product vsrx-next-gener
 az vm create --resource-group RG-PLB-TEST --location eastus --name VSRX1 --size Standard_DS3_v2 --nics VSRX1-fxp0 VSRX1-ge0 VSRX1-ge1 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234
 az vm create --resource-group RG-PLB-TEST --location eastus --name VSRX2 --size Standard_DS3_v2 --nics VSRX2-fxp0 VSRX2-ge0 VSRX2-ge1 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234
 </pre>
-
 **Create a test Web server VM**
 <pre lang=>
 az vm create -n WEB-SERVER -g RG-PLB-TEST --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics WEB-eth0
 </pre>
 **Create the Azure Public load balancer**
 <pre lang= >
-<b>Create the lb</b>
+<b>Create the LB</b>
 az network lb create --resource-group RG-PLB-TEST --name AZ-PUB-LB --sku Standard --public-ip-address AZ-PUB-LB-PIP
 <b>Create the backend pool</b>
-az network lb address-pool create --lb-name AZ-PUB-LB --name PLB1-BEPOOL --resource-group RG-PLB-TEST
+az network LB address-pool create --lb-name AZ-PUB-LB --name PLB1-BEPOOL --resource-group RG-PLB-TEST
 <b>Create the probe</b>
-az network lb probe create --resource-group RG-PLB-TEST --name BE-PROBE1 --protocol tcp --port 22 --interval 30 --threshold 2 --lb-name AZ-PUB-LB
+az network LB probe create --resource-group RG-PLB-TEST --name BE-PROBE1 --protocol tcp --port 22 --interval 30 --threshold 2 --lb-name AZ-PUB-LB
 <b>Create a LB rule</b>
 az network lb rule create --resource-group RG-PLB-TEST --name LB-RULE-1 --backend-pool-name PLB1-BEPOOL --probe-name BE-PROBE1 --protocol Tcp --frontend-port 80 --backend-port 80 --lb-name AZ-PUB-LB --floating-ip true --output table
 <b>Add the VSRX1-ge0 & VSRX2-ge0 vNICs to the LB backend pool</b>
