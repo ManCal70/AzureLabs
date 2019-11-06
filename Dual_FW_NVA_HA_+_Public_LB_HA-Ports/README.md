@@ -31,8 +31,7 @@ This lab will illustrate how to create an Azure Public load balancer, distribute
     - TRUST & UNTRUST security zones
     - Custom routing instance (Type virtual-router)
     - Secutity policies 
-  - 2 x VNETs
-    - HUB VNET
+  - VNET
       - IP Range - 10.0.0.0/16
       - Management Subnet - MGMT 10.0.254.0/24
       - UNTRUST Subnet - O-UNTRUST 10.0.0.0/24
