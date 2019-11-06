@@ -149,6 +149,5 @@ set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST the
 </pre>
 
 **Test connection to the backend Web server via the Public LB IP address**
-<pre lang= >
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/Dual_FW_NVA_HA_%2B_Public_LB_HA-Ports/apache.png)</kbd>
-</pre>
+
