@@ -10,7 +10,7 @@ This lab will illustrate how to create an Azure Public load balancer using Stand
 
 - Floating IP configuration - Floating IP configuration will NOT perform destination NAT on the packets processed by the load balancer. The traffic will be load balanced and routed to the backend firewalls preserving the original 5 tuples. The firewall still requires a NAT rule which translates the destination IP address (Public load balancer IP address) to the private side resource. However, this configuration overcomes the multiple applications and port numbers limitations from the 'default' config (applications utilizing the same destination port). This style of configuration also mitigates the management traffic conflicts. 
 
-# Topology Details
+# Topology Details - Simple Trust and Untrust topology. This is also applicable if the VM was running on a peered VNET (Spoke)
 
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/Dual_FW_NVA_HA_%2B_Public_LB_HA-Ports/default-topology.png)</kbd>
 
