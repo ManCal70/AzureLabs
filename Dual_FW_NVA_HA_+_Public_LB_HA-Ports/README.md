@@ -117,11 +117,11 @@ set interfaces ge-0/0/1 description TRUST
 set interfaces ge-0/0/1 unit 0 family inet dhcp
 set interfaces fxp0 unit 0
 <b>Routing instance configuration</b>
-set routing-instances VR-UNTRUST instance-type virtual-router
-set routing-instances VR-UNTRUST routing-options static route 168.63.129.16/32 next-hop 10.0.0.1  >><b>LB probe static route</b>
-set routing-instances VR-UNTRUST routing-options static route 0.0.0.0/0 next-hop 10.0.0.1 >><b>Default route to internet</b>
-set routing-instances VR-UNTRUST interface ge-0/0/0.0
-set routing-instances VR-UNTRUST interface ge-0/0/1.0
+set routing-instances VR-1 instance-type virtual-router
+set routing-instances VR-1 routing-options static route 168.63.129.16/32 next-hop 10.0.0.1  >><b>LB probe static route</b>
+set routing-instances VR-1 routing-options static route 0.0.0.0/0 next-hop 10.0.0.1 >><b>Default route to internet</b>
+set routing-instances VR-1 interface ge-0/0/0.0
+set routing-instances VR-1 interface ge-0/0/1.0
 <b>Security zone configuraiton</b>
 set security zones security-zone TRUST address-book address 10.0.1.10/32 10.0.1.10/32 >><b>Address book entry of web server</b>
 set security zones security-zone TRUST interfaces ge-0/0/1.0 host-inbound-traffic system-services all
