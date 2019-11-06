@@ -35,11 +35,8 @@ This lab will illustrate how to create an Azure Public load balancer, distribute
     - HUB VNET
       - IP Range - 10.0.0.0/16
       - Management Subnet - MGMT 10.0.254.0/24
-      - UNTRUST Subnet - O-UNTRUST 10.0.100.0/24
-      - TRUST Subnet - O-TRUST 10.0.99.0/24
-    - Spoke VNET - 10.80.0.0/16
-      - VM Workloads Subnet 10.80.0.99/24
-    - Hub to Spoke VNET Peering
+      - UNTRUST Subnet - O-UNTRUST 10.0.0.0/24
+      - TRUST Subnet - O-TRUST 10.0.1.0/24
     - Ubuntu Virtual machine + Apache2
 </pre>
 
