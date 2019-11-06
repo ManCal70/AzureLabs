@@ -165,7 +165,7 @@ Session ID: 111929, Policy name: DST-TO-WEB-TEST/6, Timeout: 298, Valid
 <b>Outgoing connection</b>Out: 10.0.1.10/80 --> 10.0.1.4/28363;tcp, Conn Tag: 0x0, If: ge-0/0/1.0, Pkts: 8, Bytes: 7524, 
 Total sessions: 2
 </pre>
-**Test connection to the backend Web server via the Public LB IP address**
+**Test connection to the backend Web server via the Public LB IP address - It works ;) you can shut down a vSRX and traffic will continue to flow**
 
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/Dual_FW_NVA_HA_%2B_Public_LB_HA-Ports/apache.png)</kbd>
 
