@@ -150,13 +150,20 @@ set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST the
 
 **View of the vSRX session table**
 <pre lang= >
-* Health probe session shows the Azure probe source address destined to 10.0.0.4 (vSRX UNTRUST vNIC IP
+* Health probe session shows the Azure probe source address destined to 10.0.0.4 (vSRX UNTRUST vNIC IP)
 <b>show security flow session</b> 
 Session ID: 111891, Policy name: self-traffic-policy/1, Timeout: 1798, Valid
   In: <b>168.63.129.16/57166</b> --> 10.0.0.4/22;tcp, Conn Tag: 0x0, If: ge-0/0/0.0, Pkts: 3, Bytes: 132, 
   Out: 10.0.0.4/22 --> 168.63.129.16/57166;tcp, Conn Tag: 0x0, If: .local..7, Pkts: 2, Bytes: 112, 
 Total sessions: 1
 
+<b>This output shows the incoming HTTP connection to the LB Public IP</b>
+*Since we have "Floating IP" enabled on the LB rule, the LB performs no destination translation
+
+Session ID: 111929, Policy name: DST-TO-WEB-TEST/6, Timeout: 298, Valid
+  In: 71.59.10.124/19208 --> <b>52.146.57.174</b>/80;tcp, Conn Tag: 0x0, If: ge-0/0/0.0, Pkts: 6, Bytes: 1055, 
+  Out: 10.0.1.10/80 --> 10.0.1.4/28363;tcp, Conn Tag: 0x0, If: ge-0/0/1.0, Pkts: 8, Bytes: 7524, 
+Total sessions: 2
 </pre>
 **Test connection to the backend Web server via the Public LB IP address**
 
