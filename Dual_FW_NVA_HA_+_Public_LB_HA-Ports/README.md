@@ -12,7 +12,7 @@ This lab will illustrate how to create an Azure Public load balancer, distribute
 
 # Default Config Topology Details
 
-<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/Dual_FW_NVA_HA_%2B_Public_LB_HA-Ports/default-topo.png)</kbd>
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/Dual_FW_NVA_HA_%2B_Public_LB_HA-Ports/default-topology.png)</kbd>
 
 **Elements required**
 <pre lang= >
