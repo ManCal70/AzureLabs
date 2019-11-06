@@ -141,7 +141,7 @@ set security zones security-zone TRUST interfaces ge-0/0/1.0 host-inbound-traffi
 set security zones security-zone TRUST interfaces ge-0/0/1.0 host-inbound-traffic protocols all
 set security zones security-zone UNTRUST interfaces ge-0/0/0.0 host-inbound-traffic system-services dhcp
 set security zones security-zone UNTRUST interfaces ge-0/0/0.0 host-inbound-traffic system-services ssh
-<b>Destination NAT</b>
+<b>Destination NAT (DNAT)</b>
 set security nat destination pool DST-NAT-POOL-1 address 10.0.1.10/32 >><b>IP address of Web server</b>
 set security nat destination rule-set DST-RS1 from interface ge-0/0/0.0 >><b>Ingress interface of traffic</b>
 set security nat destination rule-set DST-RS1 rule DST-R1 match destination-address 52.xx.xx.xx/32 >><b>Public IP of LB</b>
