@@ -1,7 +1,7 @@
 # Azure Lab - Dual NVA Firewalls (Juniper vSRX) Active/Active + Azure Public LB & Floating IP 
 ### *Similar design will work with multiple 3rd party NVA vendors. 
 
-This lab will illustrate how to create an Azure Public load balancer, distribute traffic between two Juniper vSRX firewalls. The Azure public load balancer can be configured in two ways. 1) Default config - LB will translate the destination IP address to that of the BE pools VM (in this case vSRX), or 2)HA Ports config - This setting will NOT translate the incoming packets destination IP. This means the packets preserve its 5 tuples when being load balanced between the back end firewalls. I will show you how to configure both flavors of LB config.
+This lab will illustrate how to create an Azure Public load balancer using Standard SKU, distribute traffic between two Juniper vSRX firewalls. The Azure public load balancer can be configured in two ways. 1) Default config - LB will translate the destination IP address to that of the BE pools VM (in this case vSRX), or 2)HA Ports config - This setting will NOT translate the incoming packets destination IP. This means the packets preserve its 5 tuples when being load balanced between the back end firewalls. This post will focus on HA ports configuration. 
 
 ### Design implications:
 - When using the Azure Public LB default configuration, if you have multiple applications that are using the same destination port, you have to perform port translation. This is due to the fact that backed pool VMs are limited to one IP address. A NAT policy will need to be configured to perform the port translation. This can become cumbersome as you add more applications and create port translations. 
