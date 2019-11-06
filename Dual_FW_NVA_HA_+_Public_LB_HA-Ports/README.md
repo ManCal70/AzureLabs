@@ -18,7 +18,7 @@
 ### Key details
 The Azure public load balancer can be configured in two ways (This lab is focused on #2): 
 <br>1- Default rule config - Azure PLB will translate the destination IP address of incoming packets to that of one of the backend pool VMs.
-<br>2- HA Ports rule config - This setting will NOT translate the incoming packets destination IP. This means the packets preserve their original 5 tuples when load balanced between the back end firewalls.
+<br>2- Floating IP rule config - This setting will NOT translate the incoming packets destination IP. This means the packets preserve their original 5 tuples when load balanced between the back end firewalls.
 
 ### Design implications:
 - When using the Azure Public LB default configuration, if you have multiple applications that are using the same destination port, you have to perform port translation. This is due to the fact that backed pool VMs are limited to one IP address. A NAT policy will need to be configured to perform the port translation. This can become cumbersome as you add more applications and create port translations. 
