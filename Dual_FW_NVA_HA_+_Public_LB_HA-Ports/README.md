@@ -109,6 +109,10 @@ az vm create --resource-group RG-PLB-TEST --location eastus --name VSRX2 --size 
 **Create a test Web server VM**
 <pre lang=>
 az vm create -n WEB-SERVER -g RG-PLB-TEST --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics WEB-eth0
+### Once the VM is up and running, run the following to update and install apache2:
+1- sudo apt update
+2- sudo apt upgrade -y
+3- sudo apt install apache2
 </pre>
 **Create the Azure Public load balancer**
 <pre lang= >
