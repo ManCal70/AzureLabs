@@ -150,7 +150,7 @@ set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST the
 
 **View of the vSRX session table**
 <pre lang= >
-<b>Health probe session shows the Azure probe source address destined to 10.0.0.4 (vSRX UNTRUST vNIC IP</b> 
+* Health probe session shows the Azure probe source address destined to 10.0.0.4 (vSRX UNTRUST vNIC IP
 <b>show security flow session</b> 
 Session ID: 111891, Policy name: self-traffic-policy/1, Timeout: 1798, Valid
   In: <b>168.63.129.16/57166</b> --> 10.0.0.4/22;tcp, Conn Tag: 0x0, If: ge-0/0/0.0, Pkts: 3, Bytes: 132, 
