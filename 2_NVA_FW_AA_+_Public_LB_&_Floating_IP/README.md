@@ -112,7 +112,7 @@ az vm create -n WEB-SERVER -g RG-PLB-TEST --image UbuntuLTS --admin-username lab
 <b>Once the VM is up and running, run the following to update and install apache2:</b>
 1- sudo apt update
 2- sudo apt upgrade -y
-3- sudo apt install apache2
+3- sudo apt install apache2 -y
 </pre>
 **Create the Azure Public load balancer**
 <pre lang= >
@@ -169,7 +169,7 @@ set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST the
 
 **View of the vSRX session table**
 <pre lang= >
-* Health probe session shows the Azure probe source address destined to 10.0.0.4 (vSRX UNTRUST vNIC IP)
+*Health probe session shows the Azure probe source address destined to 10.0.0.4 (vSRX UNTRUST vNIC IP)
 <b>show security flow session</b> 
 Session ID: 111891, Policy name: self-traffic-policy/1, Timeout: 1798, Valid
 <b>Incoming connection</b>In: <b>168.63.129.16/57166</b> --> 10.0.0.4/22;tcp, Conn Tag: 0x0, If: ge-0/0/0.0, Pkts: 3, Bytes: 132, 
