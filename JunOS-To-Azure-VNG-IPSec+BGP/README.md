@@ -22,8 +22,8 @@ az network vnet-gateway create
 <b>Create VPN GW - (for bgp peer address if you are setting this yourself grab the highest IP in the GatewaySubnet range .254)</b>
 az network vnet-gateway create -n GW-TEST-VNG -l westus --public-ip-address GW-TEST-PIP -g RG-GW-TEST --vnet GW-TEST --gateway-type Vpn --sku VpnGw1 --vpn-type RouteBased --asn 65002 --bgp-peering-address 10.225.254.254 --no-wait
 
-<b>Create the Local Network Gateway (Remote firewall config): gw ip:71.59.10.124, and remote asn 65001</b>
-az network local-gateway create --gateway-ip-address 71.59.10.124 -g RG-GW-TEST -asn 65001
+<b>Create the Local Network Gateway (Remote firewall config): gw ip:71.59.10.124,remote asn 65001, peer ip 10.250.250.250</b>
+az network local-gateway create --gateway-ip-address 71.59.10.124 -g RG-GW-TEST -asn 65001 --bgp-peering-address 10.250.250.250 --local-address-prefixes 10.225.0.0/16 
 
 <b>Create the Connection</b>
 az network vpn-connection create -g RG-GW-TEST -n VPN-CONN-1 --vnet-gateway1 GW-TEST-VNG --local-gateway2 REMOTE-SITE-VPN --enable-bgp --location westus --shared-key AzLabPass123
