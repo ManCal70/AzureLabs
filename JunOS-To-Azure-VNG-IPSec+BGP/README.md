@@ -105,7 +105,7 @@ set security policies from-zone VPN-ZONE to-zone TRUST policy VPN-ZONE-TRUST the
 <pre lang= >
 <b>SRX site tunnel verification</b>
 >show security ike security associations
-<div>
+<div class="boxed">
 Index   State  Initiator cookie  Responder cookie  Mode           Remote Address   
 3887757 UP     872c2bf09817d79f  09cf62ffc0c80c21  IKEv2          40.83.174.225
 </div>
