@@ -15,8 +15,7 @@
 </pre>
 
 **Create the Virtual Network Gateway (VNG)**
-<pre lang= >
+
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/JunOS-To-Azure-VNG-IPSec%2BBGP/vng-setup.png)</kbd>
 
-</pre>
 
