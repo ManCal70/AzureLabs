@@ -1,14 +1,25 @@
 ### JunOS SRX/vSRX IPSec configuration to interoperate with Azure Virtual Network Gateway (VNG). This example includes BGP peering configuration.
 
 <pre lang= >
-1- Create a VNG type VPN
-
+1- Create a resource group
+2- Create the VNET with GatewaySubnet
+3- Create a public IP for the VNG
+4- Create the VNG with the following parameters:
+  - Sku = VpnGw1
+  - Gateway-type = Vpn
+  - vpn-type = RouteBased
+  - ASN = 65002
+  - bgp-peering-address = 10.225.254.254 (GatewaySubnet highest IP)
+5- Create the 'Local Network Gateway' - remote firewall settings
+  - gateway-ip-address = 71.59.10.124
+  - asn = 65001 
+  - bgp-peering-address = 10.250.250.250
+  - local-address-prefixes = 10.250.0.0/16
+6- Create the connection to tie the VNG and remote gateway in IPSec
+  - vnet-gateway1 = GW-TEST-VNG
+  - local-gateway2 = LGW-1
+  - enable-bgp
 </pre>
-
-**Screenshot of Azure portal example to create the Virtual Network Gateway (VNG)**
-
-<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/JunOS-To-Azure-VNG-IPSec%2BBGP/gw-view.png)</kbd>
-<b>**CLI examples**</b>
 <pre lang= >
 <b>Create Resource group</b>
 az group create --name RG-GW-TEST --location westus
