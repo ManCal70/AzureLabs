@@ -140,3 +140,13 @@ inet.0: 14 destinations, 14 routes (14 active, 0 holddown, 0 hidden)
   Prefix                  Nexthop              MED     Lclpref    AS path
 * <b>10.225.0.0/16</b>           <b>10.225.254.254</b>                          <b>65002</b> I
 </div>
+
+<b>>You can ping the BGP neighbor VNG IP</b>
+<div class="boxed">
+ping 10.225.254.254 
+PING 10.225.254.254 (10.225.254.254): 56 data bytes
+64 bytes from 10.225.254.254: icmp_seq=0 ttl=127 time=67.500 ms
+64 bytes from 10.225.254.254: icmp_seq=1 ttl=127 time=66.605 ms
+64 bytes from 10.225.254.254: icmp_seq=2 ttl=127 time=65.792 ms
+64 bytes from 10.225.254.254: icmp_seq=3 ttl=127 time=66.107 ms
+</div>
