@@ -16,7 +16,7 @@
 
 **Screenshot of Azure portal example to create the Virtual Network Gateway (VNG)**
 
-<center><kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/JunOS-To-Azure-VNG-IPSec%2BBGP/gw-view.png)</kbd></center>
+<kbd><center>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/JunOS-To-Azure-VNG-IPSec%2BBGP/gw-view.png)</center></kbd>
 <pre lang= >
 **CLI examples**
 <b>Create VNET</b>
