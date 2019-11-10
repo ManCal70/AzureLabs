@@ -102,6 +102,9 @@ set security policies from-zone VPN-ZONE to-zone TRUST policy VPN-ZONE-TRUST mat
 set security policies from-zone VPN-ZONE to-zone TRUST policy VPN-ZONE-TRUST then permit
 </pre>
 
+<b>>Portal verification that tunnel is connected</b>
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/JunOS-To-Azure-VNG-IPSec%2BBGP/portal.png)</kbd>
+
 <pre lang= >
 <b>SRX site tunnel verification</b>
 <b>>show security ike security associations</b>
