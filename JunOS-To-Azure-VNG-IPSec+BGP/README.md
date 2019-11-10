@@ -60,4 +60,25 @@ set security ike gateway AZ-GW1 dead-peer-detection threshold 5
 set security ike gateway AZ-GW1 local-identity inet 71.59.10.124 <b>====> Local public IP address of FW</b>
 set security ike gateway AZ-GW1 external-interface ge-0/0/0.0 <b>====>Untrust Interface of FW</b>
 set security ike gateway AZ-GW1 version v2-only
+
+<b>Phase 2 - IPSec Configuraiton</b>
+set security ipsec proposal AZ-IPSEC-P2 protocol esp
+set security ipsec proposal AZ-IPSEC-P2 authentication-algorithm hmac-sha-256-128
+set security ipsec proposal AZ-IPSEC-P2 encryption-algorithm aes-256-cbc
+set security ipsec proposal AZ-IPSEC-P2 lifetime-seconds 3600
+set security ipsec policy IPSEC-POL-1 proposals AZ-IPSEC-P2
+set security ipsec vpn VPN bind-interface st0.0 <b>====> Tunnel Interface</b>
+set security ipsec vpn VPN ike gateway AZ-GW1
+set security ipsec vpn VPN ike proxy-identity local 0.0.0.0/0
+set security ipsec vpn VPN ike proxy-identity remote 0.0.0.0/0
+set security ipsec vpn VPN ike proxy-identity service any
+set security ipsec vpn VPN ike ipsec-policy IPSEC-POL-1
+set security ipsec vpn VPN establish-tunnels immediately
+
+<b>BGP Configuration</b>
+set protocols bgp group TO-AZURE type external
+set protocols bgp group TO-AZURE <b>multihop</b> ttl 2 <b>====> Important since BGP neighbor is not directly connected</b>
+set protocols bgp group TO-AZURE neighbor 10.225.254.254 peer-as 65002
+ 
+
 </pre>
