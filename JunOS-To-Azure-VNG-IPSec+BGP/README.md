@@ -107,12 +107,12 @@ set security policies from-zone VPN-ZONE to-zone TRUST policy VPN-ZONE-TRUST the
 >show security ike security associations
 <div class="boxed">
 Index   State  Initiator cookie  Responder cookie  Mode           Remote Address   
-3887757 UP     872c2bf09817d79f  09cf62ffc0c80c21  IKEv2          40.83.174.225
+3887757 <b>UP</b>     872c2bf09817d79f  09cf62ffc0c80c21  IKEv2          40.xx.xx.xx
 </div>
 >show security ipsec security associations
 <div class="boxed">
   Total active tunnels: 1     Total Ipsec sas: 1
   ID    Algorithm       SPI      Life:sec/kb  Mon lsys Port  Gateway   
-  <131073 ESP:aes-cbc-256/sha256 3cd26cfe 1303/ unlim - root 500 40.83.174.225   
-  >131073 ESP:aes-cbc-256/sha256 964dac8e 1303/ unlim - root 500 40.83.174.225 
+  <131073 ESP:aes-cbc-256/sha256 3cd26cfe 1303/ unlim - root 500 40.xx.xx.xx 
+  >131073 ESP:aes-cbc-256/sha256 964dac8e 1303/ unlim - root 500 40.xx.xx.xx 
 </div>
