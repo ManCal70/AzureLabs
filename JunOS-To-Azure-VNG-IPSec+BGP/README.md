@@ -104,12 +104,12 @@ set security policies from-zone VPN-ZONE to-zone TRUST policy VPN-ZONE-TRUST the
 
 <pre lang= >
 <b>SRX site tunnel verification</b>
->show security ike security associations
+<b>>show security ike security associations</b>
 <div class="boxed">
 Index   State  Initiator cookie  Responder cookie  Mode           Remote Address   
 3887757 <b>UP</b>     872c2bf09817d79f  09cf62ffc0c80c21  IKEv2          40.xx.xx.xx
 </div>
->show security ipsec security associations
+<b>>show security ipsec security associations</b>
 <div class="boxed">
   Total active tunnels: 1     Total Ipsec sas: 1
   ID    Algorithm       SPI      Life:sec/kb  Mon lsys Port  Gateway   
