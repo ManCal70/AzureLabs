@@ -29,7 +29,7 @@ The Azure public load balancer can be configured in two ways (This lab is focuse
 
 # Topology Details - Simple Trust and Untrust topology. This is also applicable if the VM was running on a peered VNET (Spoke)
 
-<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/Dual_FW_NVA_HA_%2B_Public_LB_HA-Ports/default-topology.png)</kbd>
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_NVA_FW_AA_%2B_Public_LB_%26_Floating_IP/default-topology.png)</kbd>
 
 **Elements required**
 <pre lang= >
@@ -199,5 +199,5 @@ Total sessions: 2
 </pre>
 **Test connection to the backend Web server via the Public LB IP address - It works ;) you can shut down a vSRX and traffic will continue to flow**
 
-<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/Dual_FW_NVA_HA_%2B_Public_LB_HA-Ports/apache.png)</kbd>
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_NVA_FW_AA_%2B_Public_LB_%26_Floating_IP/apache.png)</kbd>
 
