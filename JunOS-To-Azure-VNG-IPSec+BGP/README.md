@@ -18,7 +18,8 @@
 
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/JunOS-To-Azure-VNG-IPSec%2BBGP/gw-view.png)</kbd>
 <pre lang= >
-<b>create VNET</b>
+**CLI examples**
+<b>Create VNET</b>
 az network vnet create -n GW-TEST  -g RG-GW-TEST -l westus --address-prefix 10.225.0.0/16  --subnet-name GatewaySubnet --subnet-prefix 10.225.254.0/24
 
 <b>Create VNG PIP</b>
