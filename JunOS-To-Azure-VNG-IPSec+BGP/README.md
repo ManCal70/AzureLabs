@@ -1,4 +1,4 @@
-#### JunOS SRX/vSRX IPSec configuration to interoperate with Azure Virtual Network Gateway (VNG)
+### JunOS SRX/vSRX IPSec connection to Azure Virtual Network Gateway (VNG)
 
 #### This example includes BGP peering configuration.
 
