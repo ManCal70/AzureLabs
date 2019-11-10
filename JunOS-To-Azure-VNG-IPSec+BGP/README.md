@@ -103,7 +103,7 @@ set security policies from-zone VPN-ZONE to-zone TRUST policy VPN-ZONE-TRUST the
 </pre>
 
 <b>>Portal verification that tunnel is connected</b>
-<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/JunOS-To-Azure-VNG-IPSec%2BBGP/portal.png)</kbd>
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/JunOS-To-Azure-VNG-IPSec%2BBGP/portal-up.png)</kbd>
 
 <pre lang= >
 <b>SRX site tunnel verification</b>
