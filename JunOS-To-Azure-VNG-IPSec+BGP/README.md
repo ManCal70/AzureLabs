@@ -11,7 +11,8 @@
 <b>**CLI examples**</b>
 <pre lang= >
 <b>Create Resource group</b>
-az group create --name RG-GW-TEST --location wastus
+az group create --name RG-GW-TEST --location westus
+
 <b>Create VNET</b>
 az network vnet create -n GW-TEST  -g RG-GW-TEST -l westus --address-prefix 10.225.0.0/16  --subnet-name GatewaySubnet --subnet-prefix 10.225.254.0/24
 
