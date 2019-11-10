@@ -1,6 +1,6 @@
 ### JunOS SRX/vSRX IPSec configuration to interoperate with Azure Virtual Network Gateway (VNG). This example includes BGP peering configuration.
 
-<b>In the following lab we will:</b>
+<b> This document assumes you already have a 'Resource Group', a VNET with a 'GatewaySubnet' configured. In the following lab we will:</b>
 <pre lang= >
 1- Create a VNG type VPN
 2- Create a VNET w/ IP range
