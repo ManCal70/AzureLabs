@@ -14,7 +14,7 @@
 10-Show the firewall session tables
 </pre>
 
-**Create the Virtual Network Gateway (VNG)**
+**Screenshot of Azure portal example to create the Virtual Network Gateway (VNG)**
 
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/JunOS-To-Azure-VNG-IPSec%2BBGP/vng-setup.png)</kbd>
 
