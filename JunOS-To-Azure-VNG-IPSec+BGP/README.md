@@ -42,7 +42,7 @@ az network local-gateway create --gateway-ip-address 71.59.10.124 -g RG-GW-TEST 
 az network vpn-connection create -g RG-GW-TEST -n CONNECITON-1 --vnet-gateway1 GW-TEST-VNG --local-gateway2 LGW-1 --enable-bgp --location westus --shared-key AzLabPass123
 </pre>
 
-### Juniper SRX Configuration (SRX is very flexible in its configuraiton, selected to setup a VPN zone and also use a loopback for BGP peering)
+### Juniper SRX Configuration
 <pre lang= >
 <b>Phase 1 - IKE Configuraiton</b>
 set security ike proposal AZ-P1 authentication-method pre-shared-keys
