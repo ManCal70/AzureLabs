@@ -116,3 +116,8 @@ Index   State  Initiator cookie  Responder cookie  Mode           Remote Address
   <131073 ESP:aes-cbc-256/sha256 3cd26cfe 1303/ unlim - root 500 40.xx.xx.xx 
   >131073 ESP:aes-cbc-256/sha256 964dac8e 1303/ unlim - root 500 40.xx.xx.xx 
 </div>
+<b>>show interface terse st0</b>
+<div class="boxed">
+Interface               Admin Link Proto    Local                 Remote
+st0                     <b>up</b>    <b>up</b>
+st0.0                   <b>up</b>    <b>up</b>   inet 
