@@ -121,3 +121,22 @@ Index   State  Initiator cookie  Responder cookie  Mode           Remote Address
 Interface               Admin Link Proto    Local                 Remote
 st0                     <b>up</b>    <b>up</b>
 st0.0                   <b>up</b>    <b>up</b>   inet 
+</div>
+
+<b>>show bgp summary</b>
+<div class="boxed">
+Threading mode: BGP I/O
+Groups: 1 Peers: 1 Down peers: 0
+Table          Tot Paths  Act Paths Suppressed    History Damp State    Pending
+inet.0               
+                       1          1          0          0          0          0
+Peer                     AS      InPkt     OutPkt    OutQ   Flaps Last Up/Dwn State|#Active/Received/Accepted/Damped...
+<b>10.225.254.254</b>        <b>65002</b>         99         96       0       1       42:37 1/1/1/0              0/0/0/0
+</div>
+
+<b>>show route receive-protocol bgp 10.225.254.254</b>
+<div class="boxed">
+inet.0: 14 destinations, 14 routes (14 active, 0 holddown, 0 hidden)
+  Prefix                  Nexthop              MED     Lclpref    AS path
+* <b>10.225.0.0/16</b>           <b>10.225.254.254</b>                          <b>65002</b> I
+</div>
