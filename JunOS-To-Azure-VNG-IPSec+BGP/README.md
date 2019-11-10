@@ -78,7 +78,7 @@ set security ipsec vpn VPN establish-tunnels immediately
 <b>BGP Configuration</b>
 set protocols bgp group TO-AZURE type external
 set protocols bgp group TO-AZURE <b>multihop</b> ttl 2 <b>====> Important since BGP neighbor is not directly connected</b>
-set protocols bgp group TO-AZURE neighbor 10.225.254.254 peer-as 65002
+set protocols bgp group TO-AZURE neighbor 10.225.254.254 peer-as 65002 <b>=====>Azure VNG peering IP + peer AS</b>
  
 
 </pre>
