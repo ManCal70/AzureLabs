@@ -44,6 +44,20 @@ az network vpn-connection create -g RG-GW-TEST -n CONNECITON-1 --vnet-gateway1 G
 
 ### Juniper SRX Configuration (SRX is very flexible in its configuraiton, selected to setup a VPN zone and also use a loopback for BGP peering)
 <pre lang= >
-<b>Interfaces Config</b>
-
+<b>Phase 1 - IKE Configuraiton</b>
+set security ike proposal AZ-P1 authentication-method pre-shared-keys
+set security ike proposal AZ-P1 dh-group group2
+set security ike proposal AZ-P1 authentication-algorithm sha1
+set security ike proposal AZ-P1 encryption-algorithm aes-256-cbc
+set security ike proposal AZ-P1 lifetime-seconds 28800
+set security ike policy AZ-POL1 mode main
+set security ike policy AZ-POL1 proposals AZ-P1
+set security ike policy AZ-POL1 pre-shared-key ascii-text <b><the preshared key/password></b>
+set security ike gateway AZ-GW1 ike-policy AZ-POL1
+set security ike gateway AZ-GW1 address 40.xx.xx.xx <b>(Azure VNG public IP address)</b>
+set security ike gateway AZ-GW1 dead-peer-detection interval 10
+set security ike gateway AZ-GW1 dead-peer-detection threshold 5
+set security ike gateway AZ-GW1 local-identity inet 71.59.10.124 <b>====> Local public IP address of FW</b>
+set security ike gateway AZ-GW1 external-interface ge-0/0/0.0 <b>====>Untrust Interface of FW</b>
+set security ike gateway AZ-GW1 version v2-only
 </pre>
