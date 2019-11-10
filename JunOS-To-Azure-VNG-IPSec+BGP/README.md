@@ -134,7 +134,7 @@ Peer                     AS      InPkt     OutPkt    OutQ   Flaps Last Up/Dwn St
 <b>10.225.254.254</b>        <b>65002</b>         99         96       0       1       42:37 1/1/1/0              0/0/0/0
 </div>
 
-<b>>show route receive-protocol bgp 10.225.254.254</b>
+<b>>show route receive-protocol bgp 10.225.254.254</b> ====> BGP routes received from VNG
 <div class="boxed">
 inet.0: 14 destinations, 14 routes (14 active, 0 holddown, 0 hidden)
   Prefix                  Nexthop              MED     Lclpref    AS path
