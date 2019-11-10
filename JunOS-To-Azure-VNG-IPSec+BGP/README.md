@@ -67,7 +67,7 @@ set security ipsec proposal AZ-IPSEC-P2 authentication-algorithm hmac-sha-256-12
 set security ipsec proposal AZ-IPSEC-P2 encryption-algorithm aes-256-cbc
 set security ipsec proposal AZ-IPSEC-P2 lifetime-seconds 3600
 set security ipsec policy IPSEC-POL-1 proposals AZ-IPSEC-P2
-set security ipsec vpn VPN bind-interface st0.0 <b>====> Tunnel Interface</b>
+set security ipsec vpn VPN bind-interface st0.0 <b>====> Tunnel Interface/VTI</b>
 set security ipsec vpn VPN ike gateway AZ-GW1
 set security ipsec vpn VPN ike proxy-identity local 0.0.0.0/0
 set security ipsec vpn VPN ike proxy-identity remote 0.0.0.0/0
@@ -79,6 +79,32 @@ set security ipsec vpn VPN establish-tunnels immediately
 set protocols bgp group TO-AZURE type external
 set protocols bgp group TO-AZURE <b>multihop</b> ttl 2 <b>====> Important since BGP neighbor is not directly connected</b>
 set protocols bgp group TO-AZURE neighbor 10.225.254.254 peer-as 65002 <b>=====>Azure VNG peering IP + peer AS</b>
- 
 
+<b>Other relevant configuraiton</b>
+set interfaces lo0 unit 0 family inet address 10.250.250.250/32 <b>====>Local peering loopback</b>
+set interfaces st0 unit 0 family inet 
+set routing-options static route 10.225.254.254/32 next-hop st0.0 <b>====>Need to set static to remote VNG BGP neighbor</b>
+
+<b>VPN security zone (this can also work in UNTRUST zone)</b>
+set security zones security-zone VPN-ZONE address-book address 10.250.0.0/16 10.250.0.0/16 <b>====>Address book entries</b>
+set security zones security-zone VPN-ZONE address-book address 10.225.0.0/16 10.225.0.0/16 <b>====>Address book entries</b>
+set security zones security-zone VPN-ZONE interfaces st0.0 <b>====>Tunnel interface bound to VPN-ZONE</b>
+
+<b>security policies</b>
+set security policies from-zone TRUST to-zone VPN-ZONE policy TRUST-VPN-ZONE match source-address 10.250.0.0/16
+set security policies from-zone TRUST to-zone VPN-ZONE policy TRUST-VPN-ZONE match destination-address 10.225.0.0/16
+set security policies from-zone TRUST to-zone VPN-ZONE policy TRUST-VPN-ZONE match application any
+set security policies from-zone TRUST to-zone VPN-ZONE policy TRUST-VPN-ZONE then permit
+
+set security policies from-zone VPN-ZONE to-zone TRUST policy VPN-ZONE-TRUST match source-address 10.225.0.0/16
+set security policies from-zone VPN-ZONE to-zone TRUST policy VPN-ZONE-TRUST match destination-address 10.250.0.0/16
+set security policies from-zone VPN-ZONE to-zone TRUST policy VPN-ZONE-TRUST match application any
+set security policies from-zone VPN-ZONE to-zone TRUST policy VPN-ZONE-TRUST then permit
 </pre>
+
+<pre lang= >
+<b>SRX site tunnel verification</b>
+>show security ike security associations
+Index   State  Initiator cookie  Responder cookie  Mode           Remote Address   
+3887757 UP     872c2bf09817d79f  09cf62ffc0c80c21  IKEv2          40.83.174.225  
+>show security ipsec security associations
