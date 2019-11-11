@@ -6,8 +6,8 @@
 <pre lang= >
 <b>1-</b> Create the internal load balancer, frontend-ip, and backend pool
 <b>2-</b> Create the probe
-<b>3-</b> Create a public IP for the VNG
-<b>4-</b> Create the VNG with the following parameters:
+<b>3-</b> Create the LB rule
+<b>4-</b> Add the TRUST side vNICs to the backend pool
 
 </pre>
 
