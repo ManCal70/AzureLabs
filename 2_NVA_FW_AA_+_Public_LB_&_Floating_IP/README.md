@@ -159,6 +159,27 @@ az network public-ip show -g RG-PLB-TEST --name VSRX2-PIP-1 --output table
 Name         ResourceGroup    Location    Zones    Address        AddressVersion    AllocationMethod    IdleTimeoutInMinutes    ProvisioningState
 -----------  ---------------  ----------  -------  -------------  ----------------  ------------------  ----------------------  -------------------
 VSRX2-PIP-1  RG-PLB-TEST      eastus               <b>104.45.175.99</b>  IPv4              Static              4                       Succeeded
+</pre>
+**ssh into the firewall instances**
+ssh lab-user@104.xx.xx.xx
+<b>Output</b>
+The authenticity of host '104.xx.xx.xx (104.xx.xx.xx)' can't be established.
+RSA key fingerprint is SHA256:<scrubbed info>.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '104.45.173.74' (RSA) to the list of known hosts.
+Password:
+--- JUNOS 19.<scrubbed> Kernel 64-bit XEN JNPR-<scrubbed info>_buil
+lab-user@VSRX1> 
+
+ssh lab-user@104.45.175.99
+The authenticity of host '104.xx.xx.xx (104.xx.xx.xx)' can't be established.
+RSA key fingerprint is SHA256:<scrubbed info>.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '104.xx.xx.xx' (RSA) to the list of known hosts.
+Password:
+--- JUNOS 19.<scrubbed> Kernel 64-bit XEN JNPR-<scrubbed info>_buil
+lab-user@VSRX2> 
+
 
 </pre>
 **vSRX configuraitons- Both vSRX will have identical configs**
