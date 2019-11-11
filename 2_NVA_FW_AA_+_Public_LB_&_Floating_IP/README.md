@@ -27,7 +27,7 @@ The Azure public load balancer can be configured in two ways (This lab is focuse
 
 - Floating IP configuration - With the type of LB rule in place, the LB will NOT perform destination NAT on the packets processed by the load balancer. The traffic will be load balanced and routed to the backend firewalls preserving the original 5 tuples. The firewall still requires a DNAT rule which translates the destination IP address (Public load balancer IP address) to the private side resource. However, this configuration overcomes the multiple applications and port numbers re-use limitation from the 'default' config (applications utilizing the same destination port). This style of configuration also mitigates the potential management traffic conflicts with the probes. 
 
-# Topology Details - Simple Trust and Untrust topology. This is also applicable if the target backend VM was running on a peered VNET (Spoke)
+# Topology Details - Simple Trust and Untrust topology. This lab is applicable, if the target backend VM was running on a peered spoke VNET (UDR required on spoke).
 
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_NVA_FW_AA_%2B_Public_LB_%26_Floating_IP/default-topology.png)</kbd>
 
