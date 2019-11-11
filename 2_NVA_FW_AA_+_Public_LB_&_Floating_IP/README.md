@@ -144,23 +144,31 @@ az network lb rule create --resource-group RG-PLB-TEST --name LB-RULE-1 --backen
 az network nic ip-config update -g RG-PLB-TEST --nic-name VSRX1-ge0 -n ipconfig1 --lb-address-pool PLB1-BEPOOL --vnet-name hub-vnet --subnet O-UNTRUST --lb-name AZ-PUB-LB
 az network nic ip-config update -g RG-PLB-TEST --nic-name VSRX2-ge0 -n ipconfig1 --lb-address-pool PLB1-BEPOOL --vnet-name hub-vnet --subnet O-UNTRUST --lb-name AZ-PUB-LB
 </pre>
-**To manage firewall VMs, get a list of the public IP addresses for fxp0**
+**Get a list of the public IPs, or specific instances public IPs**
 <pre lang= >
 az network public-ip list --output table
+<b>Output</b>
+Name           ResourceGroup    Location    Zones    Address         AddressVersion    AllocationMethod    IdleTimeoutInMinutes    ProvisioningState
+-------------  ---------------  ----------  -------  --------------  ----------------  ------------------  ----------------------  -------------------
+AZ-PUB-LB-PIP  RG-PLB-TEST      eastus               52.xx.xx.xx  IPv4              Static              4                       Succeeded
+VSRX1-PIP-1    RG-PLB-TEST      eastus               104.xx.xx.xx   IPv4              Static              4                       Succeeded
+VSRX1-PIP-2    RG-PLB-TEST      eastus               52.xx.xx.xx    IPv4              Static              4                       Succeeded
+VSRX2-PIP-1    RG-PLB-TEST      eastus               104.xx.xx.xx   IPv4              Static              4                       Succeeded
+VSRX2-PIP-2    RG-PLB-TEST      eastus               52.xx.xx.xx   IPv4              Static              4                       Succeeded
 <b>For specific instance</b>
 az network public-ip show -g RG-PLB-TEST --name VSRX1-PIP-1 --output table
 <b>Output</b>
 Name         ResourceGroup    Location    Zones    Address        AddressVersion    AllocationMethod    IdleTimeoutInMinutes    ProvisioningState
 -----------  ---------------  ----------  -------  -------------  ----------------  ------------------  ----------------------  -------------------
-VSRX1-PIP-1  RG-PLB-TEST      eastus               <b>104.45.173.74</b>  IPv4              Static              4                       Succeeded
+VSRX1-PIP-1  RG-PLB-TEST      eastus               <b>104.xx.xx.xx</b>  IPv4              Static              4                       Succeeded
 
 az network public-ip show -g RG-PLB-TEST --name VSRX2-PIP-1 --output table
 <b>Output</b>
 Name         ResourceGroup    Location    Zones    Address        AddressVersion    AllocationMethod    IdleTimeoutInMinutes    ProvisioningState
 -----------  ---------------  ----------  -------  -------------  ----------------  ------------------  ----------------------  -------------------
-VSRX2-PIP-1  RG-PLB-TEST      eastus               <b>104.45.175.99</b>  IPv4              Static              4                       Succeeded
+VSRX2-PIP-1  RG-PLB-TEST      eastus               <b>104.xx.xx.xx</b>  IPv4              Static              4                       Succeeded
 </pre>
-**ssh into the firewall instances**
+**To ssj and manage firewall VMs**
 <pre lang= >
 <b>ssh lab-user@104.xx.xx.xx</b>
 <b>Output</b>
