@@ -58,7 +58,7 @@ The Azure public load balancer can be configured in two ways (This lab is focuse
 
 **Create the Resource Group**
 <pre lang= >
-az group create --name RG-PLB-TEST --location eastus
+az group create --name RG-PLB-TEST --location eastus --output table
 </pre>
 
 **Create the Hub VNET**
