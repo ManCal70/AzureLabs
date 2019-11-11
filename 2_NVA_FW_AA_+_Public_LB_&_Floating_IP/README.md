@@ -161,6 +161,7 @@ Name         ResourceGroup    Location    Zones    Address        AddressVersion
 VSRX2-PIP-1  RG-PLB-TEST      eastus               <b>104.45.175.99</b>  IPv4              Static              4                       Succeeded
 </pre>
 **ssh into the firewall instances**
+<pre lang= >
 ssh lab-user@104.xx.xx.xx
 <b>Output</b>
 The authenticity of host '104.xx.xx.xx (104.xx.xx.xx)' can't be established.
