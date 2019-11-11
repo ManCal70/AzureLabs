@@ -180,7 +180,7 @@ Password:
 --- JUNOS 19.<scrubbed> Kernel 64-bit XEN JNPR-<scrubbed info>_buil
 lab-user@VSRX1> 
 
-<b>ssh lab-user@104.45.175.99</b>
+<b>ssh lab-user@104.xx.xx.xx</b>
 <b>Output</b>
 The authenticity of host '104.xx.xx.xx (104.xx.xx.xx)' can't be established.
 RSA key fingerprint is SHA256:<scrubbed info>.
