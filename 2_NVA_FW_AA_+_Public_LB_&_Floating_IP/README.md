@@ -168,7 +168,7 @@ Name         ResourceGroup    Location    Zones    Address        AddressVersion
 -----------  ---------------  ----------  -------  -------------  ----------------  ------------------  ----------------------  -------------------
 VSRX2-PIP-1  RG-PLB-TEST      eastus               <b>104.xx.xx.xx</b>  IPv4              Static              4                       Succeeded
 </pre>
-**To ssj and manage firewall VMs**
+**To ssh and manage firewall VMs**
 <pre lang= >
 <b>ssh lab-user@104.xx.xx.xx</b>
 <b>Output</b>
