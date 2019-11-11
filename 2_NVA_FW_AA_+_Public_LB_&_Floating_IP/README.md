@@ -179,8 +179,6 @@ Warning: Permanently added '104.xx.xx.xx' (RSA) to the list of known hosts.
 Password:
 --- JUNOS 19.<scrubbed> Kernel 64-bit XEN JNPR-<scrubbed info>_buil
 lab-user@VSRX2> 
-
-
 </pre>
 **vSRX configuraitons- Both vSRX will have identical configs**
 <pre lang= >
