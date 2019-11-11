@@ -147,6 +147,19 @@ az network nic ip-config update -g RG-PLB-TEST --nic-name VSRX2-ge0 -n ipconfig1
 **To manage firewall VMs, get a list of the public IP addresses for fxp0**
 <pre lang= >
 az network public-ip list --output table
+<b>For specific instance</b>
+az network public-ip show -g RG-PLB-TEST --name VSRX1-PIP-1 --output table
+<b>Output</b>
+Name         ResourceGroup    Location    Zones    Address        AddressVersion    AllocationMethod    IdleTimeoutInMinutes    ProvisioningState
+-----------  ---------------  ----------  -------  -------------  ----------------  ------------------  ----------------------  -------------------
+VSRX1-PIP-1  RG-PLB-TEST      eastus               104.45.173.74  IPv4              Static              4                       Succeeded
+
+az network public-ip show -g RG-PLB-TEST --name VSRX2-PIP-1 --output table
+<b>Output</b>
+Name         ResourceGroup    Location    Zones    Address        AddressVersion    AllocationMethod    IdleTimeoutInMinutes    ProvisioningState
+-----------  ---------------  ----------  -------  -------------  ----------------  ------------------  ----------------------  -------------------
+VSRX2-PIP-1  RG-PLB-TEST      eastus               104.45.175.99  IPv4              Static              4                       Succeeded
+
 </pre>
 **vSRX configuraitons- Both vSRX will have identical configs**
 <pre lang= >
