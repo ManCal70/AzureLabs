@@ -162,7 +162,7 @@ VSRX2-PIP-1  RG-PLB-TEST      eastus               <b>104.45.175.99</b>  IPv4   
 </pre>
 **ssh into the firewall instances**
 <pre lang= >
-ssh lab-user@104.xx.xx.xx
+<b>ssh lab-user@104.xx.xx.xx</b>
 <b>Output</b>
 The authenticity of host '104.xx.xx.xx (104.xx.xx.xx)' can't be established.
 RSA key fingerprint is SHA256:<scrubbed info>.
@@ -172,7 +172,8 @@ Password:
 --- JUNOS 19.<scrubbed> Kernel 64-bit XEN JNPR-<scrubbed info>_buil
 lab-user@VSRX1> 
 
-ssh lab-user@104.45.175.99
+<b>ssh lab-user@104.45.175.99</b>
+<b>Output</b>
 The authenticity of host '104.xx.xx.xx (104.xx.xx.xx)' can't be established.
 RSA key fingerprint is SHA256:<scrubbed info>.
 Are you sure you want to continue connecting (yes/no)? yes
