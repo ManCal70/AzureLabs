@@ -152,13 +152,13 @@ az network public-ip show -g RG-PLB-TEST --name VSRX1-PIP-1 --output table
 <b>Output</b>
 Name         ResourceGroup    Location    Zones    Address        AddressVersion    AllocationMethod    IdleTimeoutInMinutes    ProvisioningState
 -----------  ---------------  ----------  -------  -------------  ----------------  ------------------  ----------------------  -------------------
-VSRX1-PIP-1  RG-PLB-TEST      eastus               104.45.173.74  IPv4              Static              4                       Succeeded
+VSRX1-PIP-1  RG-PLB-TEST      eastus               <b>104.45.173.74</b>  IPv4              Static              4                       Succeeded
 
 az network public-ip show -g RG-PLB-TEST --name VSRX2-PIP-1 --output table
 <b>Output</b>
 Name         ResourceGroup    Location    Zones    Address        AddressVersion    AllocationMethod    IdleTimeoutInMinutes    ProvisioningState
 -----------  ---------------  ----------  -------  -------------  ----------------  ------------------  ----------------------  -------------------
-VSRX2-PIP-1  RG-PLB-TEST      eastus               104.45.175.99  IPv4              Static              4                       Succeeded
+VSRX2-PIP-1  RG-PLB-TEST      eastus               <b>104.45.175.99</b>  IPv4              Static              4                       Succeeded
 
 </pre>
 **vSRX configuraitons- Both vSRX will have identical configs**
