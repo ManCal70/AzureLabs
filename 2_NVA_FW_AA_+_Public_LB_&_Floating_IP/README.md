@@ -124,7 +124,7 @@ az vm create --resource-group RG-PLB-TEST --location eastus --name VSRX2 --size 
 </pre>
 **Create a test Web server VM**
 <pre lang=>
-az vm create -n WEB-SERVER -g RG-PLB-TEST --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics WEB-eth0
+az vm create -n WEB-SERVER -g RG-PLB-TEST --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics WEB-eth0 --no-wait
 <b>Once the VM is up and running, run the following to update and install apache2:</b>
 1- sudo apt update
 2- sudo apt upgrade -y
