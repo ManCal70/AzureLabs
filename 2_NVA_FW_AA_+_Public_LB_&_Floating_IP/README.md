@@ -144,7 +144,10 @@ az network lb rule create --resource-group RG-PLB-TEST --name LB-RULE-1 --backen
 az network nic ip-config update -g RG-PLB-TEST --nic-name VSRX1-ge0 -n ipconfig1 --lb-address-pool PLB1-BEPOOL --vnet-name hub-vnet --subnet O-UNTRUST --lb-name AZ-PUB-LB
 az network nic ip-config update -g RG-PLB-TEST --nic-name VSRX2-ge0 -n ipconfig1 --lb-address-pool PLB1-BEPOOL --vnet-name hub-vnet --subnet O-UNTRUST --lb-name AZ-PUB-LB
 </pre>
-
+**To manage firewall VMs, get a list of the public IP addresses for fxp0**
+<pre lang= >
+az network public-ip list --output table
+</pre>
 **vSRX configuraitons- Both vSRX will have identical configs**
 <pre lang= >
 <b>Interfaces configuration</b>
