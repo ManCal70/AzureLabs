@@ -103,8 +103,7 @@ az network nic create --resource-group RG-PLB-TEST --location eastus --name WEB-
 <b>Contral Plane NSG</b>
 az network nsg create --resource-group RG-PLB-TEST --name CP-NSG --location eastus
 az network nsg rule create -g RG-PLB-TEST --nsg-name CP-NSG -n ALLOW-SSH --priority 300 --source-address-prefixes '*' --source-port-ranges '*' --destination-address-prefixes 10.0.254.0/24 --destination-port-ranges 22 --access Allow --protocol Tcp --description "Allow SSH to Management Subnet"
-az network nsg rule create -g RG-PLB-TEST --nsg-name CP-NSG -n ALLOW-ICMP --priority 301 --source-address-prefixes '*' --source-port-ranges '*' --destination-address-prefixes 10.0.254.0/24 --protocol Icmp "Allow ICMP to FW OOB interface"
-
+az network nsg rule create -g RG-PLB-TEST --nsg-name CP-NSG -n ALLOW-ICMP --priority 301 --source-address-prefixes '*' --source-port-ranges '*' --destination-address-prefixes 10.0.254.0/24 --destination-port-ranges '*' --protocol Icmp --description "Allow ICMP to FW OOB interface"
 <b>Untrust Subnet NSG</b>
 az network nsg create --resource-group RG-PLB-TEST --name UNTRUST-NSG --location eastus
 az network nsg rule create -g RG-PLB-TEST --nsg-name UNTRUST-NSG -n ALLOW-HTTP --priority 200 --source-address-prefixes '*' --source-port-ranges '*' --destination-address-prefixes 10.0.0.0/24 --destination-port-ranges 80 --access Allow --protocol Tcp --description "Allow HTTP to Untrust Subnet"
