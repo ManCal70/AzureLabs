@@ -88,9 +88,9 @@ az network public-ip create --name AZ-PUB-LB-PIP --allocation-method Static --re
 * fxp0 = Out of band management interface on vSRXs
 <pre lang>
 <b>VSRX1</b>
-az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX1-fxp0 --vnet-name HUB-VNET --subnet MGMT --public-ip-address  VSRX1-PIP-1 --private-ip-address 10.0.254.4
-az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX1-ge0 --vnet-name HUB-VNET --subnet O-UNTRUST --public-ip-address  VSRX1-PIP-2 --private-ip-address 10.0.0.4
-az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX1-ge1 --vnet-name HUB-VNET --subnet O-TRUST --private-ip-address 10.0.1.4
+az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX1-fxp0 --vnet-name HUB-VNET --subnet MGMT --public-ip-address  VSRX1-PIP-1 --private-ip-address 10.0.254.4 
+az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX1-ge0 --vnet-name HUB-VNET --subnet O-UNTRUST --public-ip-address  VSRX1-PIP-2 --private-ip-address 10.0.0.4 --ip-forwarding
+az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX1-ge1 --vnet-name HUB-VNET --subnet O-TRUST --private-ip-address 10.0.1.4 --ip-forwarding
 <b>VSRX2</b>
 az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX2-fxp0 --vnet-name HUB-VNET --subnet MGMT --public-ip-address  VSRX2-PIP-1 --private-ip-address 10.0.254.5
 az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX2-ge0 --vnet-name HUB-VNET --subnet O-UNTRUST --public-ip-address  VSRX2-PIP-2 --private-ip-address 10.0.0.5
