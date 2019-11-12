@@ -1,5 +1,5 @@
 
-### This lab builds on my previous work which can be found <a href="https://github.com/ManCalAzure/AzureLabs/blob/master/JunOS-To-Azure-VNG-IPSec+BGP/README.md">here</a>.  Please complete the lab referenced before moving on to this one. <br /></p>
+### In this lab, we will sandwich two vSRX firewalls between a public and an internal Azure load balancer. This lab builds on my previous work which can be found <a href="https://github.com/ManCalAzure/AzureLabs/blob/master/JunOS-To-Azure-VNG-IPSec+BGP/README.md">here</a>.  Please complete the lab referenced before moving on to this one. <br /></p>
 
 **In this lab we add an Azure internal load balancer on the TRUST side of the firewalls**
 
