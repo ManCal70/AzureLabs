@@ -29,7 +29,7 @@ The Azure public load balancer can be configured in two ways (This lab is focuse
 
 # Topology Details - Simple Trust and Untrust topology. This lab is applicable, if the target backend VM was running on a peered spoke VNET (UDR required on spoke).
 
-<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_NVA_FW_AA_%2B_Public_LB_%26_Floating_IP/default-topology.png)</kbd>
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_dual_ipsec_active-active_with_public_load_balancer/apache.png)</kbd>
 
 **Elements required**
 <pre lang= >
