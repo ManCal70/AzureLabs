@@ -42,6 +42,10 @@ az network local-gateway create --gateway-ip-address 71.59.10.124 -g RG-GW-TEST 
 az network vpn-connection create -g RG-GW-TEST -n CONNECITON-1 --vnet-gateway1 GW-TEST-VNG --local-gateway2 LGW-1 --enable-bgp --location westus --shared-key AzLabPass123
 </pre>
 
+<b>>Azure VNG details Portal view</b>
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_ipsec_to_azurevngw_ikev2_bgp/gw-view.png)</kbd>
+
+
 ### Juniper SRX Configuration
 <pre lang= >
 <b>Phase 1 - IKE Configuraiton</b>
