@@ -248,5 +248,5 @@ Total sessions: 2
 </pre>
 **Test connection to the backend Web server via the Public LB IP address - It works ;) you can shut down a vSRX and traffic will continue to flow**
 
-<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_NVA_FW_AA_%2B_Public_LB_%26_Floating_IP/apache.png)</kbd>
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_dual_ipsec_active-active_with_public_load_balancer/apache.png)</kbd>
 
