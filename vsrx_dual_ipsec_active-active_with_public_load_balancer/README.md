@@ -98,7 +98,7 @@ az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX
 <b>Web Server VM</b>
 az network nic create --resource-group RG-PLB-TEST --location eastus --name WEB-eth0 --vnet-name HUB-VNET --subnet O-TRUST --private-ip-address 10.0.1.10
 </pre>
-**Create NSGs - Since I selected to use Standar SKU public IP addresses an NSG is required**
+**Create NSGs - Since I selected to use 'Standard' SKU public IP addresses explicitly defined NSG is required**
 <pre lang=>
 <b>Contral Plane NSG</b>
 az network nsg create --resource-group RG-PLB-TEST --name CP-NSG --location eastus
