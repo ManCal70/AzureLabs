@@ -42,7 +42,7 @@ az network local-gateway create --gateway-ip-address 71.59.10.124 -g RG-GW-TEST 
 az network vpn-connection create -g RG-GW-TEST -n CONNECITON-1 --vnet-gateway1 GW-TEST-VNG --local-gateway2 LGW-1 --enable-bgp --location westus --shared-key AzLabPass123
 </pre>
 <pre lang= >
-<b>>Azure VNG details Portal view</b>
+<b>Azure VNG details Portal view</b>
 </pre>
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_ipsec_to_azurevngw_ikev2_bgp/gw-view.png)</kbd>
 
@@ -107,24 +107,24 @@ set security policies from-zone VPN-ZONE to-zone TRUST policy VPN-ZONE-TRUST mat
 set security policies from-zone VPN-ZONE to-zone TRUST policy VPN-ZONE-TRUST then permit
 </pre>
 
-<b>>Portal verification that tunnel is connected</b>
+<b>Portal verification that tunnel is connected</b>
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_ipsec_to_azurevngw_ikev2_bgp/portal-up.png)</kbd>
 
 <pre lang= >
 <b>SRX on-prem tunnel verification</b>
-<b>>show security ike security associations</b>
+<b>show security ike security associations</b>
 <div class="boxed">
 Index   State  Initiator cookie  Responder cookie  Mode           Remote Address   
 3887757 <b>UP</b>     872c2bf09817d79f  09cf62ffc0c80c21  IKEv2          40.xx.xx.xx
 </div>
-<b>>show security ipsec security associations</b>
+<b>show security ipsec security associations</b>
 <div class="boxed">
   Total active tunnels: 1     Total Ipsec sas: 1
   ID    Algorithm       SPI      Life:sec/kb  Mon lsys Port  Gateway   
   <131073 ESP:aes-cbc-256/sha256 3cd26cfe 1303/ unlim - root 500 40.xx.xx.xx 
   >131073 ESP:aes-cbc-256/sha256 964dac8e 1303/ unlim - root 500 40.xx.xx.xx 
 </div>
-<b>>show interface terse st0</b>
+<b>show interface terse st0</b>
 <div class="boxed">
 Interface               Admin Link Proto    Local                 Remote
 st0                     <b>up</b>    <b>up</b>
@@ -142,7 +142,7 @@ Peer                     AS      InPkt     OutPkt    OutQ   Flaps Last Up/Dwn St
 <b>10.225.254.254</b>        <b>65002</b>         99         96       0       1       42:37 1/1/1/0              0/0/0/0
 </div>
 
-<b>>show route receive-protocol bgp 10.225.254.254</b> ====> BGP routes received from VNG
+<b>show route receive-protocol bgp 10.225.254.254</b> ====> BGP routes received from VNG
 <div class="boxed">
 inet.0: 14 destinations, 14 routes (14 active, 0 holddown, 0 hidden)
   Prefix                  Nexthop              MED     Lclpref    AS path
