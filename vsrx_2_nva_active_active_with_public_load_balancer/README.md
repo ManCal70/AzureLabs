@@ -206,6 +206,7 @@ set routing-instances VR-1 routing-options static route 0.0.0.0/0 next-hop 10.0.
 set routing-instances VR-1 interface ge-0/0/0.0
 set routing-instances VR-1 interface ge-0/0/1.0
 <b>Security zone configuraiton</b>
+delete security
 set security zones security-zone TRUST address-book address 10.0.1.10/32 10.0.1.10/32 >><b>Address book entry of web server</b>
 set security zones security-zone TRUST interfaces ge-0/0/1.0 host-inbound-traffic system-services all
 set security zones security-zone TRUST interfaces ge-0/0/1.0 host-inbound-traffic protocols all
