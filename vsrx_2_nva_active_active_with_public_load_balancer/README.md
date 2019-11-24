@@ -1,4 +1,4 @@
-# Azure Lab - 2 NVA Firewalls (Juniper vSRX) Active/Active + Azure Public LB & Floating IP 
+# Azure Lab - Two Network Virtual Appliances (NVA) Firewalls (Juniper vSRX) in Active/Active design front ended by an Azure Public LB & Floating IP 
 ### This design can be applied across multiple 3rd party NVA vendors. 
 
 <b>In the following lab we will:</b>
