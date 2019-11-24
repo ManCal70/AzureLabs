@@ -28,8 +28,10 @@ az network lb rule create --resource-group RG-PLB-TEST --name ILB-R1-HAPORTS --b
 az network nic ip-config update --resource-group RG-PLB-TEST --nic-name VSRX1-ge1 --name ipconfig1 --lb-address-pool ILB-BEPOOL --vnet-name HUB-VNET --subnet O-TRUST --lb-name ILB-1
 az network nic ip-config update --resource-group RG-PLB-TEST --nic-name VSRX2-ge1 --name ipconfig1 --lb-address-pool ILB-BEPOOL --vnet-name HUB-VNET --subnet O-TRUST --lb-name ILB-1
 </pre>
+<pre lang= >
 <b>We need to create an TRUST side NSG for traffic to flow. *Remember, utilizing Standard SKUs an NSG is required</b>
-<b>Untrust Subnet NSG</b>
+<b>Trust Subnet NSG</b>
 az network nsg create --resource-group RG-PLB-TEST --name TRUST-NSG --location eastus
 az network nsg rule create -g RG-PLB-TEST --nsg-name TRUST-NSG -n ALLOW-ALL --priority 200 --source-address-prefixes '*' --source-port-ranges '*' --destination-address-prefixes '*' --destination-port-ranges '*' --access Allow --protocol '*' --description "Allow All to Trust Subnet"
+</pre>
 Te be continued..... work in progress....
