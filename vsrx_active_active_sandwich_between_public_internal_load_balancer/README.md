@@ -33,5 +33,8 @@ az network nic ip-config update --resource-group RG-PLB-TEST --nic-name VSRX2-ge
 <b>Trust Subnet NSG</b>
 az network nsg create --resource-group RG-PLB-TEST --name TRUST-NSG --location eastus
 az network nsg rule create -g RG-PLB-TEST --nsg-name TRUST-NSG -n ALLOW-ALL --priority 200 --source-address-prefixes '*' --source-port-ranges '*' --destination-address-prefixes '*' --destination-port-ranges '*' --access Allow --protocol '*' --description "Allow All to Trust Subnet"
+<b>Associate Trust vNICs with TRUST-NSG</b>
+az network nic update --resource-group RG-PLB-TEST --name VSRX1-ge1 --network-security-group TRUST-NSG
+az network nic update --resource-group RG-PLB-TEST --name VSRX2-ge1 --network-security-group TRUST-NSG
 </pre>
 Te be continued..... work in progress....
