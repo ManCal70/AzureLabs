@@ -37,4 +37,9 @@ az network nsg rule create -g RG-PLB-TEST --nsg-name TRUST-NSG -n ALLOW-ALL --pr
 az network nic update --resource-group RG-PLB-TEST --name VSRX1-ge1 --network-security-group TRUST-NSG
 az network nic update --resource-group RG-PLB-TEST --name VSRX2-ge1 --network-security-group TRUST-NSG
 </pre>
+<pre lang= >
+<b>Now we need to create a UDR so Trust side traffic is always routed to the Azure internal LB</b>
+az network route-table create  --name UDR-TO-ILB --resource-group RG-PLB-TEST -l eastus
+az network route-table route create --name DEFAULT-TO-ILB -g RG-PLB-TEST --route-table-name UDR-TO-ILB --address-prefix 0.0.0.0/0 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.1.254
+</pre>
 Te be continued..... work in progress....
