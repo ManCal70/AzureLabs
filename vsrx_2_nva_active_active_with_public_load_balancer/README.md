@@ -215,6 +215,7 @@ set security zones security-zone UNTRUST interfaces ge-0/0/0.0 host-inbound-traf
 set security nat destination pool DST-NAT-POOL-1 address 10.0.1.10/32 >><b>IP address of Web server</b>
 set security nat destination rule-set DST-RS1 from interface ge-0/0/0.0 >><b>Ingress interface of traffic</b>
 set security nat destination rule-set DST-RS1 rule DST-R1 match destination-address 52.xx.xx.xx/32 >><b>Public IP of LB</b>
+set security nat destination rule-set DST-RS1 rule DST-R1 then destination-nat pool DST-NAT-POOL-1
 <b>Source NAT (SNAT) for return flow affinity</b>
 set security nat source rule-set SNAT-FOR-DNAT-TO-WORK from zone UNTRUST
 set security nat source rule-set SNAT-FOR-DNAT-TO-WORK to zone TRUST
