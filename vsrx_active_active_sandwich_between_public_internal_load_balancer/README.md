@@ -29,6 +29,9 @@ This lab builds on my previous work which can be found <a href="https://github.c
 </pre>
 <pre lang= >
 <b>Create VNET and Subnet</b>
+
+</pre>
+
 <pre lang= >
 <b>Create ILB with front end IP, and backend pool name</b>
 az network lb create --resource-group RG-PLB-TEST --name ILB-1 --frontend-ip-name ILB-1-FE --private-ip-address 10.0.1.254 --vnet-name HUB-VNET --subnet O-TRUST --backend-pool-name ILB-BEPOOL --sku Standard
