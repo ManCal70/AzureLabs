@@ -39,9 +39,13 @@ az network vnet peering create -g RG-PLB-TEST --name HUB-TO-SPOKE --vnet-name HU
 az network vnet peering create -g RG-PLB-TEST --name SPOKE-TO-HUB --vnet-name SPOKE-VNET --remote-vnet HUB-VNET --allow-forwarded-traffic --allow-vnet-access --output table
 </pre>
 <pre lang= >
+<b>Create a vNIC for the web server and assing an IP</b>
+az network nic create --resource-group RG-PLB-TEST --location eastus --name WEB-SERV-eth0 --vnet-name SPOKE-VNET --subnet VM-SUB --private-ip-address 10.55.0.10
+<b>Create the web server VM in the SPOKE VNET VM subnet</b>
+az vm create -n WEB-SERV -g RG-PLB-TEST --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics WEB-SERV-eth0 --no-wait
+<pre lang= >
 <b>Create ILB with front end IP, and backend pool name</b>
 az network lb create --resource-group RG-PLB-TEST --name ILB-1 --frontend-ip-name ILB-1-FE --private-ip-address 10.0.1.254 --vnet-name HUB-VNET --subnet O-TRUST --backend-pool-name ILB-BEPOOL --sku Standard
-
 <b>Create the probe</b>
 az network LB probe create --resource-group RG-PLB-TEST --name ILB-PROBE1 --protocol tcp --port 22 --interval 30 --threshold 2 --lb-name ILB-1
 
