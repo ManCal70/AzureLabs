@@ -31,7 +31,6 @@ This lab builds on my previous work which can be found <a href="https://github.c
 <b>Create VNET and Subnet</b>
 az network vnet create --name SPOKE-VNET --resource-group RG-PLB-TEST --location eastus --address-prefix 10.55.0.0/16
 az network vnet subnet create --vnet-name SPOKE-VNET --name VM-SUB --resource-group RG-PLB-TEST --address-prefixes 10.55.0.0/24 --output table
-
 </pre>
 
 <pre lang= >
