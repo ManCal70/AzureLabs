@@ -32,7 +32,13 @@ This lab builds on my previous work which can be found <a href="https://github.c
 az network vnet create --name SPOKE-VNET --resource-group RG-PLB-TEST --location eastus --address-prefix 10.55.0.0/16
 az network vnet subnet create --vnet-name SPOKE-VNET --name VM-SUB --resource-group RG-PLB-TEST --address-prefixes 10.55.0.0/24 --output table
 </pre>
+<pre lang= >
+<b>Create the HUB to SPOKE VNET peering</b>
+az network vnet peering create -g RG-PLB-TEST --name HUB-TO-SPOKE --vnet-name HUB-VNET --remote-vnet SPOKE-VNET --allow-forwarded-traffic --allow-vnet-access --output table
+<b>Create the SPOke to HUB VNET peering</b>
+az network vnet peering create -g RG-PLB-TEST --name SPOKE-TO-HUB --vnet-name SPOKE-VNET --remote-vnet HUB-VNET --allow-forwarded-traffic --allow-vnet-access --output table
 
+</pre>
 <pre lang= >
 <b>Create ILB with front end IP, and backend pool name</b>
 az network lb create --resource-group RG-PLB-TEST --name ILB-1 --frontend-ip-name ILB-1-FE --private-ip-address 10.0.1.254 --vnet-name HUB-VNET --subnet O-TRUST --backend-pool-name ILB-BEPOOL --sku Standard
