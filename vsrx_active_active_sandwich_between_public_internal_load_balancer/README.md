@@ -12,7 +12,7 @@ This lab builds on my previous work which can be found <a href="https://github.c
 <b>6-</b> Bind the UDR to the VMs subnet
 </pre>
 <pre lang= >
-<b>** Azure CLI elements to configure</b>
+<b>**Azure CLI elements to configure</b>
 <b>1-</b> Create a Spoke VNET and subnet
 <b>2-</b> Create a web server VM in the subnet above
 <b>3-</b> Peer the VNET with the Existing HUB
