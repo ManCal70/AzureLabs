@@ -1,5 +1,7 @@
 
-<b> In this lab, we will sandwich two vSRX firewalls between a public and an internal Azure load balancer.</b> 
+<b> In this lab, we will sandwich two vSRX firewalls between a public and an internal Azure load balancer.</b>
+
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_2_nva_active_active_with_public_load_balancer/default-topology.png)</kbd>
 
 This lab builds on my previous work which can be found <a href="https://github.com/ManCalAzure/AzureLabs/tree/master/vsrx_2_nva_active_active_with_public_load_balancer/README.md">here</a>.  Please complete the lab referenced before moving on to this one. <br /></p>
 <pre lang= >
