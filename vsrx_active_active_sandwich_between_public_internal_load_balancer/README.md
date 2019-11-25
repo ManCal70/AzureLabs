@@ -4,11 +4,14 @@
 **In this lab we add an Azure internal load balancer on the TRUST side of the firewalls**
 
 <pre lang= >
-<b>1-</b> Create the internal load balancer, frontend-ip, and backend pool
-<b>2-</b> Create the probe
-<b>3-</b> Create the LB rule
-<b>4-</b> Add the TRUST side vNICs to the backend pool
-<b>5-</b> Split the vSRX routing into two instances
+<b>1-</b> Create a Spoke VNET and subnet
+<b>2-</b> Create a VM in the subnet created
+<b>3-</b> Peer the VNET with the Existing HUB
+<b>3-</b> Create the internal load balancer, frontend-ip, and backend pool
+<b>4-</b> Create the probe
+<b>5-</b> Create the LB rule
+<b>6-</b> Add the TRUST side vNICs to the backend pool
+<b>7-</b> Split the vSRX routing into two instances
   - VR-TRUST
   - VR-UNTRUST
 <b>6-</b> Configure each routing instance
