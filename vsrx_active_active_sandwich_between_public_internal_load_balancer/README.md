@@ -14,7 +14,7 @@ This lab builds on my previous work which can be found <a href="https://github.c
 <pre lang= >
 <b>** Azure CLI elements to configure</b>
 <b>1-</b> Create a Spoke VNET and subnet
-<b>2-</b> Create a VM in the subnet created
+<b>2-</b> Create a web server VM in the subnet above
 <b>3-</b> Peer the VNET with the Existing HUB
 <b>3-</b> Create the internal load balancer, frontend-ip, and backend pool
 <b>4-</b> Create the probe
