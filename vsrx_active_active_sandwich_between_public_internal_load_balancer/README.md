@@ -14,9 +14,9 @@
 <b>7-</b> Split the vSRX routing into two instances
   - VR-TRUST
   - VR-UNTRUST
-<b>6-</b> Configure each routing instance
-<b>7-</b> Configure routing to support TRUST and UNTRUST LB Probes
-<b>8-</b> Configure route leaking between TRUST and UNTRUST VRs to support transit
+<b>8-</b> Configure each routing instance
+<b>9-</b> Configure routing to support TRUST and UNTRUST LB Probes
+<b>10-</b> Configure route leaking between TRUST and UNTRUST VRs to support transit
 </pre>
 <pre lang= >
 <b>Create ILB with front end IP, and backend pool name</b>
