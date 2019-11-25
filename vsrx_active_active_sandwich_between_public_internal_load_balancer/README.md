@@ -3,7 +3,7 @@
 
 This lab builds on my previous work which can be found <a href="https://github.com/ManCalAzure/AzureLabs/tree/master/vsrx_2_nva_active_active_with_public_load_balancer/README.md">here</a>.  Please complete the lab referenced before moving on to this one. <br /></p>
 
-**In this lab we add an Azure internal load balancer on the TRUST side of the firewalls**
+**In this lab, we add an Azure internal load balancer on the TRUST side of the firewalls, create a spoke VNET, peer it with the HUB VNET, create a subnet for VMs, create a UDR which sets 0/0 next-hop LB VIP**
 
 <pre lang= >
 <b>1-</b> Create a Spoke VNET and subnet
