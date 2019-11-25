@@ -35,7 +35,7 @@ az network vnet subnet create --vnet-name SPOKE-VNET --name VM-SUB --resource-gr
 <pre lang= >
 <b>Create the HUB to SPOKE VNET peering</b>
 az network vnet peering create -g RG-PLB-TEST --name HUB-TO-SPOKE --vnet-name HUB-VNET --remote-vnet SPOKE-VNET --allow-forwarded-traffic --allow-vnet-access --output table
-<b>Create the SPOke to HUB VNET peering</b>
+<b>Create the SPOKE to HUB VNET peering</b>
 az network vnet peering create -g RG-PLB-TEST --name SPOKE-TO-HUB --vnet-name SPOKE-VNET --remote-vnet HUB-VNET --allow-forwarded-traffic --allow-vnet-access --output table
 </pre>
 <pre lang= >
