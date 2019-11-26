@@ -126,6 +126,9 @@ az network nic update --resource-group RG-PLB-TEST --name VSRX2-ge0 --network-se
 </pre>
 
 **Up to this point, we have created the following topology**
+***1- Created HUB & SPOKE VNET***
+***2- Created TRUST & UNTRUST subnets***
+
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_2_nva_active_active_with_public_load_balancer/plain-setup.png)</kbd>
 
 **Create the vSRX firewall VM**
