@@ -249,6 +249,9 @@ set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST match 
 set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST then permit
 set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST then log session-init
 set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST then log session-close
+
+<b>Static route to VMWORKLOAD VNET</b>
+set routing-instances VR-1 routing-options static route 10.80.99.0/24 next-hop 10.0.1.1
 </pre>
 
 **View of the vSRX session table**
