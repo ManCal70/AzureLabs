@@ -12,12 +12,12 @@ This lab builds on my previous work which can be found <a href="https://github.c
   - Frontend-ip
   - Backend pool
   - Probe on port 22
-  - Load balancer rule
+  - Load balancer rule with 'HA Ports'
 <b>4-</b> Add TRUST side firewall vNICs to the backend pool
 <b>5-</b> on vSRX configuration, add a second routing instance (VR/VRF) to handle the health probes coming from TRUST and UNTRUST (will elaborate later)
   - TRUST VR
   - UNTRUST VR
-<b>6-</b>Create a UDR which sets 0/0 next-hop ILB VIP
+<b>6-</b> Create a UDR which sets 0/0 next-hop ILB VIP
 <b>7-</b> Bind the UDR to the VMs subnet
 <b>8-</b> Configure each routing instance
 <b>9-</b> Configure routing to support TRUST and UNTRUST LB Probes
