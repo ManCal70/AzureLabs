@@ -124,7 +124,9 @@ az network nic update --resource-group RG-PLB-TEST --name VSRX2-fxp0 --network-s
 az network nic update --resource-group RG-PLB-TEST --name VSRX1-ge0 --network-security-group UNTRUST-NSG
 az network nic update --resource-group RG-PLB-TEST --name VSRX2-ge0 --network-security-group UNTRUST-NSG
 </pre>
-<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_2_nva_active_active_with_public_load_balancer/plain-topology1.png</kbd>
+
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_2_nva_active_active_with_public_load_balancer/plain-topology1.png)</kbd>
+
 **Create the vSRX firewall VM**
 <pre lang=>
 <b>First - Accept the Juniper Networks license agreement</b>
