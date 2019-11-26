@@ -63,7 +63,7 @@ az group create --name RG-PLB-TEST --location eastus --output table
 </pre>
 **Create a storage account for boot diagnosticsp**
 <pre lang= >
-az storage account create --name mcbootdiag --resource-group RG-PLB-TEST --location eastus --sku Standard_LRS --kind BlobStorage
+az storage account create -n mcbootdiag -g RG-PLB-TEST -l eastus --sku Standard_LRS
 </pre>
 **Create the HUB and a SPOKE VNET**
 <pre lang= >
