@@ -61,16 +61,18 @@ The Azure public load balancer can be configured in two ways (This lab is focuse
 az group create --name RG-PLB-TEST --location eastus --output table
 </pre>
 
-**Create the Hub VNET**
+**Create the HUB and a SPOKE VNET**
 <pre lang= >
 az network vnet create --name HUB-VNET --resource-group RG-PLB-TEST --location eastus --address-prefix 10.0.0.0/16
+az network vnet create --name SPOKE-VNET --resource-group RG-PLB-TEST --location eastus --address-prefix 10.80.0.0/16
 </pre>
 
-**Create the Subnets**
+**Create the Subnets in HUB and SPOKE VNETs**
 <pre lang= >
 az network vnet subnet create --vnet-name HUB-VNET --name MGMT --resource-group RG-PLB-TEST --address-prefixes 10.0.254.0/24 --output table
 az network vnet subnet create --vnet-name HUB-VNET --name O-UNTRUST --resource-group RG-PLB-TEST --address-prefixes 10.0.0.0/24 --output table
 az network vnet subnet create --vnet-name HUB-VNET --name O-TRUST --resource-group RG-PLB-TEST --address-prefixes 10.0.1.0/24 --output table
+az network vnet subnet create --vnet-name SPOKE-VNET --name VMWORKLOADS --resource-group RG-PLB-TEST --address-prefixes 10.80.99.0/24 --output table
 </pre>
 
 **Create the Public IPs - When utilizing Public IPs with Standard SKU, an NSG is required on the Subnet/vNIC. Two public IPs will be created per Firewall NVA, and 1 for the Public LB. 1) fxp0 - management interface 2) ge0 - UNTRUST/Interface facing interface**
