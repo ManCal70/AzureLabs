@@ -4,15 +4,16 @@
 <b>In the following lab we will:</b>
 <pre lang= >
 1- Create a resource group for all of the objects (LB, FW, VNET,...)
-2- Create a VNET w/ IP range
-3- Create 3 Subnets (Management, TRUST, and UNTRUST)
-4- Create public IP address objects for required elements
-5- Create nNICs for the firewalls (vSRX) and web server (Ubuntu + Apache)
-6- Create the virtual machines
-7- Configure the vSRX firewalls
-8- Create the Azure public load balancer
-9- Test Apache2 connectivity 
-10-Show the firewall session tables
+2- Create a storagea account for boot diagnostics 
+3- Create a VNET w/ IP range
+4- Create 3 Subnets (Management, TRUST, and UNTRUST)
+5- Create public IP address objects for required elements
+6- Create nNICs for the firewalls (vSRX) and web server (Ubuntu + Apache)
+7- Create the virtual machines
+8- Configure the vSRX firewalls
+9- Create the Azure public load balancer
+10- Test Apache2 connectivity 
+11-Show the firewall session tables
 </pre>
 
 ### Key details
@@ -60,7 +61,10 @@ The Azure public load balancer can be configured in two ways (This lab is focuse
 <pre lang= >
 az group create --name RG-PLB-TEST --location eastus --output table
 </pre>
-
+**Create a storage account for boot diagnosticsp**
+<pre lang= >
+az storage account create --name mcbootdiag --resource-group RG-PLB-TEST --location eastus --sku Standard_LRS --kind BlobStorage
+</pre>
 **Create the HUB and a SPOKE VNET**
 <pre lang= >
 az network vnet create --name HUB-VNET --resource-group RG-PLB-TEST --location eastus --address-prefix 10.0.0.0/16
@@ -121,13 +125,13 @@ az network nic update --resource-group RG-PLB-TEST --name VSRX2-ge0 --network-se
 <b>In PowerShell</b>
 Get-AzureRmMarketplaceTerms -Publisher juniper-networks -Product vsrx-next-generation-firewall -Name vsrx-byol-azure-image | Set-AzureRmMarketplaceTerms -Accept
 <b>VSRX1</b>
-az vm create --resource-group RG-PLB-TEST --location eastus --name VSRX1 --size Standard_DS3_v2 --nics VSRX1-fxp0 VSRX1-ge0 VSRX1-ge1 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234 --no-wait
+az vm create --resource-group RG-PLB-TEST --location eastus --name VSRX1 --size Standard_DS3_v2 --nics VSRX1-fxp0 VSRX1-ge0 VSRX1-ge1 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234 --boot-diagnostics-storage mcbootdiag --no-wait
 <b>VSRX2</b>
-az vm create --resource-group RG-PLB-TEST --location eastus --name VSRX2 --size Standard_DS3_v2 --nics VSRX2-fxp0 VSRX2-ge0 VSRX2-ge1 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234 --no-wait
+az vm create --resource-group RG-PLB-TEST --location eastus --name VSRX2 --size Standard_DS3_v2 --nics VSRX2-fxp0 VSRX2-ge0 VSRX2-ge1 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234 --boot-diagnostics-storage mcbootdiag --no-wait
 </pre>
 **Create a test Web server VM**
 <pre lang=>
-az vm create -n WEB-SERVER -g RG-PLB-TEST --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics WEB-eth0 --no-wait
+az vm create -n WEB-SERVER -g RG-PLB-TEST --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics WEB-eth0 --boot-diagnostics-storage mcbootdiag --no-wait
 <b>Once the VM is up and running, run the following to update and install apache2:</b>
 1- sudo apt update
 2- sudo apt upgrade -y
