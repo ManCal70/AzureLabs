@@ -199,6 +199,8 @@ lab-user@VSRX2>
 </pre>
 **vSRX configuraitons- Both vSRX will have identical configs**
 <pre lang= >
+<b>Delete default security config</b>
+delete security
 <b>Interfaces configuration</b>
 set interfaces ge-0/0/0 description UNTRUST
 set interfaces ge-0/0/0 unit 0 family inet dhcp
@@ -228,13 +230,20 @@ set security nat source rule-set SNAT-FOR-DNAT-TO-WORK from zone UNTRUST
 set security nat source rule-set SNAT-FOR-DNAT-TO-WORK to zone TRUST
 set security nat source rule-set SNAT-FOR-DNAT-TO-WORK rule SNAT-R1 match destination-address 10.0.1.0/24
 set security nat source rule-set SNAT-FOR-DNAT-TO-WORK rule SNAT-R1 then source-nat interface
-<b>Security policies to allow incoming HTTP traffic to the Web server</b>
+<b>Security policies to allow incoming HTTP traffic to the Web server, also TRUST to TRUST for internal hairpin traffic</b>
 set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST match source-address any
-set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST match destination-address 10.0.1.10/32
+set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST match destination-address 10.80.99.10/32
 set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST match application junos-http
 set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST then permit
 set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST then log session-init
 set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST then log session-close
+
+set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST match source-address any
+set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST match destination-address any
+set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST match application any
+set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST then permit
+set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST then log session-init
+set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST then log session-close
 </pre>
 
 **View of the vSRX session table**
