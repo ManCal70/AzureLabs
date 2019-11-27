@@ -3,7 +3,7 @@
 <p align="left"><b>This design can be applied across multiple 3rd party NVA vendors</p></b>
 </p>
 <b>In the following lab we will:</b>
-<div>
+<pre lang= >
 1. Create a resource group for all of the objects (LB, FW, VNET,...)
 1. Create a storagea account for boot diagnostics 
 1. Create a VNET w/ IP range
@@ -15,7 +15,7 @@
 1. Create the Azure public load balancer
 1. Test Apache2 connectivity 
 1. Show the firewall session tables
-</div>
+</pre>
 
 ### Key details
 The Azure public load balancer can be configured in two ways (This lab is focused on #2): 
