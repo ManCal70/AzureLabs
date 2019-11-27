@@ -3,21 +3,19 @@
 <p align="left"><b>This design can be applied across multiple 3rd party NVA vendors</p></b>
 </p>
 <b>In the following lab we will:</b>
-<pre lang= >
-
-Create a resource group for all of the objects (LB, FW, VNET,...)
-Create a storagea account for boot diagnostics 
-Create a VNET w/ IP range
-Create 3 Subnets (Management, TRUST, and UNTRUST)
-Create public IP address objects for required elements
-Create nNICs for the firewalls (vSRX) and web server (Ubuntu + Apache)
-Create the virtual machines
-Configure the vSRX firewalls
-Create the Azure public load balancer
-Test Apache2 connectivity 
-Show the firewall session tables
-
-</pre>
+<div>
+1. Create a resource group for all of the objects (LB, FW, VNET,...)
+1. Create a storagea account for boot diagnostics 
+1. Create a VNET w/ IP range
+1. Create 3 Subnets (Management, TRUST, and UNTRUST)
+1. Create public IP address objects for required elements
+1. Create nNICs for the firewalls (vSRX) and web server (Ubuntu + Apache)
+1. Create the virtual machines
+1. Configure the vSRX firewalls
+1. Create the Azure public load balancer
+1. Test Apache2 connectivity 
+1. Show the firewall session tables
+</div>
 
 ### Key details
 The Azure public load balancer can be configured in two ways (This lab is focused on #2): 
