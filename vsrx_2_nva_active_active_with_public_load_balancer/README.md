@@ -133,7 +133,7 @@ az network nic update --resource-group RG-PLB-TEST --name VSRX2-ge0 --network-se
 4- Created the vNICs for the firewalls, and the web server
 5- Created the NSGs
 </pre>
-<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_2_nva_active_active_with_public_load_balancer/plain-topo1.png)</kbd>
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_2_nva_active_active_with_public_load_balancer/topology2.png)</kbd>
 
 **Create the vSRX firewall VM**
 <pre lang=>
