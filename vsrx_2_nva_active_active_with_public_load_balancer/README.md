@@ -1,6 +1,6 @@
-<p align="center">
+<p align="left">
 <b>Azure Lab - Two Network Virtual Appliances (NVA) Firewalls (Juniper vSRX) in Active/Active design front ended by an Azure Public LB & Floating IP</center></b>
-<p align="center"><b>This design can be applied across multiple 3rd party NVA vendors</p></b>
+<p align="left"><b>This design can be applied across multiple 3rd party NVA vendors</p></b>
 </p>
 <b>In the following lab we will:</b>
 <pre lang= >
