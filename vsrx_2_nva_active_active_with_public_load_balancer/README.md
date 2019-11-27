@@ -167,6 +167,11 @@ az network lb rule create --resource-group RG-PLB-TEST --name LB-RULE-1 --backen
 az network nic ip-config update -g RG-PLB-TEST --nic-name VSRX1-ge0 -n ipconfig1 --lb-address-pool PLB1-BEPOOL --vnet-name hub-vnet --subnet O-UNTRUST --lb-name AZ-PUB-LB
 az network nic ip-config update -g RG-PLB-TEST --nic-name VSRX2-ge0 -n ipconfig1 --lb-address-pool PLB1-BEPOOL --vnet-name hub-vnet --subnet O-UNTRUST --lb-name AZ-PUB-LB
 </pre>
+<pre lang= >
+**Create the Azure Public load balancer**
+</pre>
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_2_nva_active_active_with_public_load_balancer/topology1.png)</kbd>
+
 **Get a list of the public IPs, or specific instances public IPs**
 <pre lang= >
 az network public-ip list --output table
