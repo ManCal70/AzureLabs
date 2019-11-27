@@ -4,17 +4,19 @@
 </p>
 <b>In the following lab we will:</b>
 <pre lang= >
-1- Create a resource group for all of the objects (LB, FW, VNET,...)
-2- Create a storagea account for boot diagnostics 
-3- Create a VNET w/ IP range
-4- Create 3 Subnets (Management, TRUST, and UNTRUST)
-5- Create public IP address objects for required elements
-6- Create nNICs for the firewalls (vSRX) and web server (Ubuntu + Apache)
-7- Create the virtual machines
-8- Configure the vSRX firewalls
-9- Create the Azure public load balancer
-10- Test Apache2 connectivity 
-11-Show the firewall session tables
+
+Create a resource group for all of the objects (LB, FW, VNET,...)
+Create a storagea account for boot diagnostics 
+Create a VNET w/ IP range
+Create 3 Subnets (Management, TRUST, and UNTRUST)
+Create public IP address objects for required elements
+Create nNICs for the firewalls (vSRX) and web server (Ubuntu + Apache)
+Create the virtual machines
+Configure the vSRX firewalls
+Create the Azure public load balancer
+Test Apache2 connectivity 
+Show the firewall session tables
+
 </pre>
 
 ### Key details
