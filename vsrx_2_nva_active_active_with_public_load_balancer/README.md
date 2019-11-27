@@ -128,9 +128,9 @@ az network nic update --resource-group RG-PLB-TEST --name VSRX2-ge0 --network-se
 **Up to this point, we have created the following topology**
 <pre lang=>
 1- Created HUB & SPOKE VNET
-2- Created TRUST & UNTRUST subnets
-3- Created the Public IP addresses
-4- Created the vNICs for the firewalls, VMs
+2- Created TRUST, UNTRUST, and MGMT (firewall maangement) subnets
+3- Created the Public IP addresses for the firewalls and the load balancer
+4- Created the vNICs for the firewalls, and the web server
 5- Created the NSGs
 </pre>
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_2_nva_active_active_with_public_load_balancer/plain-topo1.png)</kbd>
