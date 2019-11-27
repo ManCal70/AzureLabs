@@ -18,13 +18,15 @@
 </pre>
 
 ### Key details
+<pre lang= >
 The Azure public load balancer can be configured in two ways (This lab is focused on #2): 
 <br>1- Default rule config - Azure PLB will translate the destination IP address of incoming packets to that of one of the backend pool VMs.
 <br>2- Floating IP rule config - This setting will NOT translate the incoming packets destination IP. This means the packets preserve their original 5 tuples when load balanced between the back end firewalls.
-
+</pre>
 ### Design implications:
+<pre lang= >
 - When using the Azure Public LB default configuration, if you have multiple applications that are using the same destination port, you have to perform port translation. This is due to the fact that backed pool VMs are limited to one IP address. A NAT policy will need to be configured to perform the port translation. This can become cumbersome as you add more applications and create port translations. 
-
+</pre>
 - Health check probes - There are 3 types of health probes you can use to check the health of the backend pool - TCP/HTTP/HTTPS - in this design, we are going to select TCP on port 22 (ssh) to the firewalls UNTRUST IP addresses. This is a simple TCP probe with a connection terminating 'four-way close' TCP handshake. The probe is looking for an ACK response from the firewall. I will be enabling the ssh service on the untrust interface of the firewall, where the probe will ingress. You should always secure the control plane by creating ACLs/Filters to only allow the required sources (that is beyond the scope of this document). Always keep in mind that probes are sent to the IP address of the firewalls, this means, when you are using the 'default' load balancer configuration, you may have conflicts with the firewall 'management' configurations (ssh etc...). 
 
 - Floating IP configuration - With the type of LB rule in place, the LB will NOT perform destination NAT on the packets processed by the load balancer. The traffic will be load balanced and routed to the backend firewalls preserving the original 5 tuples. The firewall still requires a DNAT rule which translates the destination IP address (Public load balancer IP address) to the private side resource. However, this configuration overcomes the multiple applications and port numbers re-use limitation from the 'default' config (applications utilizing the same destination port). This style of configuration also mitigates the potential management traffic conflicts with the probes. 
