@@ -1,5 +1,5 @@
 
-<b> In this lab, we will sandwich two vSRX firewalls between a public and an internal Azure load balancer.</b>
+<b> In this lab, we will add an internal load balancer on the trust side of the vSRX firewalls. The ultimate result will be that incoming Internet connections will be load balanced between the two vSRX firewalls untrust side, and trust side connections will be load balanced to the trust side of the vSRX firewalls.</b>
 
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_active_active_sandwich_between_public_internal_load_balancer/firewall_sandwich.png)</kbd>
 
