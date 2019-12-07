@@ -48,6 +48,7 @@ az network route-table route create --name DEFAULT-RT-TO-ILB -g RG-PLB-TEST --ro
 az network vnet subnet update --vnet-name SPOKE-VNET --name VMWORKLOADS --resource-group RG-PLB-TEST --route-table UDR-TO-ILB-1
 
 <b>After the UDR is applied to the subnet, you can check the effective route table to ensure the route is in effect. *Keep in mind after applying a UDR this can cake up to a minute to propagate.</b>
-az network nic show-effective-route-table --name WEB-eth0 --resource-group RG-PLB-TEST
+az network nic show-effective-route-table --name WEB-eth0 --resource-group RG-PLB-TEST --output table
 </pre>
+
 Te be continued..... work in progress....
