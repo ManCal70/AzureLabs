@@ -21,6 +21,13 @@ The previous lab can be found <a href="https://github.com/ManCalAzure/AzureLabs/
 <pre lang= >
 <b>Create ILB with front end IP, and backend pool name</b>
 az network lb create --resource-group RG-PLB-TEST --name ILB-1 --frontend-ip-name ILB-1-FE --private-ip-address 10.0.1.254 --vnet-name HUB-VNET --subnet O-TRUST --backend-pool-name ILB-BEPOOL --sku Standard
+
+<b>Output after created:</b>
+az network lb list -g RG-PLB-TEST --output table
+Location    Name       ProvisioningState    ResourceGroup    ResourceGuid
+----------  ---------  -------------------  ---------------  ------------------------------------
+eastus      AZ-PUB-LB  Succeeded            RG-PLB-TEST      75055a40-5f78-4502-acf3-71a5e6ad952f
+
 <b>Create the probe</b>
 az network LB probe create --resource-group RG-PLB-TEST --name ILB-PROBE1 --protocol tcp --port 22 --interval 30 --threshold 2 --lb-name ILB-1
 
