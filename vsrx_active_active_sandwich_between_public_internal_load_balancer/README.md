@@ -53,7 +53,23 @@ az network nic ip-config update --resource-group RG-PLB-TEST --nic-name VSRX2-ge
 <b>We need to create an TRUST side NSG for traffic to flow. *Always keep in mind, when utilizing Standard SKUs, an NSG is required</b>
 <b>Trust Subnet NSG</b>
 az network nsg create --resource-group RG-PLB-TEST --name TRUST-NSG --location eastus
+
+<b>Trust Subnet NSG check</b>
+az network nsg show -g RG-PLB-TEST --name TRUST-NSG --output table
+Location    Name       ProvisioningState    ResourceGroup    ResourceGuid
+----------  ---------  -------------------  ---------------  ------------------------------------
+eastus      TRUST-NSG  Succeeded            RG-PLB-TEST      fcd7c257-be8e-497e-abc3-2575b190ed6c
+
+<b>Create required NSG rule</b>
 az network nsg rule create -g RG-PLB-TEST --nsg-name TRUST-NSG -n ALLOW-ALL --priority 200 --source-address-prefixes '*' --source-port-ranges '*' --destination-address-prefixes '*' --destination-port-ranges '*' --access Allow --protocol '*' --description "Allow All to Trust Subnet"
+
+<b>NSG Rule check</b>
+az network nsg rule show --name ALLOW-ALL --nsg-name TRUST-NSG -g RG-PLB-TEST --output table
+Name       ResourceGroup    Priority    SourcePortRanges    SourceAddressPrefixes    SourceASG    Access    Protocol    Direction    DestinationPortRanges    DestinationAddressPrefixes    DestinationASG
+---------  ---------------  ----------  ------------------  -----------------------  -----------  --------  ----------  -----------  -----------------------  ----------------------------  ----------------
+ALLOW-ALL  RG-PLB-TEST      200         *                   *                        None         Allow     *           Inbound      *                        *                             None
+
+
 <b>Associate Trust vNICs with TRUST-NSG</b>
 az network nic update --resource-group RG-PLB-TEST --name VSRX1-ge1 --network-security-group TRUST-NSG
 az network nic update --resource-group RG-PLB-TEST --name VSRX2-ge1 --network-security-group TRUST-NSG
