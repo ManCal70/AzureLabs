@@ -1,4 +1,4 @@
-The previous lab can be found <a href="https://github.com/ManCalAzure/AzureLabs/tree/master/vsrx_2_nva_active_active_with_public_load_balancer/README.md">here</a>.  Please complete the lab referenced before moving on to this one. <br /></p>
+The previous lab can be found <a href="https://github.com/ManCalAzure/AzureLabs/tree/master/vsrx_2_nva_active_active_with_public_load_balancer/README.md">here</a>.  Please complete the lab referenced before moving forward with this one. <br /></p>
 <pre lang= >
 <b>In this lab:</b>
 <b>1-</b> Create an Azure internal load balancer with:
