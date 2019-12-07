@@ -40,7 +40,7 @@ az network nic update --resource-group RG-PLB-TEST --name VSRX1-ge1 --network-se
 az network nic update --resource-group RG-PLB-TEST --name VSRX2-ge1 --network-security-group TRUST-NSG
 </pre>
 <pre lang= >
-<b>Now we need to create a UDR so Trust side traffic is always routed to the Azure internal LB</b>
+<b>Now we need to create a user defined route (UDR) which routes traffic to the internal load balancer VIP address. This address is applied to any VNET where you want traffic to be routed via the ILB.</b>
 az network route-table create  --name UDR-TO-ILB --resource-group RG-PLB-TEST -l eastus
 az network route-table route create --name DEFAULT-TO-ILB -g RG-PLB-TEST --route-table-name UDR-TO-ILB --address-prefix 0.0.0.0/0 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.1.254
 </pre>
