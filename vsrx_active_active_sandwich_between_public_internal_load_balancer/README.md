@@ -31,8 +31,20 @@ eastus      AZ-PUB-LB  Succeeded            RG-PLB-TEST      75055a40-5f78-4502-
 <b>Create the probe</b>
 az network LB probe create --resource-group RG-PLB-TEST --name ILB-PROBE1 --protocol tcp --port 22 --interval 30 --threshold 2 --lb-name ILB-1
 
+<b>Show the probe after created:</b>
+az network lb probe list --resource-group RG-PLB-TEST --lb-name AZ-PUB-LB --output table
+IntervalInSeconds    Name       NumberOfProbes    Port    Protocol    ProvisioningState    ResourceGroup
+-------------------  ---------  ----------------  ------  ----------  -------------------  ---------------
+30                   BE-PROBE1  2                 22      Tcp         Succeeded            RG-PLB-TEST
+
 <b>Create the loab balancing rule with 'HA Ports'</b>
 az network lb rule create --resource-group RG-PLB-TEST --name ILB-R1-HAPORTS --backend-pool-name ILB-BEPOOL --probe-name ILB-PROBE1 --protocol all --frontend-port 0 --backend-port 0 --lb-name ILB-1
+
+<b>Show the rule created:</b>
+az network lb rule list --lb-name AZ-PUB-LB -g RG-PLB-TEST --output table
+BackendPort    DisableOutboundSnat    EnableFloatingIp    EnableTcpReset    FrontendPort    IdleTimeoutInMinutes    LoadDistribution    Name       Protocol    ProvisioningState    ResourceGroup
+-------------  ---------------------  ------------------  ----------------  --------------  ----------------------  ------------------  ---------  ----------  -------------------  ---------------
+80             False                  True                False             80              4                       Default             LB-RULE-1  Tcp         Succeeded            RG-PLB-TEST
 <b>Add trust side vNICs to backend pool utilized by the ILB</b>
 az network nic ip-config update --resource-group RG-PLB-TEST --nic-name VSRX1-ge1 --name ipconfig1 --lb-address-pool ILB-BEPOOL --vnet-name HUB-VNET --subnet O-TRUST --lb-name ILB-1
 az network nic ip-config update --resource-group RG-PLB-TEST --nic-name VSRX2-ge1 --name ipconfig1 --lb-address-pool ILB-BEPOOL --vnet-name HUB-VNET --subnet O-TRUST --lb-name ILB-1
