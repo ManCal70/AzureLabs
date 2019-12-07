@@ -5,7 +5,7 @@ The previous lab can be found <a href="https://github.com/ManCalAzure/AzureLabs/
   - Frontend-ip
   - Backend pool
   - Probe on port 22
-  - Load balancer rule with 'HA Ports'
+  - Load balancer rule with 'HA Ports' >> HA ports allows for all IPs & ports to be forwarded to the vSRX firewalls
 <b>2-</b> Add TRUST side firewall vNICs to the backend pool 
 <b>3-</b> on vSRX configuration, add a second routing instance (VR/VRF) to handle the health probes coming from TRUST and UNTRUST (will elaborate later)
   - TRUST VR
