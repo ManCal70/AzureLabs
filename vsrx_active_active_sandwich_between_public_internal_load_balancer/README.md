@@ -1,8 +1,3 @@
-
-<b> In this lab, we will add an internal load balancer on the trust side of the vSRX firewalls. The ultimate result will be that incoming Internet connections will be load balanced between the two vSRX firewalls untrust side, and trust side connections will be load balanced to the trust side of the vSRX firewalls.</b>
-
-<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_active_active_sandwich_between_public_internal_load_balancer/firewall_sandwich.png)</kbd>
-
 The previous lab can be found <a href="https://github.com/ManCalAzure/AzureLabs/tree/master/vsrx_2_nva_active_active_with_public_load_balancer/README.md">here</a>.  Please complete the lab referenced before moving on to this one. <br /></p>
 <pre lang= >
 <b>In this lab:</b>
@@ -21,6 +16,8 @@ The previous lab can be found <a href="https://github.com/ManCalAzure/AzureLabs/
 <b>7-</b> Configure routing to support TRUST and UNTRUST LB Probes
 <b>8-</b> Configure route leaking between TRUST and UNTRUST VRs to support transit
 </pre>
+
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_active_active_sandwich_between_public_internal_load_balancer/firewall_sandwich.png)</kbd>
 <pre lang= >
 <b>Create VNET and Subnet</b>
 az network vnet create --name SPOKE-VNET --resource-group RG-PLB-TEST --location eastus --address-prefix 10.55.0.0/16
