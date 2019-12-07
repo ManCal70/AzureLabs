@@ -24,7 +24,7 @@ az network lb create --resource-group RG-PLB-TEST --name ILB-1 --frontend-ip-nam
 <b>Create the probe</b>
 az network LB probe create --resource-group RG-PLB-TEST --name ILB-PROBE1 --protocol tcp --port 22 --interval 30 --threshold 2 --lb-name ILB-1
 
-<b>Create the loab balancing rule</b>
+<b>Create the loab balancing rule with 'HA Ports'</b>
 az network lb rule create --resource-group RG-PLB-TEST --name ILB-R1-HAPORTS --backend-pool-name ILB-BEPOOL --probe-name ILB-PROBE1 --protocol all --frontend-port 0 --backend-port 0 --lb-name ILB-1
 <b>Add vNICs to backend pool</b>
 az network nic ip-config update --resource-group RG-PLB-TEST --nic-name VSRX1-ge1 --name ipconfig1 --lb-address-pool ILB-BEPOOL --vnet-name HUB-VNET --subnet O-TRUST --lb-name ILB-1
