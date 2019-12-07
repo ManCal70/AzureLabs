@@ -77,7 +77,21 @@ az network nic update --resource-group RG-PLB-TEST --name VSRX2-ge1 --network-se
 <pre lang= >
 <b>Now we need to create a user defined route (UDR) which routes traffic to the internal load balancer VIP address. This address is applied to any VNET where you want traffic to be routed via the ILB.</b>
 az network route-table create  --name UDR-TO-ILB-1 --resource-group RG-PLB-TEST -l eastus
+
+<b>UDR creationg check</b>
+az network route-table show --name UDR-TO-ILB-1 -g RG-PLB-TEST --output table
+DisableBgpRoutePropagation    Location    Name          ProvisioningState    ResourceGroup
+----------------------------  ----------  ------------  -------------------  ---------------
+False                         eastus      UDR-TO-ILB-1  Succeeded            RG-PLB-TEST
+
+<b>UDR creation</b>
 az network route-table route create --name DEFAULT-RT-TO-ILB -g RG-PLB-TEST --route-table-name UDR-TO-ILB-1 --address-prefix 0.0.0.0/0 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.1.254
+
+<b>Route creationg check</b>
+az network route-table route show -g RG-PLB-TEST --name DEFAULT-RT-TO-ILB --route-table-name UDR-TO-ILB-1 --output table
+AddressPrefix    Name               NextHopIpAddress    NextHopType       ProvisioningState    ResourceGroup
+---------------  -----------------  ------------------  ----------------  -------------------  ---------------
+0.0.0.0/0        DEFAULT-RT-TO-ILB  10.0.1.254          VirtualAppliance  Succeeded            RG-PLB-TEST
 
 <b>Once the UDR is created, associate it or apply it to the VMWORKLOADS subnet.</b>
 az network vnet subnet update --vnet-name SPOKE-VNET --name VMWORKLOADS --resource-group RG-PLB-TEST --route-table UDR-TO-ILB-1
