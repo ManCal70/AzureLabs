@@ -6,22 +6,20 @@
 The previous lab can be found <a href="https://github.com/ManCalAzure/AzureLabs/tree/master/vsrx_2_nva_active_active_with_public_load_balancer/README.md">here</a>.  Please complete the lab referenced before moving on to this one. <br /></p>
 <pre lang= >
 <b>In this lab:</b>
-<b>1-</b> Create a 'SPOKE' VNET with a subnet called 'VM Subnet'
-<b>2-</b> Peer spoke with the HUB (where firewalls TRUST side resides) & HUB with SPOKE
-<b>3-</b> Create an Azure internal load balancer with:
+<b>1-</b> Create an Azure internal load balancer with:
   - Frontend-ip
   - Backend pool
   - Probe on port 22
   - Load balancer rule with 'HA Ports'
-<b>4-</b> Add TRUST side firewall vNICs to the backend pool
-<b>5-</b> on vSRX configuration, add a second routing instance (VR/VRF) to handle the health probes coming from TRUST and UNTRUST (will elaborate later)
+<b>2-</b> Add TRUST side firewall vNICs to the backend pool 
+<b>3-</b> on vSRX configuration, add a second routing instance (VR/VRF) to handle the health probes coming from TRUST and UNTRUST (will elaborate later)
   - TRUST VR
   - UNTRUST VR
-<b>6-</b> Create a UDR which sets 0/0 next-hop ILB VIP
-<b>7-</b> Bind the UDR to the VMs subnet
-<b>8-</b> Configure each routing instance
-<b>9-</b> Configure routing to support TRUST and UNTRUST LB Probes
-<b>10-</b> Configure route leaking between TRUST and UNTRUST VRs to support transit
+<b>4-</b> Create a UDR which sets 0/0 next-hop ILB VIP
+<b>5-</b> Bind the UDR to the VMs subnet
+<b>6-</b> Configure each routing instance
+<b>7-</b> Configure routing to support TRUST and UNTRUST LB Probes
+<b>8-</b> Configure route leaking between TRUST and UNTRUST VRs to support transit
 </pre>
 <pre lang= >
 <b>Create VNET and Subnet</b>
