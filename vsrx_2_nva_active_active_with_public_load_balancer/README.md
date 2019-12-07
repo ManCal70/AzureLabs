@@ -137,7 +137,7 @@ az network nic update --resource-group RG-PLB-TEST --name VSRX2-ge0 --network-se
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_2_nva_active_active_with_public_load_balancer/topology2.png)
 </kbd>
 
-**Create the vSRX firewall VM**
+**Create the vSRX firewall VMs**
 <pre lang=>
 <b>First - Accept the Juniper Networks license agreement</b>
 <b>In PowerShell</b>
