@@ -98,6 +98,15 @@ az network vnet subnet update --vnet-name SPOKE-VNET --name VMWORKLOADS --resour
 
 <b>After the UDR is applied to the subnet, you can check the effective route table to ensure the route is in effect. *Keep in mind after applying a UDR this can cake up to a minute to propagate.</b>
 az network nic show-effective-route-table --name WEB-eth0 --resource-group RG-PLB-TEST --output table
-</pre>
 
+At this point you can check the effective route table of the VM vNIC to ensure the default points to the ILB IP
+az network nic show-effective-route-table -g RG-PLB-TEST -n WEB-eth0 --output table
+
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_active_active_sandwich_between_public_internal_load_balancer/route-table.png)</kbd>
+
+</pre>
+<pre lang= >
+
+<b>In this lab, we will:</b>
+</pre>
 Te be continued..... work in progress....
