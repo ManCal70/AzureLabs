@@ -105,7 +105,7 @@ az network nic show-effective-route-table -g RG-PLB-TEST -n WEB-eth0 --output ta
 <b>Output of the Web server effective route table</b>
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_active_active_sandwich_between_public_internal_load_balancer/Route-table.png)</kbd>
 
-<b>You can do the same with Azure CLI</b>
+<b>You can do the same with Azure CLI<br />
 az network nic show-effective-route-table -g RG-PLB-TEST -n WEB-eth0 --output table
 
 Source    State    Address Prefix    Next Hop Type     Next Hop IP
