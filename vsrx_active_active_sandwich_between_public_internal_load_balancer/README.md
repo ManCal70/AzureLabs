@@ -107,14 +107,12 @@ az network nic show-effective-route-table -g RG-PLB-TEST -n WEB-eth0 --output ta
 
 <b>You can do the same with Azure CLI</br>
 az network nic show-effective-route-table -g RG-PLB-TEST -n WEB-eth0 --output table
-<frameset>
 Source    State    Address Prefix    Next Hop Type     Next Hop IP
 --------  -------  ----------------  ----------------  -------------
 Default   Active   10.80.0.0/16      VnetLocal
 Default   Active   10.0.0.0/16       VNetPeering
 Default   Invalid  0.0.0.0/0         Internet
 User      Active   0.0.0.0/0         VirtualAppliance  10.0.1.254
-</frameset>
 <pre lang= >
 </pre>
 Te be continued..... work in progress....
