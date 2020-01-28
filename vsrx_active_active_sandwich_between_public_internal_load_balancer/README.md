@@ -102,7 +102,7 @@ az network nic show-effective-route-table --name WEB-eth0 --resource-group RG-PL
 At this point you can check the effective route table of the VM vNIC to ensure the default points to the ILB IP
 az network nic show-effective-route-table -g RG-PLB-TEST -n WEB-eth0 --output table
 
-<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_active_active_sandwich_between_public_internal_load_balancer/route-table.png)</kbd>
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_active_active_sandwich_between_public_internal_load_balancer/Route-table.png)</kbd>
 
 </pre>
 <pre lang= >
