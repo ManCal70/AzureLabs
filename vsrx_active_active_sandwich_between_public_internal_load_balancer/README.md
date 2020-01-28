@@ -16,7 +16,6 @@ The previous lab can be found <a href="https://github.com/ManCalAzure/AzureLabs/
 <b>7-</b> Configure routing to support TRUST and UNTRUST LB Probes
 <b>8-</b> Configure route leaking between TRUST and UNTRUST VRs to support transit
 </pre>
-
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_active_active_sandwich_between_public_internal_load_balancer/firewall_sandwich.png)</kbd>
 <pre lang= >
 <b>Create ILB with front end IP, and backend pool name</b>
@@ -104,8 +103,7 @@ az network nic show-effective-route-table -g RG-PLB-TEST -n WEB-eth0 --output ta
 </pre>
 
 <b>Output of the Web server effective route table</b>
-<kbd>![alt text]
-(https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_active_active_sandwich_between_public_internal_load_balancer/Route-table.png)</kbd>
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_active_active_sandwich_between_public_internal_load_balancer/Route-table.png)</kbd>
 
 <pre lang= >
 </pre>
