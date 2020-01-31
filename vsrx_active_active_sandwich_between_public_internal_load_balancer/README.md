@@ -117,10 +117,10 @@ Default   Invalid  0.0.0.0/0         Internet
 User      Active   0.0.0.0/0         VirtualAppliance  10.0.1.254
 
 </pre>
-#### At this point we have:
-<b>1-</b>The ILB configured, we have added the vSRX vNICs to the BE pool
-<b>2-</b>The UDR with 0/0 (default) route is applied to the client/source/trust subnet pointing to the VIP
-<b>3-</b>We have also created a trust side NSG
+#### At this point we have: \n
+<p><b>1-</b>The ILB configured, we have added the vSRX vNICs to the BE pool</p>
+<p><b>2-</b>The UDR with 0/0 (default) route is applied to the client/source/trust subnet pointing to the VIP</p>
+<p><b>3-</b>We have also created a trust side NSG</p>
 <pre lang= >
 
 </pre>
