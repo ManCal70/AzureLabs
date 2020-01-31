@@ -49,7 +49,7 @@ az network nic ip-config update --resource-group RG-PLB-TEST --nic-name VSRX1-ge
 az network nic ip-config update --resource-group RG-PLB-TEST --nic-name VSRX2-ge1 --name ipconfig1 --lb-address-pool ILB-BEPOOL --vnet-name HUB-VNET --subnet O-TRUST --lb-name ILB-1
 </pre>
 <pre lang= >
-<b>We need to create an TRUST side NSG for traffic to flow. *Always keep in mind, when utilizing Standard SKUs, an NSG is required</b>
+<b>We need to create a TRUST side NSG for traffic to flow. *Always keep in mind, when utilizing Standard SKUs, an NSG is required</b>
 <b>Trust Subnet NSG</b>
 az network nsg create --resource-group RG-PLB-TEST --name TRUST-NSG --location eastus
 
@@ -120,8 +120,8 @@ User      Active   0.0.0.0/0         VirtualAppliance  10.0.1.254
 #### At this point we have:
 <p>
 <b>1-</b>The ILB configured, we have added the vSRX vNICs to the BE pool<br />
-<b>2-</b>The UDR with 0/0 (default) route is applied to the client/source/trust subnet pointing to the VIP<br />
-<b>3-</b>We have also created a trust side NSG<br />
+<b>2-</b>The UDR with 0/0 (default) route is applied to the client/source/TRUST subnet pointing to the VIP<br />
+<b>3-</b>We have also created a TRUST side NSG<br />
 </p>
 <pre lang= >
 
