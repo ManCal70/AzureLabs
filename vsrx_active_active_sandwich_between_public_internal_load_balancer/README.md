@@ -1,4 +1,4 @@
-The previous lab can be found <a href="https://github.com/ManCalAzure/AzureLabs/tree/master/vsrx_2_nva_active_active_with_public_load_balancer/README.md">here</a>.  Please complete the lab referenced before moving forward with this one. <br /></p>
+### The previous lab can be found <a href="https://github.com/ManCalAzure/AzureLabs/tree/master/vsrx_2_nva_active_active_with_public_load_balancer/README.md">here</a>.  Please complete the lab referenced before moving forward with this one. <br /></p>
 <pre lang= >
 <b>In this lab, we will:</b>
 <b>1-</b> Create an Azure internal load balancer with:
@@ -117,7 +117,7 @@ Default   Invalid  0.0.0.0/0         Internet
 User      Active   0.0.0.0/0         VirtualAppliance  10.0.1.254
 
 </pre>
-# At this point, we have the ILB configured, we have added the vSRX vNICs to the BE pool, the UDR with 0/0 (default) route is applied to the client/source/trust subnet pointing to the VIP, we have also created a trust side NSG
+### At this point, we have the ILB configured, we have added the vSRX vNICs to the BE pool, the UDR with 0/0 (default) route is applied to the client/source/trust subnet pointing to the VIP, we have also created a trust side NSG
 <pre lang= >
 
 </pre>
