@@ -86,7 +86,7 @@ False                         eastus      UDR-TO-ILB-1  Succeeded            RG-
 <b>UDR creation</b>
 az network route-table route create --name DEFAULT-RT-TO-ILB -g RG-PLB-TEST --route-table-name UDR-TO-ILB-1 --address-prefix 0.0.0.0/0 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.1.254
 
-<b>Route creationg check</b>
+<b>Route creation check</b>
 az network route-table route show -g RG-PLB-TEST --name DEFAULT-RT-TO-ILB --route-table-name UDR-TO-ILB-1 --output table
 AddressPrefix    Name               NextHopIpAddress    NextHopType       ProvisioningState    ResourceGroup
 ---------------  -----------------  ------------------  ----------------  -------------------  ---------------
@@ -117,4 +117,7 @@ Default   Invalid  0.0.0.0/0         Internet
 User      Active   0.0.0.0/0         VirtualAppliance  10.0.1.254
 
 </pre>
-Te be continued..... work in progress....
+# At this point, we have the ILB configured, we have added the vSRX vNICs to the BE pool, the UDR with 0/0 (default) route is applied to the client/source/trust subnet pointing to the VIP, we have also created a trust side NSG
+<pre lang= >
+
+</pre>
