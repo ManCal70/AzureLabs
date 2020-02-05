@@ -124,7 +124,9 @@ User      Active   0.0.0.0/0         VirtualAppliance  10.0.1.254
 <b>3-</b>We have also created a TRUST side NSG<br />
 </p>
 
-<b>*</b>Since the vSRX firewall now has LB's on both the TRUST and UNTRUST zones, each LB will send probes to health check the firewalls These probes will be coming ingress via TRUST and UNTRUST interfaces. We need to make some routing changes in the vSRX to handle probes coming from the same source IP, but need that need to be routed back via its corresponding interface. 
+<b>*</b>Since the vSRX firewall now has LB's on both the TRUST and UNTRUST zones, each LB will send probes to health check the firewall. These probes will be originating/ingress via TRUST (Internal LB) and UNTRUST (Public LB) interfaces. We need to make some routing changes in the vSRX to handle probes coming from the same source IP, but that need to be routed back via its corresponding interface. In Junos, this is handled via the use of a 'Virtual Router' or L3 routing tables. In the previous lab, since we only had a Public LB, we were ok with a single virtual router (VR) since the probes were originating from a single side of the firewalls (UNTRUST). The addition of the Internal LB, creates the scenario where the probes will be originating on both sides of the firewall (TRUST and UNTRUST). We need to ensure these probes are routed back out the interface or zone where they originated. 
+
 <pre lang= >
+These are the updates required to the vSRX
 
 </pre>
