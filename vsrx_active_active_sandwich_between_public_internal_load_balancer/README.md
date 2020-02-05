@@ -119,10 +119,12 @@ User      Active   0.0.0.0/0         VirtualAppliance  10.0.1.254
 </pre>
 #### At this point we have:
 <p>
-<b>1-</b>The ILB configured, we have added the vSRX vNICs to the BE pool<br />
+<b>1-</b>The ILB configured with front end IP, probes, LB rules, and we have added the vSRX vNICs to the BE pool<br />
 <b>2-</b>The UDR with 0/0 (default) route is applied to the client/source/TRUST subnet pointing to the VIP<br />
 <b>3-</b>We have also created a TRUST side NSG<br />
 </p>
+
+<b>*</b>Since the vSRX firewall now has LB's on both the TRUST and UNTRUST zones, each LB will send probes to health check the firewalls These probes will be coming ingress via TRUST and UNTRUST interfaces. We need to make some routing changes in the vSRX to handle probes coming from the same source IP, but need that need to be routed back via its corresponding interface. 
 <pre lang= >
 
 </pre>
