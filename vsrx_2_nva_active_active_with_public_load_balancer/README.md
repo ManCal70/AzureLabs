@@ -113,11 +113,11 @@ az network nic create --resource-group RG-PLB-TEST --location eastus --name WEB-
 <pre lang=>
 <b>Contral Plane NSG</b>
 az network nsg create --resource-group RG-PLB-TEST --name CP-NSG --location eastus
-az network nsg rule create -g RG-PLB-TEST --nsg-name CP-NSG -n ALLOW-SSH --priority 300 --source-address-prefixes '*' --source-port-ranges '*' --destination-address-prefixes 10.0.254.0/24 --destination-port-ranges 22 --access Allow --protocol Tcp --description "Allow SSH to Management Subnet"
-az network nsg rule create -g RG-PLB-TEST --nsg-name CP-NSG -n ALLOW-ICMP --priority 301 --source-address-prefixes '*' --source-port-ranges '*' --destination-address-prefixes 10.0.254.0/24 --destination-port-ranges '*' --protocol Icmp --description "Allow ICMP to FW OOB interface"
+az network nsg rule create -g RG-PLB-FW-LAB --nsg-name CP-NSG -n ALLOW-SSH --priority 300 --source-address-prefixes Internet --destination-address-prefixes 10.0254.0/24 --destination-port-ranges 22 --access Allow --protocol Tcp --description "Allow SSH to Management Subnet"
+az network nsg rule create -g RG-PLB-FW-LAB --nsg-name CP-NSG -n ALLOW-ICMP --priority 301 --source-address-prefixes Internet --destination-address-prefixes 10.0.54.0/24 --destination-port-ranges * --protocol Icmp --description "Allow ICMP to FW OOB interface"
 <b>Untrust Subnet NSG</b>
 az network nsg create --resource-group RG-PLB-TEST --name UNTRUST-NSG --location eastus
-az network nsg rule create -g RG-PLB-TEST --nsg-name UNTRUST-NSG -n ALLOW-HTTP --priority 200 --source-address-prefixes '*' --source-port-ranges '*' --destination-address-prefixes '*' --destination-port-ranges 80 --access Allow --protocol Tcp --description "Allow HTTP to Untrust Subnet"
+az network nsg rule create -g RG-PLB-FW-LAB --nsg-name UNTRUST-NSG -n ALLOW-HTTP --priority 200 --source-address-prefixes * --source-port-ranges * --destination-address-prefixes * --destination-port-ranges 80 --access Allow --protocol Tcp --description "Allow HTTP to Untrust Subnet"
 <b>Associate vNICs with corresponding NSGs</b>
 az network nic update --resource-group RG-PLB-TEST --name VSRX1-fxp0 --network-security-group CP-NSG
 az network nic update --resource-group RG-PLB-TEST --name VSRX2-fxp0 --network-security-group CP-NSG
