@@ -1,4 +1,4 @@
-#### The previous lab can be found <a href="https://github.com/ManCalAzure/AzureLabs/tree/master/vsrx_2_nva_active_active_with_public_load_balancer/README.md">here</a>.  Please complete the lab referenced before moving forward with this one. <br /></p>
+#### The previous lab can be found <a href="https://github.com/ManCalAzure/AzureLabs/tree/master/2_FW_NVA_HA_%2B_Az_Pub_%2B_Int_LB/README.md">here</a>.  Please complete the lab referenced before moving forward with this one. <br /></p>
 <pre lang= >
 <b>In this lab, we will:</b>
 <b>1-</b> Create an Azure internal load balancer with:
@@ -16,7 +16,7 @@
 <b>7-</b> Configure routing to support TRUST and UNTRUST LB Probes
 <b>8-</b> Configure route leaking between TRUST and UNTRUST VRs to support transit
 </pre>
-<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_active_active_sandwich_between_public_internal_load_balancer/firewall_sandwich.png)</kbd>
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_%2B_Az_Pub_%2B_Int_LB/firewall_sandwich.png)</kbd>
 <pre lang= >
 <b>Create ILB with front end IP, and backend pool name</b>
 az network lb create --resource-group RG-PLB-TEST --name ILB-1 --frontend-ip-name ILB-1-FE --private-ip-address 10.0.1.254 --vnet-name HUB-VNET --subnet O-TRUST --backend-pool-name ILB-BEPOOL --sku Standard
@@ -103,7 +103,7 @@ az network nic show-effective-route-table -g RG-PLB-TEST -n WEB-eth0 --output ta
 </pre>
 
 <b>Output of the Web server effective route table</b>
-<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_active_active_sandwich_between_public_internal_load_balancer/Route-table.png)</kbd>
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_%2B_Az_Pub_%2B_Int_LB/Route-table.png)</kbd>
 
 <pre lang= >
 <b>You can do the same with Azure CLI</b>
