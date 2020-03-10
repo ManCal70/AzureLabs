@@ -16,6 +16,7 @@
 <b>7-</b> Configure routing to support TRUST and UNTRUST LB Probes
 <b>8-</b> Configure route leaking between TRUST and UNTRUST VRs to support transit
 </pre>
+<b>End goal of this lab - 2 FWs sandwich between two Azure load balancers for HA</b>
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_%2B_Az_Pub_%2B_Int_LB/firewall_sandwich.png)</kbd>
 <pre lang= >
 <b>Create ILB with front end IP, and backend pool name</b>
