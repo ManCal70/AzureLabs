@@ -1,8 +1,8 @@
 <p align="center">
 <b>Design</center></b>
 <pre lang= >
-* 2 x single vNIC Network Virtual Appliances (NVA) Firewalls (Juniper vSRX)
-* Active/Active design front ended by an Internal LB.
+<b>* 2 x single vNIC Network Virtual Appliances (NVA) Firewalls (Juniper vSRX)</b>
+<b>* Active/Active design front ended by an Internal LB.</b>
 </pre>
 <p align="center">
 <b>Topology</center></b>
