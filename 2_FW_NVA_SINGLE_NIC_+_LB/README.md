@@ -11,8 +11,8 @@
 <b>Goal</center></b>
 <pre lang= >
 <b>The goal is to provide firewall HA through the use of an internal load balancer without the use of NAT to maintain flow affinity. *This works for Azure internal sources and destinations.</b>
-
 </pre>
+
 
 <p align="center">
 <b>Topology</center></b>
