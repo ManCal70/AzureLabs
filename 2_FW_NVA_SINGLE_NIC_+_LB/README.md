@@ -38,12 +38,12 @@ az group create --name RG-FW-LAB-E --location eastus --output table
 az group create --name RG-FW-LAB-W --location westus --output table
 </pre>
 
-##Create storage account for bootdiagnostics (not always required)
+## Create storage account for bootdiagnostics (not always required)
 <pre lang= >
 az storage account create -n mcbootdiag -g RG-FW-LAB-E -l eastus --sku Standard_LRS
 </pre>
 
-##Create VNETs
+## Create VNETs
 <pre lang= >
 WEST --
 az network vnet create --name HUB-WEST --resource-group RG-FW-LAB-W --location westus --address-prefix 10.0.0.0/16
@@ -56,7 +56,7 @@ az network vnet create --name HUB-EAST --resource-group RG-FW-LAB-E --location e
 az network vnet create --name SPK1-EAST --resource-group RG-FW-LAB-E --location eastus --address-prefix 10.11.0.0/16
 az network vnet create --name SPK2-EAST --resource-group RG-FW-LAB-E --location eastus --address-prefix 10.12.0.0/16
 </pre>
-##Create Subnets
+## Create Subnets
 <pre lang= >
 WEST
 az network vnet subnet create --vnet-name HUB-WEST --name MGT-WEST-SUB --resource-group RG-FW-LAB-W --address-prefixes 10.0.254.0/24 --output table
