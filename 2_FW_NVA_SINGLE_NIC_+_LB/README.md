@@ -1,3 +1,4 @@
+<p align="center">
 <b>Design</center></b>
 <pre lang= >
 <p><p align="left"><b>2 x single vNIC Network Virtual Appliances (NVA) Firewalls (Juniper vSRX)</b></p> 
