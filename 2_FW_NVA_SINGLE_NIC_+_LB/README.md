@@ -1,3 +1,7 @@
+<p align="center">
+<b>Topology</center></b>
+
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_SINGLE_NIC_+_LB/topology.png)</kbd>
 <p align="left">
 <b>Design</center></b>
 <p><p align="left"><b>2 single vNIC Network Virtual Appliances (NVA) Firewalls (Juniper vSRX) in Active/Active design front ended by an Internal LB. A single vNIC Firewall is useful to avoid having to use NAT. The way Azure LB hashing works, allows for flow affinity without the need of NAT. This use case only applies to traffic originating and destined to Azure VNETs. Internet bound traffic requires a different design.</b></p>
