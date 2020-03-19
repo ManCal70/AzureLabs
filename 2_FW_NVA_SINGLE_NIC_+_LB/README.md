@@ -3,6 +3,8 @@
 <pre lang= >
 <b>* 2 x single vNIC Network Virtual Appliances (NVA) Firewalls (Juniper vSRX)</b>
 <b>* Active/Active design front ended by an Internal LB.</b>
+<b>* 2 regions with a Hub and two spokes which are VNET peered</b>
+<b>* 2 hubs are Global VNET peered</b>
 </pre>
 <p align="center">
 <b>Topology</center></b>
