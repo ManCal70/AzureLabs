@@ -1,3 +1,13 @@
+## Azure Networking Lab
+
+In this lab, I will configure two firewalls (Juniper vSRX NVAs) each with a single vNIC. The two firewalls will be front ended by an Azure internal load balancer.
+
+## Why single vNIC firewalls? 
+When utilizing VMs/NVAs with multiple vNICs for ingress and egress (like firewalls), the use of source NAT is necessary to maintain flow symmetry/affinity. This becomes a problem with some applications that break when NATed, like Active Directory. A single vNIC design removes this obstacle. 
+
+## How to maintain flow symmetry/affinity with out source NAT?
+The Azure load balancer hashing algorithm takes into account source IP/Port & destination IP/Port, and it is programmed in a way that is independent of the order of the fields. Means both flows/wings of the connection will maintain symmetry.
+
 <p align="left">
 <b>Design</left></b>
 <pre lang= >
