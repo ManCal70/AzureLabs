@@ -1,5 +1,5 @@
-<p align="center">
-<b>Design</center></b>
+<p align="left">
+<b>Design</left></b>
 <pre lang= >
 <b>* 2 x single vNIC Network Virtual Appliances (NVA) Firewalls (Juniper vSRX)</b>
 <b>* Active/Active design front ended by an Internal LB.</b>
@@ -7,11 +7,11 @@
 <b>* 2 hubs are Global VNET peered</b>
 </pre>
 
-<p align="center">
+<p align="left">
 <b>Topology</center></b>
 
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_SINGLE_NIC_+_LB/topology.png)</kbd>
-<p align="left">
+<p align="center">
 
 
 <p align="left"><b>This design can be applied across multiple 3rd party NVA vendors that are able to support intra-zone security policies and enforcement</p></b>
