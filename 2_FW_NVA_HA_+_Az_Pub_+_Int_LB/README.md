@@ -1,4 +1,4 @@
-#### The previous lab can be found <a href="https://github.com/ManCalAzure/AzureLabs/tree/master/2_FW_NVA_HA_%2B_Az_Pub_LB/README.md">here</a>.  Please complete the lab referenced before moving forward with this one. <br /></p>
+#### The previous lab can be found <a href="https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_%2B_Az_Pub_LB/README.md">here</a>.  Please complete the lab referenced before moving forward with this one. <br /></p>
 <pre lang= >
 <b>In this lab, we will:</b>
 <b>1-</b> Create an Azure internal load balancer with:
