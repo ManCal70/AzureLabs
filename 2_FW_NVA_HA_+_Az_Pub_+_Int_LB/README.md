@@ -29,7 +29,13 @@
 <b>14-</b> Associate the UDR with the spoke subnet
 <b>15-</b> Configure the firewalls and test web servers
 </pre>
-<b>End goal of this lab - 2 FWs sandwich between two Azure load balancers for HA</b>
+
+### End goal of this lab - 2 FWs sandwich between two Azure load balancers for HA
+
+### Create a resource group
+<pre lang= >
+az group create --name RG-PLB-TEST --location eastus --output table
+</pre>
 
 <b>Create ILB with front end IP, and backend pool name</b>
 <pre lang= >
