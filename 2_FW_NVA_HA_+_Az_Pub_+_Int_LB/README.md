@@ -1,4 +1,4 @@
-Azure Network Security Lab #2 - In this lab, we will deploy 2 NVA firewalls (Juniper vSRXs) with both a Public and Internal load balancer. This provides HA for both inbound and outbound connections.
+#### Azure Network Security Lab #2 - In this lab, we will deploy 2 NVA firewalls (Juniper vSRXs) with both a Public and Internal load balancer. This provides HA for both inbound and outbound connections.
 <pre lang= >
 <b>In this lab, we will:</b>
 <b>1-</b> Create an Azure internal load balancer with:
