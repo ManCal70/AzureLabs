@@ -7,16 +7,27 @@
 <pre lang= >
 <b>1-</b> Create a resource group
 <b>2-</b> Create a storage account (bootdiags)
-<b>3-</b> Create VNETS
+<b>3-</b> Create VNETS (hub and spokes)
 <b>4-</b> Create Subnets
-<b>5-</b> Create public IPs for firewalla management
-<b>6-</b> Create vNICs (For firewalls & VMs)
-<b>7-</b> Create control plane and data plane Network Security Groups (NSGs)
-<b>8-</b> Associate the vNICs with their correponding NSGs
-<b>9-</b> Create the firewall and Test VMs
-<b>10-</b> 
-<b>11-</b>
-
+<b>5-</b> Create the VNET peerings between the hub and spokes
+<b>6-</b> Create public IPs for the firewalls
+<b>7-</b> Create vNICs (For firewalls & VMs)
+<b>8-</b> Create control plane (management) and data plane Network Security Groups (UNTRUST & TRUST) (NSGs)
+<b>9-</b> Associate the vNICs with their correponding NSGs
+<b>10-</b> Create the firewall and Test web server
+<b>11-</b> Create the Azure public load balancer
+  - Backend poool
+  - Probe
+  - LB rule - with floating IP
+  - Associate the firewall UNTRUST vNICs with the LB backendpool
+<b>12-</b> Create the Azure internal load balancer
+  - Backend poool
+  - Probe
+  - LB rule - with HA ports
+  - Associate the firewall TRUST vNICs with the internal LB backendpool
+<b>13-</b> Create the spoke UDR + Route which will route traffic to the internal LB VIP
+<b>14-</b> Associate the UDR with the spoke subnet
+<b>15-</b> Configure the firewalls and test web servers
 </pre>
 <b>End goal of this lab - 2 FWs sandwich between two Azure load balancers for HA</b>
 
