@@ -57,21 +57,21 @@ The Azure public load balancer can be configured in two ways (This lab is focuse
     - Ubuntu Virtual machine + Apache2
 </pre>
 
-**Create the Resource Group**
+### Create the Resource Group
 <pre lang= >
 az group create --name RG-PLB-TEST --location eastus --output table
 </pre>
-**Create a storage account for boot diagnosticsp**
+### Create a storage account for boot diagnosticsp
 <pre lang= >
 az storage account create -n mcbootdiag -g RG-PLB-TEST -l eastus --sku Standard_LRS
 </pre>
-**Create the HUB and a SPOKE VNET**
+### Create the HUB and a SPOKE VNET
 <pre lang= >
 az network vnet create --name HUB-VNET --resource-group RG-PLB-TEST --location eastus --address-prefix 10.0.0.0/16
 az network vnet create --name SPOKE-VNET --resource-group RG-PLB-TEST --location eastus --address-prefix 10.80.0.0/16
 </pre>
 
-**Create the Subnets in HUB and SPOKE VNETs**
+### Create the Subnets in HUB and SPOKE VNETs
 <pre lang= >
 az network vnet subnet create --vnet-name HUB-VNET --name MGMT --resource-group RG-PLB-TEST --address-prefixes 10.0.254.0/24 --output table
 az network vnet subnet create --vnet-name HUB-VNET --name O-UNTRUST --resource-group RG-PLB-TEST --address-prefixes 10.0.0.0/24 --output table
@@ -79,12 +79,12 @@ az network vnet subnet create --vnet-name HUB-VNET --name O-TRUST --resource-gro
 az network vnet subnet create --vnet-name SPOKE-VNET --name VMWORKLOADS --resource-group RG-PLB-TEST --address-prefixes 10.80.99.0/24 --output table
 </pre>
 
-**VNET Peer HUB and SPOKE VNETs**
+### VNET Peer HUB and SPOKE VNETs
 <pre lang= >
 az network vnet peering create -g RG-PLB-TEST --name HUB-TO-SPOKE --vnet-name HUB-VNET --remote-vnet SPOKE-VNET --allow-forwarded-traffic --allow-vnet-access --output table
 az network vnet peering create -g RG-PLB-TEST --name SPOKE-TO-HUB --vnet-name SPOKE-VNET --remote-vnet HUB-VNET --allow-forwarded-traffic --allow-vnet-access --output table
 </pre>
-**Create the Public IPs - When utilizing Public IPs with Standard SKU, an NSG is required on the Subnet/vNIC. Two public IPs will be created per Firewall NVA, and 1 for the Public LB. 1) fxp0 - management interface 2) ge0 - UNTRUST/Interface facing interface**
+### Create the Public IPs - When utilizing Public IPs with Standard SKU, an NSG is required on the Subnet/vNIC. Two public IPs will be created per Firewall NVA, and 1 for the Public LB. 1) fxp0 - management interface 2) ge0 - UNTRUST/Interface facing interface
 <pre lang= >
 <b>vSRX1</b>
 az network public-ip create --name VSRX1-PIP-1 --allocation-method Static --resource-group RG-PLB-TEST --location eastus --sku Standard
@@ -95,7 +95,7 @@ az network public-ip create --name VSRX2-PIP-2 --allocation-method Static --reso
 <b>Az Load Balancer Public IP</b>
 az network public-ip create --name AZ-PUB-LB-PIP --allocation-method Static --resource-group RG-PLB-TEST --location eastus --sku Standard
 </pre>
-**Create the vNICs**
+### Create the vNICs
 * fxp0 = Out of band management interface on vSRXs
 <pre lang>
 <b>VSRX1</b>
