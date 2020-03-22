@@ -1,4 +1,7 @@
-#### Azure Network Security Lab #2 - In this lab, we will deploy 2 NVA firewalls (Juniper vSRXs) with both a Public and Internal load balancer. This provides HA for both inbound and outbound connections.
+#### Azure Network Security Lab #2 - In this lab, we will deploy 2 NVA firewalls (Juniper vSRXs) with both a Public and Internal load balancer. This provides HA for both inbound and outbound connections. 
+
+#### Topology
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_%2B_Az_Pub_%2B_Int_LB/firewall_sandwich.png)</kbd>
 <pre lang= >
 <b>In this lab, we will:</b>
 <b>1-</b> Create an Azure internal load balancer with:
@@ -17,7 +20,6 @@
 <b>8-</b> Configure route leaking between TRUST and UNTRUST VRs to support transit
 </pre>
 <b>End goal of this lab - 2 FWs sandwich between two Azure load balancers for HA</b>
-<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_%2B_Az_Pub_%2B_Int_LB/firewall_sandwich.png)</kbd>
 
 <b>Create ILB with front end IP, and backend pool name</b>
 <pre lang= >
