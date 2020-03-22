@@ -40,6 +40,25 @@ az group create --name RG-LB-TEST --location eastus --output table
 az storage account create -n mcbootdiag -g RG-LB-TEST -l eastus --sku Standard_LRS
 </pre>
 
+### Create the HUB and a SPOKE VNET
+<pre lang= >
+az network vnet create --name HUB-VNET --resource-group RG-LB-TEST --location eastus --address-prefix 10.0.0.0/16
+az network vnet create --name SPOKE-VNET --resource-group RG-LB-TEST --location eastus --address-prefix 10.80.0.0/16
+</pre>
+
+### Create the Subnets in HUB and SPOKE VNETs
+<pre lang= >
+az network vnet subnet create --vnet-name HUB-VNET --name MGMT --resource-group RG-LB-TEST --address-prefixes 10.0.254.0/24 --output table
+az network vnet subnet create --vnet-name HUB-VNET --name O-UNTRUST --resource-group RG-LB-TEST --address-prefixes 10.0.0.0/24 --output table
+az network vnet subnet create --vnet-name HUB-VNET --name O-TRUST --resource-group RG-LB-TEST --address-prefixes 10.0.1.0/24 --output table
+az network vnet subnet create --vnet-name SPOKE-VNET --name VMWORKLOADS --resource-group RG-LB-TEST --address-prefixes 10.80.99.0/24 --output table
+</pre>
+
+### VNET Peer HUB and SPOKE VNETs
+<pre lang= >
+az network vnet peering create -g RG-LB-TEST --name HUB-TO-SPOKE --vnet-name HUB-VNET --remote-vnet SPOKE-VNET --allow-forwarded-traffic --allow-vnet-access --output table
+az network vnet peering create -g RG-LB-TEST --name SPOKE-TO-HUB --vnet-name SPOKE-VNET --remote-vnet HUB-VNET --allow-forwarded-traffic --allow-vnet-access --output table
+</pre>
 
 
 
