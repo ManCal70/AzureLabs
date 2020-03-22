@@ -1,4 +1,4 @@
-#### The previous lab (Internet facing firewall NVAs (Juniper vSRX Firewalls) in HA design) can be found <a href="https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_%2B_Az_Pub_LB/README.md">here</a>.  Please complete the lab referenced before moving forward with this one. <br /></p>
+Azure Network Security Lab #2 - In this lab, we will deploy 2 NVA firewalls (Juniper vSRXs) with both a Public and Internal load balancer. This provides HA for both inbound and outbound connections.
 <pre lang= >
 <b>In this lab, we will:</b>
 <b>1-</b> Create an Azure internal load balancer with:
