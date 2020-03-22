@@ -49,8 +49,8 @@ az network vnet create --name SPOKE-VNET --resource-group RG-LB-TEST --location 
 ### Create the Subnets in HUB and SPOKE VNETs
 <pre lang= >
 az network vnet subnet create --vnet-name HUB-VNET --name MGMT --resource-group RG-LB-TEST --address-prefixes 10.0.254.0/24 --output table
-az network vnet subnet create --vnet-name HUB-VNET --name O-UNTRUST --resource-group RG-LB-TEST --address-prefixes 10.0.0.0/24 --output table
-az network vnet subnet create --vnet-name HUB-VNET --name O-TRUST --resource-group RG-LB-TEST --address-prefixes 10.0.1.0/24 --output table
+az network vnet subnet create --vnet-name HUB-VNET --name UNTRUST --resource-group RG-LB-TEST --address-prefixes 10.0.0.0/24 --output table
+az network vnet subnet create --vnet-name HUB-VNET --name TRUST --resource-group RG-LB-TEST --address-prefixes 10.0.1.0/24 --output table
 az network vnet subnet create --vnet-name SPOKE-VNET --name VMWORKLOADS --resource-group RG-LB-TEST --address-prefixes 10.80.99.0/24 --output table
 </pre>
 
@@ -60,11 +60,52 @@ az network vnet peering create -g RG-LB-TEST --name HUB-TO-SPOKE --vnet-name HUB
 az network vnet peering create -g RG-LB-TEST --name SPOKE-TO-HUB --vnet-name SPOKE-VNET --remote-vnet HUB-VNET --allow-forwarded-traffic --allow-vnet-access --output table
 </pre>
 
+### Create the Public IPs - When utilizing Public IPs with Standard SKU, an NSG is required on the Subnet/vNIC. Two public IPs will be created per Firewall NVA, and 1 for the Public LB. 1) fxp0 - management interface 2) ge0 - UNTRUST/Interface facing interface
+<pre lang= >
+vSRX1
+az network public-ip create --name VSRX1-PIP-1 --allocation-method Static --resource-group RG-LB-TEST --location eastus --sku Standard
+az network public-ip create --name VSRX1-PIP-2 --allocation-method Static --resource-group RG-LB-TEST --location eastus --sku Standard
+vSRX2
+az network public-ip create --name VSRX2-PIP-1 --allocation-method Static --resource-group RG-LB-TEST --location eastus --sku Standard
+az network public-ip create --name VSRX2-PIP-2 --allocation-method Static --resource-group RG-LB-TEST --location eastus --sku Standard
+Az Load Balancer Public IP
+az network public-ip create --name AZ-PUB-LB-PIP --allocation-method Static --resource-group RG-LB-TEST --location eastus --sku Standard
+</pre>
 
+### Create the vNICs
+fxp0 = Out of band management interface on vSRXs
+<pre lang= >
+VSRX1
+az network nic create --resource-group RG-LB-TEST --location eastus --name VSRX1-fxp0 --vnet-name HUB-VNET --subnet MGMT --public-ip-address  VSRX1-PIP-1 --private-ip-address 10.0.254.4 
+az network nic create --resource-group RG-LB-TEST --location eastus --name VSRX1-ge0 --vnet-name HUB-VNET --subnet UNTRUST --public-ip-address  VSRX1-PIP-2 --private-ip-address 10.0.0.4 --ip-forwarding
+az network nic create --resource-group RG-LB-TEST --location eastus --name VSRX1-ge1 --vnet-name HUB-VNET --subnet TRUST --private-ip-address 10.0.1.4 --ip-forwarding
+VSRX2
+az network nic create --resource-group RG-LB-TEST --location eastus --name VSRX2-fxp0 --vnet-name HUB-VNET --subnet MGMT --public-ip-address  VSRX2-PIP-1 --private-ip-address 10.0.254.5
+az network nic create --resource-group RG-LB-TEST --location eastus --name VSRX2-ge0 --vnet-name HUB-VNET --subnet UNTRUST --public-ip-address  VSRX2-PIP-2 --private-ip-address 10.0.0.5
+az network nic create --resource-group RG-LB-TEST --location eastus --name VSRX2-ge1 --vnet-name HUB-VNET --subnet TRUST --private-ip-address 10.0.1.5
+Web Server VM
+az network nic create --resource-group RG-LB-TEST --location eastus --name WEB-eth0 --vnet-name SPOKE-VNET --subnet VMWORKLOADS --private-ip-address 10.80.99.10
+</pre>
+
+### Create NSGs - Since I selected to use 'Standard' SKU public IP addresses explicitly defined NSG is required
+<pre lang= >
+Contral Plane NSG
+az network nsg create --resource-group RG-LB-TEST --name CP-NSG --location eastus
+az network nsg rule create -g RG-LB-FW-LAB --nsg-name CP-NSG -n ALLOW-SSH --priority 300 --source-address-prefixes Internet --destination-address-prefixes 10.0254.0/24 --destination-port-ranges 22 --access Allow --protocol Tcp --description "Allow SSH to Management Subnet"
+az network nsg rule create -g RG-LB-FW-LAB --nsg-name CP-NSG -n ALLOW-ICMP --priority 301 --source-address-prefixes Internet --destination-address-prefixes 10.0.54.0/24 --destination-port-ranges * --protocol Icmp --description "Allow ICMP to FW OOB interface"
+Untrust Subnet NSG
+az network nsg create --resource-group RG-LB-TEST --name UNTRUST-NSG --location eastus
+az network nsg rule create -g RG-LB-FW-LAB --nsg-name UNTRUST-NSG -n ALLOW-HTTP --priority 200 --source-address-prefixes * --source-port-ranges * --destination-address-prefixes * --destination-port-ranges 80 --access Allow --protocol Tcp --description "Allow HTTP to Untrust Subnet"
+Associate vNICs with corresponding NSGs
+az network nic update --resource-group RG-LB-TEST --name VSRX1-fxp0 --network-security-group CP-NSG
+az network nic update --resource-group RG-LB-TEST --name VSRX2-fxp0 --network-security-group CP-NSG
+az network nic update --resource-group RG-LB-TEST --name VSRX1-ge0 --network-security-group UNTRUST-NSG
+az network nic update --resource-group RG-LB-TEST --name VSRX2-ge0 --network-security-group UNTRUST-NSG
+</pre>
 
 <b>Create ILB with front end IP, and backend pool name</b>
 <pre lang= >
-az network lb create --resource-group RG-PLB-TEST --name ILB-1 --frontend-ip-name ILB-1-FE --private-ip-address 10.0.1.254 --vnet-name HUB-VNET --subnet O-TRUST --backend-pool-name ILB-BEPOOL --sku Standard
+az network lb create --resource-group RG-PLB-TEST --name ILB-1 --frontend-ip-name ILB-1-FE --private-ip-address 10.0.1.254 --vnet-name HUB-VNET --subnet TRUST --backend-pool-name ILB-BEPOOL --sku Standard
 </pre>
 <b>Output after created:</b>
 <pre lang= >
@@ -97,8 +138,8 @@ BackendPort    DisableOutboundSnat    EnableFloatingIp    EnableTcpReset    Fron
 -------------  ---------------------  ------------------  ----------------  --------------  ----------------------  ------------------  ---------  ----------  -------------------  ---------------
 80             False                  True                False             80              4                       Default             LB-RULE-1  Tcp         Succeeded            RG-PLB-TEST
 <b>Add trust side vNICs to backend pool utilized by the ILB</b>
-az network nic ip-config update --resource-group RG-PLB-TEST --nic-name VSRX1-ge1 --name ipconfig1 --lb-address-pool ILB-BEPOOL --vnet-name HUB-VNET --subnet O-TRUST --lb-name ILB-1
-az network nic ip-config update --resource-group RG-PLB-TEST --nic-name VSRX2-ge1 --name ipconfig1 --lb-address-pool ILB-BEPOOL --vnet-name HUB-VNET --subnet O-TRUST --lb-name ILB-1
+az network nic ip-config update --resource-group RG-PLB-TEST --nic-name VSRX1-ge1 --name ipconfig1 --lb-address-pool ILB-BEPOOL --vnet-name HUB-VNET --subnet TRUST --lb-name ILB-1
+az network nic ip-config update --resource-group RG-PLB-TEST --nic-name VSRX2-ge1 --name ipconfig1 --lb-address-pool ILB-BEPOOL --vnet-name HUB-VNET --subnet TRUST --lb-name ILB-1
 </pre>
 <pre lang= >
 <b>We need to create a TRUST side NSG for traffic to flow. *Always keep in mind, when utilizing Standard SKUs, an NSG is required</b>
@@ -136,10 +177,10 @@ DisableBgpRoutePropagation    Location    Name          ProvisioningState    Res
 False                         eastus      UDR-TO-ILB-1  Succeeded            RG-PLB-TEST
 
 <b>UDR creation</b>
-az network route-table route create --name DEFAULT-RT-TO-ILB -g RG-PLB-TEST --route-table-name UDR-TO-ILB-1 --address-prefix 0.0.0.0/0 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.1.254
+az network route-table route create --name DEFAULT-RT-TO-ILB -g RG-LB-TEST --route-table-name UDR-TO-ILB-1 --address-prefix 0.0.0.0/0 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.1.254
 
 <b>Route creation check</b>
-az network route-table route show -g RG-PLB-TEST --name DEFAULT-RT-TO-ILB --route-table-name UDR-TO-ILB-1 --output table
+az network route-table route show -g RG-LB-TEST --name DEFAULT-RT-TO-ILB --route-table-name UDR-TO-ILB-1 --output table
 AddressPrefix    Name               NextHopIpAddress    NextHopType       ProvisioningState    ResourceGroup
 ---------------  -----------------  ------------------  ----------------  -------------------  ---------------
 0.0.0.0/0        DEFAULT-RT-TO-ILB  10.0.1.254          VirtualAppliance  Succeeded            RG-PLB-TEST
