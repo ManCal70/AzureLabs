@@ -270,7 +270,7 @@ set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST then l
 set routing-instances VR-1 routing-options static route 10.80.99.0/24 next-hop 10.0.1.1
 </pre>
 
-**View of the vSRX session table**
+### View of the vSRX session table
 <pre lang= >
 *Health probe session shows the Azure probe source address destined to 10.0.0.4 (vSRX UNTRUST vNIC IP)
 <b>show security flow session</b> 
@@ -287,7 +287,7 @@ Session ID: 111929, Policy name: DST-TO-WEB-TEST/6, Timeout: 298, Valid
 <b>Outgoing connection</b>Out: 10.0.1.10/80 --> 10.0.1.4/28363;tcp, Conn Tag: 0x0, If: ge-0/0/1.0, Pkts: 8, Bytes: 7524, 
 Total sessions: 2
 </pre>
-**Test connection to the backend Web server via the Public LB IP address - It works ;) you can shut down a vSRX and traffic will continue to flow**
+### Test connection to the backend Web server via the Public LB IP address - It works ;) you can shut down a vSRX and traffic will continue to flow
 
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_%2B_Az_Pub_LB/apache.png)</kbd>
 
