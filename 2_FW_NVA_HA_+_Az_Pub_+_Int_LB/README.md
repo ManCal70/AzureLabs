@@ -30,8 +30,6 @@
 <b>15-</b> Configure the firewalls and test web servers
 </pre>
 
-### Goal of this lab - Illustrate how to deploy and configure 2 firewalls sandwiched between two Azure load balancers for HA (a public and an internal load balancer)
-
 ### Create a resource group
 <pre lang= >
 az group create --name RG-LB-TEST --location eastus --output table
