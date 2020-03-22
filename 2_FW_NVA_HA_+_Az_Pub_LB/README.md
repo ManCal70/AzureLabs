@@ -32,7 +32,7 @@ The Azure public load balancer can be configured in two ways (This lab is focuse
 
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_+_Az_Pub_LB/topology1.png)</kbd>
 
-**Elements required**
+### Elements required
 <pre lang= >
   - Resource Group 
   - Azure public Load balancer
