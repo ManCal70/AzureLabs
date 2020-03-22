@@ -1,6 +1,6 @@
 <p align="left">
 <b>Azure Lab 1 - Internet facing firewall NVAs (Juniper vSRX Firewalls) in HA design</center></b>
-<p align="left"><b>This design can be applied across multiple 3rd party NVA vendors</p></b>
+<p align="left"><b>This design can be applied across any 3rd party NVA vendor</p></b>
 </p>
 <b>In the following lab we will:</b>
 <pre lang= >
