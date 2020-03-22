@@ -1,5 +1,5 @@
 <p align="left">
-<b>Azure Network Security Lab #1 - Internet facing firewall NVAs (Juniper vSRX Firewalls) in HA design</center></b>
+<b>Azure Network Security Lab #1 - In this lab we will deploy 2 NVA firewall NVAs (Juniper vSRX Firewalls) with public IPs, in HA design</center></b>
 <p align="left"><b>This design is vendor agonostic and can be inplemented identically across multiple vendors</p></b>
 </p>
 <p align="left"><b>Azure Configuration Elements</p></b>
