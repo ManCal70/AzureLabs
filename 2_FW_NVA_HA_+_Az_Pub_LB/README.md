@@ -2,6 +2,7 @@
 <b>Azure Network Security Lab #1 - Internet facing firewall NVAs (Juniper vSRX Firewalls) in HA design</center></b>
 <p align="left"><b>This design is vendor agonostic and can be inplemented identically across multiple vendors</p></b>
 </p>
+<p align="left"><b>Azure Configuration Elements</p></b>
 <pre lang= >
 * Create a resource group for all of the objects (LB, FW, VNET,...)
 * Create a storagea account for boot diagnostics 
