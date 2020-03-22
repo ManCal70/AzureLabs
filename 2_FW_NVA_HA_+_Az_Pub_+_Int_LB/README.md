@@ -18,29 +18,37 @@
 </pre>
 <b>End goal of this lab - 2 FWs sandwich between two Azure load balancers for HA</b>
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_%2B_Az_Pub_%2B_Int_LB/firewall_sandwich.png)</kbd>
-<pre lang= >
-<b>Create ILB with front end IP, and backend pool name</b>
-az network lb create --resource-group RG-PLB-TEST --name ILB-1 --frontend-ip-name ILB-1-FE --private-ip-address 10.0.1.254 --vnet-name HUB-VNET --subnet O-TRUST --backend-pool-name ILB-BEPOOL --sku Standard
 
+<b>Create ILB with front end IP, and backend pool name</b>
+<pre lang= >
+az network lb create --resource-group RG-PLB-TEST --name ILB-1 --frontend-ip-name ILB-1-FE --private-ip-address 10.0.1.254 --vnet-name HUB-VNET --subnet O-TRUST --backend-pool-name ILB-BEPOOL --sku Standard
+</pre>
 <b>Output after created:</b>
+<pre lang= >
 az network lb list -g RG-PLB-TEST --output table
 Location    Name       ProvisioningState    ResourceGroup    ResourceGuid
 ----------  ---------  -------------------  ---------------  ------------------------------------
 eastus      AZ-PUB-LB  Succeeded            RG-PLB-TEST      75055a40-5f78-4502-acf3-71a5e6ad952f
-
+</pre>
 <b>Create the probe</b>
+<pre lang= >
 az network LB probe create --resource-group RG-PLB-TEST --name ILB-PROBE1 --protocol tcp --port 22 --interval 30 --threshold 2 --lb-name ILB-1
+</pre>
 
 <b>Show the probe after created:</b>
+<pre lang= >
 az network lb probe list --resource-group RG-PLB-TEST --lb-name AZ-PUB-LB --output table
 IntervalInSeconds    Name       NumberOfProbes    Port    Protocol    ProvisioningState    ResourceGroup
 -------------------  ---------  ----------------  ------  ----------  -------------------  ---------------
 30                   BE-PROBE1  2                 22      Tcp         Succeeded            RG-PLB-TEST
+</pre>
 
 <b>Create the loab balancing rule with 'HA Ports'</b>
 az network lb rule create --resource-group RG-PLB-TEST --name ILB-R1-HAPORTS --backend-pool-name ILB-BEPOOL --probe-name ILB-PROBE1 --protocol all --frontend-port 0 --backend-port 0 --lb-name ILB-1
+</pre>
 
 <b>Show the rule created:</b>
+<pre lang= >
 az network lb rule list --lb-name AZ-PUB-LB -g RG-PLB-TEST --output table
 BackendPort    DisableOutboundSnat    EnableFloatingIp    EnableTcpReset    FrontendPort    IdleTimeoutInMinutes    LoadDistribution    Name       Protocol    ProvisioningState    ResourceGroup
 -------------  ---------------------  ------------------  ----------------  --------------  ----------------------  ------------------  ---------  ----------  -------------------  ---------------
