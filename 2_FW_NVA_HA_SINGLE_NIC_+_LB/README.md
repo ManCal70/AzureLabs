@@ -20,7 +20,7 @@ The Azure load balancer hashing algorithm takes into account source IP/Port & de
 <p align="left">
 <b>Topology</center></b>
 
-<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_SINGLE_NIC_%2B_LB/topology.png)</kbd>
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_SINGLE_NIC_%2B_LB/diagram.png)</kbd>
 <p align="center">
 
 
