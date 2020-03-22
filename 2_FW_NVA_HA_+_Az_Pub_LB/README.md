@@ -293,4 +293,4 @@ Total sessions: 2
 
 At this point, you have an Azure Standard SKU public load balancer. This load balancer will forward traffic to two firewalls (vSRXs) network virtual appliances (NVAs). 
 
-<b>The next lab builds upon this one, we will add an internal load balancer on the 'TRUST' side of the firewalls. You can find this next lab</b><a href="https://github.com/ManCalAzure/AzureLabs/tree/master/vsrx_active_active_sandwich_between_public_internal_load_balancer/README.md"> here</a>.<br /></p>
+<b>The next lab builds upon this one, we will add an internal load balancer on the 'TRUST' side of the firewalls. You can find this next lab</b><a href="https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_%2B_Az_Pub_%2B_Int_LB/README.md"> here</a>.<br /></p>
