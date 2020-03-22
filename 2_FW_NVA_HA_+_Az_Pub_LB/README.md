@@ -109,7 +109,7 @@ az network nic create --resource-group RG-PLB-TEST --location eastus --name VSRX
 <b>Web Server VM</b>
 az network nic create --resource-group RG-PLB-TEST --location eastus --name WEB-eth0 --vnet-name SPOKE-VNET --subnet VMWORKLOADS --private-ip-address 10.80.99.10
 </pre>
-**Create NSGs - Since I selected to use 'Standard' SKU public IP addresses explicitly defined NSG is required**
+### Create NSGs - Since I selected to use 'Standard' SKU public IP addresses explicitly defined NSG is required
 <pre lang=>
 <b>Contral Plane NSG</b>
 az network nsg create --resource-group RG-PLB-TEST --name CP-NSG --location eastus
@@ -125,7 +125,7 @@ az network nic update --resource-group RG-PLB-TEST --name VSRX1-ge0 --network-se
 az network nic update --resource-group RG-PLB-TEST --name VSRX2-ge0 --network-security-group UNTRUST-NSG
 </pre>
 
-**Up to this point, we have created the following topology**
+### Up to this point, we have created the following topology
 <pre lang=>
 1- Created HUB & SPOKE VNET
 2- Created TRUST, UNTRUST, and MGMT (firewall maangement) subnets
@@ -137,7 +137,7 @@ az network nic update --resource-group RG-PLB-TEST --name VSRX2-ge0 --network-se
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_+_Az_Pub_LB/topology2.png)
 </kbd>
 
-**Create the vSRX firewall VMs**
+### Create the vSRX firewall VMs
 <pre lang=>
 <b>First - Accept the Juniper Networks license agreement</b>
 <b>In PowerShell</b>
@@ -147,7 +147,7 @@ az vm create --resource-group RG-PLB-TEST --location eastus --name VSRX1 --size 
 <b>VSRX2</b>
 az vm create --resource-group RG-PLB-TEST --location eastus --name VSRX2 --size Standard_DS3_v2 --nics VSRX2-fxp0 VSRX2-ge0 VSRX2-ge1 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234 --boot-diagnostics-storage mcbootdiag --no-wait
 </pre>
-**Create a test Web server VM**
+### Create a test Web server VM
 <pre lang=>
 az vm create -n WEB-SERVER -g RG-PLB-TEST --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics WEB-eth0 --boot-diagnostics-storage mcbootdiag --no-wait
 <b>Once the VM is up and running, run the following to update and install apache2:</b>
@@ -155,7 +155,7 @@ az vm create -n WEB-SERVER -g RG-PLB-TEST --image UbuntuLTS --admin-username lab
 2- sudo apt upgrade -y
 3- sudo apt install apache2 -y
 </pre>
-**Create the Azure Public load balancer**
+### Create the Azure Public load balancer
 <pre lang= >
 <b>Create the LB</b>
 az network lb create --resource-group RG-PLB-TEST --name AZ-PUB-LB --sku Standard --public-ip-address AZ-PUB-LB-PIP --no-wait
@@ -172,7 +172,7 @@ az network nic ip-config update -g RG-PLB-TEST --nic-name VSRX2-ge0 -n ipconfig1
 
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_+_Az_Pub_LB/topology1.png)</kbd>
 
-**Get a list of the public IPs, or specific instances public IPs**
+### Get a list of the public IPs, or specific instances public IPs
 <pre lang= >
 az network public-ip list --output table
 <b>Output</b>
@@ -196,7 +196,7 @@ Name         ResourceGroup    Location    Zones    Address        AddressVersion
 -----------  ---------------  ----------  -------  -------------  ----------------  ------------------  ----------------------  -------------------
 VSRX2-PIP-1  RG-PLB-TEST      eastus               <b>104.xx.xx.xx</b>  IPv4              Static              4                       Succeeded
 </pre>
-**To ssh and manage firewall VMs**
+### To ssh and manage firewall VMs
 <pre lang= >
 <b>ssh lab-user@104.xx.xx.xx</b>
 <b>Output</b>
@@ -218,7 +218,7 @@ Password:
 --- JUNOS 19.<scrubbed> Kernel 64-bit XEN JNPR-<scrubbed info>_buil
 lab-user@VSRX2> 
 </pre>
-**vSRX configuraitons- Both vSRX will have identical configs**
+### vSRX configuraitons- Both vSRX will have identical configs
 <pre lang= >
 <b>Delete default security config</b>
 delete security
