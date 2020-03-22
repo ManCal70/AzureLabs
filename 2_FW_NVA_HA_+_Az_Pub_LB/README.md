@@ -289,7 +289,7 @@ Total sessions: 2
 </pre>
 **Test connection to the backend Web server via the Public LB IP address - It works ;) you can shut down a vSRX and traffic will continue to flow**
 
-<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_2_nva_active_active_with_public_load_balancer/apache.png)</kbd>
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_%2B_Az_Pub_LB/apache.png)</kbd>
 
 At this point, you have an Azure Standard SKU public load balancer. This load balancer will forward traffic to two firewalls (vSRXs) network virtual appliances (NVAs). 
 
