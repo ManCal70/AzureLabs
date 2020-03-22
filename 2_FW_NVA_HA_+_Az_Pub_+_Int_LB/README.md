@@ -2,22 +2,21 @@
 
 #### Topology
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_%2B_Az_Pub_%2B_Int_LB/firewall_sandwich.png)</kbd>
+
+### Lab Configuration Elements
 <pre lang= >
-<b>In this lab, we will:</b>
-<b>1-</b> Create an Azure internal load balancer with:
-  - Frontend-ip
-  - Backend pool
-  - Probe on port 22
-  - Load balancer rule with 'HA Ports' >> HA ports allows for all IPs & ports to be forwarded to the vSRX firewalls
-<b>2-</b> Add TRUST side firewall vNICs to the backend pool 
-<b>3-</b> on vSRX configuration, add a second routing instance (VR/VRF) to handle the health probes coming from TRUST and UNTRUST (will elaborate later)
-  - TRUST VR
-  - UNTRUST VR
-<b>4-</b> Create a UDR which sets 0/0 next-hop ILB VIP
-<b>5-</b> Bind the UDR to the VMs subnet
-<b>6-</b> Configure each routing instance
-<b>7-</b> Configure routing to support TRUST and UNTRUST LB Probes
-<b>8-</b> Configure route leaking between TRUST and UNTRUST VRs to support transit
+<b>1-</b> Create a resource group
+<b>2-</b> Create a storage account (bootdiags)
+<b>3-</b> Create VNETS
+<b>4-</b> Create Subnets
+<b>5-</b> Create public IPs for firewalla management
+<b>6-</b> Create vNICs (For firewalls & VMs)
+<b>7-</b> Create control plane and data plane Network Security Groups (NSGs)
+<b>8-</b> Associate the vNICs with their correponding NSGs
+<b>9-</b> Create the firewall and Test VMs
+<b>10-</b> 
+<b>11-</b>
+
 </pre>
 <b>End goal of this lab - 2 FWs sandwich between two Azure load balancers for HA</b>
 
