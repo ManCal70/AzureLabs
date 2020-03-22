@@ -30,12 +30,20 @@
 <b>15-</b> Configure the firewalls and test web servers
 </pre>
 
-### End goal of this lab - 2 FWs sandwich between two Azure load balancers for HA
+### Goal of this lab - Illustrate how to deploy and configure 2 firewalls sandwiched between two Azure load balancers for HA (a public and an internal load balancer)
 
 ### Create a resource group
 <pre lang= >
-az group create --name RG-PLB-TEST --location eastus --output table
+az group create --name RG-LB-TEST --location eastus --output table
 </pre>
+
+### Create a storage account for bootdiags
+<pre lang= >
+az storage account create -n mcbootdiag -g RG-LB-TEST -l eastus --sku Standard_LRS
+</pre>
+
+
+
 
 <b>Create ILB with front end IP, and backend pool name</b>
 <pre lang= >
