@@ -372,3 +372,5 @@ set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST then l
 
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_%2B_Az_Pub_%2B_Int_LB/apache2.png)</kbd>
 
+Complete firewall configuration is attached to the lab folder.
+
