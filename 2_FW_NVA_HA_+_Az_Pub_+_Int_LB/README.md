@@ -210,18 +210,22 @@ az network vnet subnet update --vnet-name SPOKE-VNET --name VMWORKLOADS --resour
 az network nic show-effective-route-table --name WEB-eth0 --resource-group RG-LB-TEST --output table
 </pre>
 
+
 ### Creating the Azure public load balancer (PLB)
 <pre lang= >
 az network lb create --resource-group RG-LB-TEST --name AZ-PUB-LB --sku Standard --public-ip-address AZ-PUB-LB-PIP --no-wait
 </pre>
+
 ### Create PLB the backend pool
 <pre lang= >
 az network LB address-pool create --lb-name AZ-PUB-LB --name PLB-BEPOOL --resource-group RG-LB-TEST
 </pre>
+
 ### Create PLB the probe
 <pre lang= >
 az network LB probe create --resource-group RG-LB-TEST --name BE-PROBE1 --protocol tcp --port 22 --interval 30 --threshold 2 --lb-name AZ-PUB-LB
 </pre>
+
 ### Create a PLB LB rule
 <pre lang= >
 az network lb rule create --resource-group RG-LB-TEST --name LB-RULE-1 --backend-pool-name PLB-BEPOOL --probe-name BE-PROBE1 --protocol Tcp --frontend-port 80 --backend-port 80 --lb-name AZ-PUB-LB --floating-ip true --output table
