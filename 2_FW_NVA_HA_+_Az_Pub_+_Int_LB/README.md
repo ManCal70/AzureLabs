@@ -104,7 +104,6 @@ Trust Subnet NSG
 az network nsg create --resource-group RG-LB-TEST --name TRUST-NSG --location eastus
 az network nsg rule create -g RG-LB-TEST --nsg-name TRUST-NSG -n ALLOW-HTTP --priority 200 --source-address-prefixes * --source-port-ranges * --destination-address-prefixes * --destination-port-ranges * --access Allow --protocol * --description "Allow all to trust Subnet"
 
-
 Associate vNICs with corresponding NSGs
 az network nic update --resource-group RG-LB-TEST --name VSRX1-fxp0 --network-security-group CP-NSG
 az network nic update --resource-group RG-LB-TEST --name VSRX2-fxp0 --network-security-group CP-NSG
@@ -124,10 +123,26 @@ az network nic update --resource-group RG-LB-TEST --name VSRX2-ge1 --network-sec
 * Created the vNICs for the firewalls, and the web server
 * Created the NSGs for the management subnet (MGT) and UNTRUST subnet.
 
-<b>Create ILB with front end IP, and backend pool name</b>
+
+### Create ILB with front end IP, and backend pool name
 <pre lang= >
 az network lb create --resource-group RG-PLB-TEST --name ILB-1 --frontend-ip-name ILB-1-FE --private-ip-address 10.0.1.254 --vnet-name HUB-VNET --subnet TRUST --backend-pool-name ILB-BEPOOL --sku Standard
 </pre>
+
+### Create the vSRX Firewalls
+<pre lang= >
+<b>First - Accept the Juniper Networks license agreement</b>
+In PowerShell
+Get-AzureRmMarketplaceTerms -Publisher juniper-networks -Product vsrx-next-generation-firewall -Name vsrx-byol-azure-image | Set-AzureRmMarketplaceTerms -Accept
+
+VSRX1
+az vm create --resource-group RG-LB-TEST --location eastus --name VSRX1 --size Standard_DS3_v2 --nics VSRX1-fxp0 VSRX1-ge0 VSRX1-ge1 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234 --boot-diagnostics-storage mcbootdiag --no-wait
+VSRX2
+az vm create --resource-group RG-LB-TEST --location eastus --name VSRX2 --size Standard_DS3_v2 --nics VSRX2-fxp0 VSRX2-ge0 VSRX2-ge1 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234 --boot-diagnostics-storage mcbootdiag --no-wait
+
+</pre>
+
+
 <b>Output after created:</b>
 <pre lang= >
 az network lb list -g RG-PLB-TEST --output table
