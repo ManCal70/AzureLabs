@@ -127,6 +127,10 @@ az network nic update --resource-group RG-LB-TEST --name VSRX2-ge1 --network-sec
 * Created the vNICs for the firewalls, and the web server
 * Created the NSGs for the management subnet (MGT) and UNTRUST subnet.
 
+<p style="page-break-after: always;">&nbsp;</p>
+-----------------------------------------------
+<p style="page-break-before: always;">&nbsp;</p>
+
 ### Create the vSRX Firewalls, and the web server VMs
 <pre lang= >
 <b>First - Accept the Juniper Networks license agreement</b>
@@ -171,8 +175,10 @@ az network lb list -g RG-PLB-TEST --output table
 Location    Name       ProvisioningState    ResourceGroup    ResourceGuid
 ----------  ---------  -------------------  ---------------  ------------------------------------
 eastus      AZ-PUB-LB  Succeeded            RG-PLB-TEST      75055a40-5f78-4502-acf3-71a5e6ad952f
+</pre>
 
-Create the probe
+### Create the probe
+<pre lang= >
 az network LB probe create --resource-group RG-PLB-TEST --name ILB-PROBE1 --protocol tcp --port 22 --interval 30 --threshold 2 --lb-name ILB-1
 
 Show the probe after created:
@@ -180,17 +186,20 @@ az network lb probe list --resource-group RG-PLB-TEST --lb-name AZ-PUB-LB --outp
 IntervalInSeconds    Name       NumberOfProbes    Port    Protocol    ProvisioningState    ResourceGroup
 -------------------  ---------  ----------------  ------  ----------  -------------------  ---------------
 30                   BE-PROBE1  2                 22      Tcp         Succeeded            RG-PLB-TEST
+</pre>
 
-Create the loab balancing rule with 'HA Ports'
+### Create the loab balancing rule with 'HA Ports'
+<pre lang= >
 az network lb rule create --resource-group RG-PLB-TEST --name ILB-R1-HAPORTS --backend-pool-name ILB-BEPOOL --probe-name ILB-PROBE1 --protocol all --frontend-port 0 --backend-port 0 --lb-name ILB-1
 
 Show the rule created:
 az network lb rule list --lb-name AZ-PUB-LB -g RG-PLB-TEST --output table
+</pre>
 
-Add trust side vNICs to backend pool utilized by the ILB
+### Add trust side vNICs to backend pool utilized by the ILB
+<pre lang= >
 az network nic ip-config update --resource-group RG-PLB-TEST --nic-name VSRX1-ge1 --name ipconfig1 --lb-address-pool ILB-BEPOOL --vnet-name HUB-VNET --subnet O-TRUST --lb-name ILB-1
 az network nic ip-config update --resource-group RG-PLB-TEST --nic-name VSRX2-ge1 --name ipconfig1 --lb-address-pool ILB-BEPOOL --vnet-name HUB-VNET --subnet O-TRUST --lb-name ILB-1
-
 </pre>
 
 
