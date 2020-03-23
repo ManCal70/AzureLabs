@@ -93,16 +93,16 @@ az network nic create --resource-group RG-LB-TEST --location eastus --name WEB-e
 <pre lang= >
 Contral Plane NSG
 az network nsg create --resource-group RG-LB-TEST --name CP-NSG --location eastus
-az network nsg rule create -g RG-LB-FW-LAB --nsg-name CP-NSG -n ALLOW-SSH --priority 300 --source-address-prefixes Internet --destination-address-prefixes 10.0254.0/24 --destination-port-ranges 22 --access Allow --protocol Tcp --description "Allow SSH to Management Subnet"
-az network nsg rule create -g RG-LB-FW-LAB --nsg-name CP-NSG -n ALLOW-ICMP --priority 301 --source-address-prefixes Internet --destination-address-prefixes 10.0.54.0/24 --destination-port-ranges * --protocol Icmp --description "Allow ICMP to FW OOB interface"
+az network nsg rule create -g RG-LB-TEST --nsg-name CP-NSG -n ALLOW-SSH --priority 300 --source-address-prefixes Internet --destination-address-prefixes 10.0254.0/24 --destination-port-ranges 22 --access Allow --protocol Tcp --description "Allow SSH to Management Subnet"
+az network nsg rule create -g RG-LB-TEST --nsg-name CP-NSG -n ALLOW-ICMP --priority 301 --source-address-prefixes Internet --destination-address-prefixes 10.0.54.0/24 --destination-port-ranges * --protocol Icmp --description "Allow ICMP to FW OOB interface"
 
 Untrust Subnet NSG
 az network nsg create --resource-group RG-LB-TEST --name UNTRUST-NSG --location eastus
-az network nsg rule create -g RG-LB-FW-LAB --nsg-name UNTRUST-NSG -n ALLOW-HTTP --priority 200 --source-address-prefixes * --source-port-ranges * --destination-address-prefixes * --destination-port-ranges 80 --access Allow --protocol Tcp --description "Allow HTTP to Untrust Subnet"
+az network nsg rule create -g RG-LB-TEST --nsg-name UNTRUST-NSG -n ALLOW-HTTP --priority 200 --source-address-prefixes * --source-port-ranges * --destination-address-prefixes * --destination-port-ranges 80 --access Allow --protocol Tcp --description "Allow HTTP to Untrust Subnet"
 
 Trust Subnet NSG
 az network nsg create --resource-group RG-LB-TEST --name TRUST-NSG --location eastus
-az network nsg rule create -g RG-LB-FW-LAB --nsg-name TRUST-NSG -n ALLOW-HTTP --priority 200 --source-address-prefixes * --source-port-ranges * --destination-address-prefixes * --destination-port-ranges * --access Allow --protocol * --description "Allow all to trust Subnet"
+az network nsg rule create -g RG-LB-TEST --nsg-name TRUST-NSG -n ALLOW-HTTP --priority 200 --source-address-prefixes * --source-port-ranges * --destination-address-prefixes * --destination-port-ranges * --access Allow --protocol * --description "Allow all to trust Subnet"
 
 
 Associate vNICs with corresponding NSGs
