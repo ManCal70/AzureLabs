@@ -2,7 +2,7 @@
 
 #### Topology
 <table><tr><td>
-    <img src="https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_%2B_Az_Pub_%2B_Int_LB/topo-diagram.png" style="border: 2px solid black" />
+    <img src="https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_%2B_Az_Pub_%2B_Int_LB/topo-diagram.png" lt="" title="Lab Topology" width="300" height="200"  />
 </td></tr></table>
 
 ### Lab Configuration Elements
