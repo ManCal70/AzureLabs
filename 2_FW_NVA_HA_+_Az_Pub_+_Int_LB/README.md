@@ -196,7 +196,9 @@ az network lb rule list --lb-name AZ-PUB-LB -g RG-LB-TEST --output table
 BackendPort    DisableOutboundSnat    EnableFloatingIp    EnableTcpReset    FrontendPort    IdleTimeoutInMinutes    LoadDistribution    Name       Protocol    ProvisioningState    ResourceGroup
 -------------  ---------------------  ------------------  ----------------  --------------  ----------------------  ------------------  ---------  ----------  -------------------  ---------------
 80             False                  True                False             80              4                       Default             LB-RULE-1  Tcp         Succeeded            RG-LB-TEST
-<b>Add trust side vNICs to backend pool utilized by the ILB</b>
+</pre>
+### Add trust side vNICs to backend pool utilized by the ILB
+<pre lang= >
 az network nic ip-config update --resource-group RG-LB-TEST --nic-name VSRX1-ge1 --name ipconfig1 --lb-address-pool ILB-BEPOOL --vnet-name HUB-VNET --subnet TRUST --lb-name ILB-1
 az network nic ip-config update --resource-group RG-LB-TEST --nic-name VSRX2-ge1 --name ipconfig1 --lb-address-pool ILB-BEPOOL --vnet-name HUB-VNET --subnet TRUST --lb-name ILB-1
 </pre>
