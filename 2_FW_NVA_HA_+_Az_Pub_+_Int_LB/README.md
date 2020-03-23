@@ -221,8 +221,14 @@ az network vnet subnet update --vnet-name SPOKE-VNET --name VMWORKLOADS --resour
 <pre lang= >
 az network nic show-effective-route-table --name WEB-eth0 --resource-group RG-LB-TEST --output table
 
-
-
+Source    State    Address Prefix    Next Hop Type    Next Hop IP
+--------  -------  ----------------  ---------------  -------------
+Default   Active   10.80.0.0/16      VnetLocal
+Default   Active   10.0.0.0/16       VNetPeering
+Default   Active   0.0.0.0/0         Internet
+Default   Active   10.0.0.0/8        None
+Default   Active   100.64.0.0/10     None
+Default   Active   192.168.0.0/16    None
 </pre>
 
 ### Creating the Azure public load balancer (PLB)
