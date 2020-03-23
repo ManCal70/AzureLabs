@@ -154,7 +154,7 @@ Once the VM is up and running, run the following to update and install apache2:
 
 ### Create ILB with front end IP, and backend pool name
 <pre lang= >
-az network lb create --resource-group RG-FW-LAB-W --name ILB-1 --frontend-ip-name ILB-1-FE --private-ip-address 10.0.0.254 --backend-pool-name ILB-BEPOOL --vnet-name HUB-VNET --subnet TRUST --location eastus --sku Standard
+az network lb create --resource-group RG-LB-TEST --name ILB-1 --frontend-ip-name ILB-1-FE --private-ip-address 10.0.0.254 --backend-pool-name ILB-BEPOOL --vnet-name HUB-VNET --subnet TRUST --location eastus --sku Standard
 
 Output after created:
 az network lb list -g RG-LB-TEST --output table
