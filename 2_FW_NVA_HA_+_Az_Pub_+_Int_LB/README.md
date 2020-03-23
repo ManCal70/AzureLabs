@@ -244,3 +244,93 @@ az network public-ip list --output table
 Ror specific instance
 az network public-ip show -g RG-LB-TEST --name VSRX1-PIP-1 --output table
 </pre>
+
+## At this point, all Azure elements have been deployed and configured.
+
+### Since we are utilizing both a public and internal load balancer, you have to be mindful of flow symmetry/affinity. In order to preserve flow symmetry, you have to configure source NAT (SNAT) for egress flows. This ensures that traffic which egress a specific firewall VM, returns to that same firewall. 
+
+<b>Delete default security config</b>
+delete security
+
+<b>Ensure firewalls have ssh service running (important since it is how the probe health checks the firewalls)
+set system services ssh
+
+<b>Interface configuration</b>
+set interfaces ge-0/0/0 description UNTRUST
+set interfaces ge-0/0/0 unit 0 family inet dhcp
+set interfaces ge-0/0/1 description TRUST
+set interfaces ge-0/0/1 unit 0 family inet dhcp
+set interfaces fxp0 unit 0
+
+<b>Security zones</b>
+set security zones security-zone TRUST address-book address 10.180.99.10/32 10.180.99.10/32
+set security zones security-zone TRUST address-book address 10.180.99.0/24 10.180.99.0/24
+set security zones security-zone TRUST interfaces ge-0/0/1.0 host-inbound-traffic system-services all
+set security zones security-zone TRUST interfaces ge-0/0/1.0 host-inbound-traffic protocols all
+set security zones security-zone UNTRUST interfaces ge-0/0/0.0 host-inbound-traffic system-services dhcp
+set security zones security-zone UNTRUST interfaces ge-0/0/0.0 host-inbound-traffic system-services ssh
+
+<b>SNAT and DNAT configuration</b>
+set security nat source rule-set SNAT-FOR-DNAT-TO-WORK from zone TRUST
+set security nat source rule-set SNAT-FOR-DNAT-TO-WORK to zone UNTRUST
+set security nat source rule-set SNAT-FOR-DNAT-TO-WORK rule SNAT-R1 match source-address 10.180.99.0/24
+set security nat source rule-set SNAT-FOR-DNAT-TO-WORK rule SNAT-R1 then source-nat interface
+set security nat destination pool DST-NAT-POOL-1 description "Web server"
+set security nat destination pool DST-NAT-POOL-1 address 10.180.99.10/32
+set security nat destination rule-set DST-RS1 from interface ge-0/0/0.0
+set security nat destination rule-set DST-RS1 rule DST-R1 match destination-address 0.0.0.0/0
+set security nat destination rule-set DST-RS1 rule DST-R1 then destination-nat pool DST-NAT-POOL-1
+
+<b>Route policy for route leaking</b>
+set policy-options prefix-list T-ALLOW-PREFIXES 0.0.0.0/0
+set policy-options prefix-list U-ALLOW-PREFIXES 10.180.99.0/24
+set policy-options policy-statement IMP-TRUST term 1 from prefix-list T-ALLOW-PREFIXES
+set policy-options policy-statement IMP-TRUST term 1 then accept
+set policy-options policy-statement IMP-TRUST term DENY-ALL then reject
+set policy-options policy-statement IMP-UNTRUST term 1 from prefix-list U-ALLOW-PREFIXES
+set policy-options policy-statement IMP-UNTRUST term 1 then accept
+set policy-options policy-statement IMP-UNTRUST term DENY-ALL then reject
+
+<b>Since we have a public and and internal load balancer, we have to configure 2 x virtual routers (L3 tables) to ensure the load balancer probes are routed out their specific ingress interfaces</b>
+
+<b>Configuring routing instances</b>
+set routing-instances VR-TRUST instance-type virtual-router
+set routing-instances VR-TRUST routing-options static route 10.80.99.0/24 next-hop 10.0.1.1
+set routing-instances VR-TRUST routing-options static route 168.63.129.16/32 next-hop 10.0.1.1
+set routing-instances VR-TRUST routing-options static rib-group T-U-ROUTES-LEAK
+
+set routing-instances VR-UNTRUST instance-type virtual-router
+set routing-instances VR-UNTRUST routing-options static rib-group U-T-ROUTES-LEAK
+set routing-instances VR-UNTRUST routing-options static route 0.0.0.0/0 next-hop 10.0.0.1
+
+<b>In Junos route leaking requires the configuration of RIB-GROUPS (tells which route table to leak to where)</b>
+set routing-options rib-groups U-T-ROUTES-LEAK import-rib VR-UNTRUST.inet.0
+set routing-options rib-groups U-T-ROUTES-LEAK import-rib VR-TRUST.inet.0
+set routing-options rib-groups U-T-ROUTES-LEAK import-policy IMP-TRUST
+set routing-options rib-groups T-U-ROUTES-LEAK import-rib VR-TRUST.inet.0
+set routing-options rib-groups T-U-ROUTES-LEAK import-rib VR-UNTRUST.inet.0
+set routing-options rib-groups T-U-ROUTES-LEAK import-policy IMP-UNTRUST
+
+<b>Security poilicies
+set security policies from-zone TRUST to-zone UNTRUST policy TRUST-TO-UNTRUST match source-address 10.180.99.0/24
+set security policies from-zone TRUST to-zone UNTRUST policy TRUST-TO-UNTRUST match destination-address any
+set security policies from-zone TRUST to-zone UNTRUST policy TRUST-TO-UNTRUST match application any
+set security policies from-zone TRUST to-zone UNTRUST policy TRUST-TO-UNTRUST then permit
+set security policies from-zone TRUST to-zone UNTRUST policy TRUST-TO-UNTRUST then log session-init
+set security policies from-zone TRUST to-zone UNTRUST policy TRUST-TO-UNTRUST then log session-close
+
+set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST match source-address any
+set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST match destination-address 10.180.99.10/32
+set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST match application junos-http
+set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST then permit
+set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST then log session-init
+set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST then log session-close
+
+set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST match source-address any
+set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST match destination-address any
+set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST match application any
+set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST then permit
+set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST then log session-init
+set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST then log session-close
+
+
