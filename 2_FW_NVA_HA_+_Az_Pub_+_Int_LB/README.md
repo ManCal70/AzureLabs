@@ -115,14 +115,14 @@ az network nic update --resource-group RG-LB-TEST --name VSRX2-ge1 --network-sec
 </pre>
 
 ### Up to this point, we have created the following:
-1- Created the resource group
-2- Created a storage account in case bootdiags require it
-3- Created HUB & SPOKE VNETs
-4- Created TRUST, UNTRUST, and MGMT (firewall maangement) subnets
-5- Created the VNET peering (Hub to Spoke)
-4- Created the Public IP addresses for the firewalls and the load balancer
-5- Created the vNICs for the firewalls, and the web server
-6- Created the NSGs for the management subnet (MGT) and UNTRUST subnet.
+* Created the resource group
+* Created a storage account in case bootdiags require it
+* Created HUB & SPOKE VNETs
+* Created TRUST, UNTRUST, and MGMT (firewall maangement) subnets
+* Created the VNET peering (Hub to Spoke)
+* Created the Public IP addresses for the firewalls and the load balancer
+* Created the vNICs for the firewalls, and the web server
+* Created the NSGs for the management subnet (MGT) and UNTRUST subnet.
 
 <b>Create ILB with front end IP, and backend pool name</b>
 <pre lang= >
