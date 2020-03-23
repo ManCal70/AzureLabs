@@ -287,8 +287,8 @@ set interfaces ge-0/0/1 unit 0 family inet dhcp
 set interfaces fxp0 unit 0
 
 <b>Security zones</b>
-set security zones security-zone TRUST address-book address 10.180.99.10/32 10.180.99.10/32
-set security zones security-zone TRUST address-book address 10.180.99.0/24 10.180.99.0/24
+set security zones security-zone TRUST address-book address 10.80.99.10/32 10.80.99.10/32
+set security zones security-zone TRUST address-book address 10.80.99.0/24 10.80.99.0/24
 set security zones security-zone TRUST interfaces ge-0/0/1.0 host-inbound-traffic system-services all
 set security zones security-zone TRUST interfaces ge-0/0/1.0 host-inbound-traffic protocols all
 set security zones security-zone UNTRUST interfaces ge-0/0/0.0 host-inbound-traffic system-services dhcp
@@ -297,17 +297,17 @@ set security zones security-zone UNTRUST interfaces ge-0/0/0.0 host-inbound-traf
 <b>SNAT and DNAT configuration</b>
 set security nat source rule-set SNAT-FOR-DNAT-TO-WORK from zone TRUST
 set security nat source rule-set SNAT-FOR-DNAT-TO-WORK to zone UNTRUST
-set security nat source rule-set SNAT-FOR-DNAT-TO-WORK rule SNAT-R1 match source-address 10.180.99.0/24
+set security nat source rule-set SNAT-FOR-DNAT-TO-WORK rule SNAT-R1 match source-address 10.80.99.0/24
 set security nat source rule-set SNAT-FOR-DNAT-TO-WORK rule SNAT-R1 then source-nat interface
 set security nat destination pool DST-NAT-POOL-1 description "Web server"
-set security nat destination pool DST-NAT-POOL-1 address 10.180.99.10/32
+set security nat destination pool DST-NAT-POOL-1 address 10.80.99.10/32
 set security nat destination rule-set DST-RS1 from interface ge-0/0/0.0
 set security nat destination rule-set DST-RS1 rule DST-R1 match destination-address 0.0.0.0/0
 set security nat destination rule-set DST-RS1 rule DST-R1 then destination-nat pool DST-NAT-POOL-1
 
 <b>Route policy for route leaking</b>
 set policy-options prefix-list T-ALLOW-PREFIXES 0.0.0.0/0
-set policy-options prefix-list U-ALLOW-PREFIXES 10.180.99.0/24
+set policy-options prefix-list U-ALLOW-PREFIXES 10.80.99.0/24
 set policy-options policy-statement IMP-TRUST term 1 from prefix-list T-ALLOW-PREFIXES
 set policy-options policy-statement IMP-TRUST term 1 then accept
 set policy-options policy-statement IMP-TRUST term DENY-ALL then reject
@@ -338,7 +338,7 @@ set routing-options rib-groups T-U-ROUTES-LEAK import-rib VR-UNTRUST.inet.0
 set routing-options rib-groups T-U-ROUTES-LEAK import-policy IMP-UNTRUST
 
 <b>Security poilicies
-set security policies from-zone TRUST to-zone UNTRUST policy TRUST-TO-UNTRUST match source-address 10.180.99.0/24
+set security policies from-zone TRUST to-zone UNTRUST policy TRUST-TO-UNTRUST match source-address 10.80.99.0/24
 set security policies from-zone TRUST to-zone UNTRUST policy TRUST-TO-UNTRUST match destination-address any
 set security policies from-zone TRUST to-zone UNTRUST policy TRUST-TO-UNTRUST match application any
 set security policies from-zone TRUST to-zone UNTRUST policy TRUST-TO-UNTRUST then permit
@@ -346,7 +346,7 @@ set security policies from-zone TRUST to-zone UNTRUST policy TRUST-TO-UNTRUST th
 set security policies from-zone TRUST to-zone UNTRUST policy TRUST-TO-UNTRUST then log session-close
 
 set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST match source-address any
-set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST match destination-address 10.180.99.10/32
+set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST match destination-address 10.80.99.10/32
 set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST match application junos-http
 set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST then permit
 set security policies from-zone UNTRUST to-zone TRUST policy DST-TO-WEB-TEST then log session-init
