@@ -123,13 +123,7 @@ az network nic update --resource-group RG-LB-TEST --name VSRX2-ge1 --network-sec
 * Created the vNICs for the firewalls, and the web server
 * Created the NSGs for the management subnet (MGT) and UNTRUST subnet.
 
-
-### Create ILB with front end IP, and backend pool name
-<pre lang= >
-az network lb create --resource-group RG-PLB-TEST --name ILB-1 --frontend-ip-name ILB-1-FE --private-ip-address 10.0.1.254 --vnet-name HUB-VNET --subnet TRUST --backend-pool-name ILB-BEPOOL --sku Standard
-</pre>
-
-### Create the vSRX Firewalls
+### Create the vSRX Firewalls, and the web server VMs
 <pre lang= >
 <b>First - Accept the Juniper Networks license agreement</b>
 In PowerShell
@@ -137,9 +131,31 @@ Get-AzureRmMarketplaceTerms -Publisher juniper-networks -Product vsrx-next-gener
 
 VSRX1
 az vm create --resource-group RG-LB-TEST --location eastus --name VSRX1 --size Standard_DS3_v2 --nics VSRX1-fxp0 VSRX1-ge0 VSRX1-ge1 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234 --boot-diagnostics-storage mcbootdiag --no-wait
+
 VSRX2
 az vm create --resource-group RG-LB-TEST --location eastus --name VSRX2 --size Standard_DS3_v2 --nics VSRX2-fxp0 VSRX2-ge0 VSRX2-ge1 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234 --boot-diagnostics-storage mcbootdiag --no-wait
 
+Web Server
+az vm create -n WEB-SERVER -g RG-LB-TEST --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics WEB-eth0 --boot-diagnostics-storage mcbootdiag --no-wait
+
+Once the VM is up and running, run the following to update and install apache2:
+1- sudo apt update
+2- sudo apt upgrade -y
+3- sudo apt install apache2 -y
+</pre>
+
+### Create ILB with front end IP, and backend pool name
+<pre lang= >
+az network lb create --resource-group RG-LB-TEST --name PUB-LB --sku Standard --public-ip-address AZ-PUB-LB-PIP --no-wait
+Create the backend pool
+az network LB address-pool create --lb-name PUB-LB --name PLB1-BEPOOL --resource-group RG-LB-TEST
+Create the probe
+az network LB probe create --resource-group RG-LB-TEST --name BE-PROBE1 --protocol tcp --port 22 --interval 30 --threshold 2 --lb-name PUB-LB
+Create a LB rule
+az network lb rule create --resource-group RG-LB-TEST --name LB-RULE-1 --backend-pool-name PLB1-BEPOOL --probe-name BE-PROBE1 --protocol Tcp --frontend-port 80 --backend-port 80 --lb-name AZ-PUB-LB --floating-ip true --output table
+Add the VSRX1-ge0 & VSRX2-ge0 vNICs to the LB backend pool
+az network nic ip-config update -g RG-LB-TEST --nic-name VSRX1-ge0 -n ipconfig1 --lb-address-pool PLB1-BEPOOL --vnet-name hub-vnet --subnet O-UNTRUST --lb-name PUB-LB
+az network nic ip-config update -g RG-LB-TEST --nic-name VSRX2-ge0 -n ipconfig1 --lb-address-pool PLB1-BEPOOL --vnet-name hub-vnet --subnet O-UNTRUST --lb-name PUB-LB
 </pre>
 
 
