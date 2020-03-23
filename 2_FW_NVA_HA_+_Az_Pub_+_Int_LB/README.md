@@ -104,6 +104,8 @@ Trust Subnet NSG
 az network nsg create --resource-group RG-LB-TEST --name TRUST-NSG --location eastus
 az network nsg rule create -g RG-LB-TEST --nsg-name TRUST-NSG -n ALLOW-ALL --priority 200 --source-address-prefixes * --source-port-ranges * --destination-address-prefixes * --destination-port-ranges * --access Allow --protocol * --description "Allow All to Trust Subnet"
 
+ADD an allow all outbound on Trust side******************
+
 NSG Rule check
 az network nsg rule show --name ALLOW-ALL --nsg-name TRUST-NSG -g RG-LB-TEST --output table
 az network nsg rule show --name ALLOW-HTTP --nsg-name UNTRUST-NSG -g RG-LB-TEST --output table
@@ -317,11 +319,13 @@ set policy-options policy-statement IMP-UNTRUST term DENY-ALL then reject
 
 <b>Configuring routing instances</b>
 set routing-instances VR-TRUST instance-type virtual-router
+set routing-instances VR-TRUST interface ge-0/0/1.0
 set routing-instances VR-TRUST routing-options static route 10.80.99.0/24 next-hop 10.0.1.1
 set routing-instances VR-TRUST routing-options static route 168.63.129.16/32 next-hop 10.0.1.1
 set routing-instances VR-TRUST routing-options static rib-group T-U-ROUTES-LEAK
 
 set routing-instances VR-UNTRUST instance-type virtual-router
+set routing-instances VR-UNTRUST interface ge-0/0/0.0
 set routing-instances VR-UNTRUST routing-options static rib-group U-T-ROUTES-LEAK
 set routing-instances VR-UNTRUST routing-options static route 0.0.0.0/0 next-hop 10.0.0.1
 
