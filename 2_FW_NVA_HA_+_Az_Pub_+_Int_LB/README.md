@@ -102,7 +102,11 @@ az network nsg rule create -g RG-LB-TEST --nsg-name UNTRUST-NSG -n ALLOW-HTTP --
 
 Trust Subnet NSG
 az network nsg create --resource-group RG-LB-TEST --name TRUST-NSG --location eastus
-az network nsg rule create -g RG-LB-TEST --nsg-name TRUST-NSG -n ALLOW-HTTP --priority 200 --source-address-prefixes * --source-port-ranges * --destination-address-prefixes * --destination-port-ranges * --access Allow --protocol * --description "Allow all to trust Subnet"
+az network nsg rule create -g RG-PLB-TEST --nsg-name TRUST-NSG -n ALLOW-ALL --priority 200 --source-address-prefixes * --source-port-ranges * --destination-address-prefixes * --destination-port-ranges * --access Allow --protocol * --description "Allow All to Trust Subnet"
+
+NSG Rule check
+az network nsg rule show --name ALLOW-ALL --nsg-name TRUST-NSG -g RG-PLB-TEST --output table
+
 
 Associate vNICs with corresponding NSGs
 az network nic update --resource-group RG-LB-TEST --name VSRX1-fxp0 --network-security-group CP-NSG
@@ -157,6 +161,43 @@ Add the VSRX1-ge0 & VSRX2-ge0 vNICs to the LB backend pool
 az network nic ip-config update -g RG-LB-TEST --nic-name VSRX1-ge0 -n ipconfig1 --lb-address-pool PLB1-BEPOOL --vnet-name hub-vnet --subnet O-UNTRUST --lb-name PUB-LB
 az network nic ip-config update -g RG-LB-TEST --nic-name VSRX2-ge0 -n ipconfig1 --lb-address-pool PLB1-BEPOOL --vnet-name hub-vnet --subnet O-UNTRUST --lb-name PUB-LB
 </pre>
+
+### Create ILB with front end IP, and backend pool name
+<pre lang= >
+az network lb create --resource-group RG-PLB-TEST --name ILB-1 --frontend-ip-name ILB-1-FE --private-ip-address 10.0.1.254 --vnet-name HUB-VNET --subnet O-TRUST --backend-pool-name ILB-BEPOOL --sku Standard
+
+Output after created:
+az network lb list -g RG-PLB-TEST --output table
+Location    Name       ProvisioningState    ResourceGroup    ResourceGuid
+----------  ---------  -------------------  ---------------  ------------------------------------
+eastus      AZ-PUB-LB  Succeeded            RG-PLB-TEST      75055a40-5f78-4502-acf3-71a5e6ad952f
+
+Create the probe
+az network LB probe create --resource-group RG-PLB-TEST --name ILB-PROBE1 --protocol tcp --port 22 --interval 30 --threshold 2 --lb-name ILB-1
+
+Show the probe after created:
+az network lb probe list --resource-group RG-PLB-TEST --lb-name AZ-PUB-LB --output table
+IntervalInSeconds    Name       NumberOfProbes    Port    Protocol    ProvisioningState    ResourceGroup
+-------------------  ---------  ----------------  ------  ----------  -------------------  ---------------
+30                   BE-PROBE1  2                 22      Tcp         Succeeded            RG-PLB-TEST
+
+Create the loab balancing rule with 'HA Ports'
+az network lb rule create --resource-group RG-PLB-TEST --name ILB-R1-HAPORTS --backend-pool-name ILB-BEPOOL --probe-name ILB-PROBE1 --protocol all --frontend-port 0 --backend-port 0 --lb-name ILB-1
+
+Show the rule created:
+az network lb rule list --lb-name AZ-PUB-LB -g RG-PLB-TEST --output table
+
+Add trust side vNICs to backend pool utilized by the ILB
+az network nic ip-config update --resource-group RG-PLB-TEST --nic-name VSRX1-ge1 --name ipconfig1 --lb-address-pool ILB-BEPOOL --vnet-name HUB-VNET --subnet O-TRUST --lb-name ILB-1
+az network nic ip-config update --resource-group RG-PLB-TEST --nic-name VSRX2-ge1 --name ipconfig1 --lb-address-pool ILB-BEPOOL --vnet-name HUB-VNET --subnet O-TRUST --lb-name ILB-1
+
+</pre>
+
+
+
+
+
+
 
 
 <b>Output after created:</b>
