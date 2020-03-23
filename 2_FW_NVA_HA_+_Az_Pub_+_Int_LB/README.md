@@ -249,6 +249,8 @@ az network public-ip show -g RG-LB-TEST --name VSRX1-PIP-1 --output table
 
 ### Since we are utilizing both a public and internal load balancer, you have to be mindful of flow symmetry/affinity. In order to preserve flow symmetry, you have to configure source NAT (SNAT) for egress flows. This ensures that traffic which egress a specific firewall VM, returns to that same firewall. 
 
+### Firewall configs
+<pre lang= >
 <b>Delete default security config</b>
 delete security
 
@@ -332,5 +334,5 @@ set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST match 
 set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST then permit
 set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST then log session-init
 set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST then log session-close
-
+</pre>
 
