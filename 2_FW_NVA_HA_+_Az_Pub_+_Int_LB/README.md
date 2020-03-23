@@ -295,14 +295,22 @@ set security zones security-zone UNTRUST interfaces ge-0/0/0.0 host-inbound-traf
 set security zones security-zone UNTRUST interfaces ge-0/0/0.0 host-inbound-traffic system-services ssh
 
 <b>SNAT and DNAT configuration</b>
+SNAT TO Internet
 set security nat source rule-set SNAT-FOR-DNAT-TO-WORK from zone TRUST
 set security nat source rule-set SNAT-FOR-DNAT-TO-WORK to zone UNTRUST
 set security nat source rule-set SNAT-FOR-DNAT-TO-WORK rule SNAT-R1 match source-address 10.80.99.0/24
 set security nat source rule-set SNAT-FOR-DNAT-TO-WORK rule SNAT-R1 then source-nat interface
+SNAT to VNETs
+set security nat source rule-set SNAT-TO-VNETS from zone UNTRUST
+set security nat source rule-set SNAT-TO-VNETS to zone TRUST
+set security nat source rule-set SNAT-TO-VNETS rule SNAT-R1-VNET match source-address 0.0.0.0/0
+set security nat source rule-set SNAT-TO-VNETS rule SNAT-R1-VNET then source-nat interface
+DNAT to web server
 set security nat destination pool DST-NAT-POOL-1 description "Web server"
 set security nat destination pool DST-NAT-POOL-1 address 10.80.99.10/32
-set security nat destination rule-set DST-RS1 from interface ge-0/0/0.0
+set security nat destination rule-set DST-RS1 from zone UNTRUST
 set security nat destination rule-set DST-RS1 rule DST-R1 match destination-address 0.0.0.0/0
+set security nat destination rule-set DST-RS1 rule DST-R1 match destination-port 80
 set security nat destination rule-set DST-RS1 rule DST-R1 then destination-nat pool DST-NAT-POOL-1
 
 <b>Route policy for route leaking</b>
