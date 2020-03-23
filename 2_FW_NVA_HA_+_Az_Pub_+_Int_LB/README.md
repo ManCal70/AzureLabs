@@ -117,7 +117,7 @@ az network nic update --resource-group RG-LB-TEST --name VSRX1-ge1 --network-sec
 az network nic update --resource-group RG-LB-TEST --name VSRX2-ge1 --network-security-group UNTRUST-NSG
 </pre>
 
-### Up to this point, we have created the following:
+### At this point, we have created the following:
 * Created the resource group
 * Created a storage account in case bootdiags require it
 * Created HUB & SPOKE VNETs
@@ -188,99 +188,42 @@ az network nic ip-config update --resource-group RG-LB-TEST --nic-name VSRX1-ge1
 az network nic ip-config update --resource-group RG-LB-TEST --nic-name VSRX2-ge1 --name ipconfig1 --lb-address-pool ILB-BEPOOL --vnet-name HUB-VNET --subnet TRUST --lb-name ILB-1
 </pre>
 
-
-
-<b>Show the rule created:</b>
+### Need to create UDR to apply to the VMWORKLOADS subnet - UDR will route 0/0 to the internal LB VIP
 <pre lang= >
-az network lb rule list --lb-name AZ-PUB-LB -g RG-LB-TEST --output table
-BackendPort    DisableOutboundSnat    EnableFloatingIp    EnableTcpReset    FrontendPort    IdleTimeoutInMinutes    LoadDistribution    Name       Protocol    ProvisioningState    ResourceGroup
--------------  ---------------------  ------------------  ----------------  --------------  ----------------------  ------------------  ---------  ----------  -------------------  ---------------
-80             False                  True                False             80              4                       Default             LB-RULE-1  Tcp         Succeeded            RG-LB-TEST
+Create the UDR
+az network route-table create  --name UDR-TO-ILB --resource-group RG-LB-TEST -l eastus
+
+Create the route
+az network route-table route create --name DEF-TO-ILB -g RG-LB-TEST --route-table-name UDR-TO-ILB --address-prefix 0.0.0.0/0 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.1.254
+
+Route creation check
+az network route-table route show -g RG-LB-TEST --name DEF-TO-ILB --route-table-name UDR-TO-ILB --output table
 </pre>
-### Add trust side vNICs to backend pool utilized by the ILB
+
+### Once the UDR is created, associate it or apply it to the VMWORKLOADS subnet.
 <pre lang= >
-az network nic ip-config update --resource-group RG-LB-TEST --nic-name VSRX1-ge1 --name ipconfig1 --lb-address-pool ILB-BEPOOL --vnet-name HUB-VNET --subnet TRUST --lb-name ILB-1
-az network nic ip-config update --resource-group RG-LB-TEST --nic-name VSRX2-ge1 --name ipconfig1 --lb-address-pool ILB-BEPOOL --vnet-name HUB-VNET --subnet TRUST --lb-name ILB-1
+az network vnet subnet update --vnet-name SPOKE-VNET --name VMWORKLOADS --resource-group RG-PLB-TEST --route-table UDR-TO-ILB
 </pre>
+
+### Check web server effective route table to ensure UDR is applied
 <pre lang= >
-<b>We need to create a TRUST side NSG for traffic to flow. *Always keep in mind, when utilizing Standard SKUs, an NSG is required</b>
-<b>Trust Subnet NSG</b>
-az network nsg create --resource-group RG-LB-TEST --name TRUST-NSG --location eastus
-
-<b>Trust Subnet NSG check</b>
-az network nsg show -g RG-LB-TEST --name TRUST-NSG --output table
-Location    Name       ProvisioningState    ResourceGroup    ResourceGuid
-----------  ---------  -------------------  ---------------  ------------------------------------
-eastus      TRUST-NSG  Succeeded            RG-LB-TEST      fcd7c257-be8e-497e-abc3-2575b190ed6c
-
-<b>Create required NSG rule</b>
-az network nsg rule create -g RG-LB-TEST --nsg-name TRUST-NSG -n ALLOW-ALL --priority 200 --source-address-prefixes '*' --source-port-ranges '*' --destination-address-prefixes '*' --destination-port-ranges '*' --access Allow --protocol '*' --description "Allow All to Trust Subnet"
-
-<b>NSG Rule check</b>
-az network nsg rule show --name ALLOW-ALL --nsg-name TRUST-NSG -g RG-LB-TEST --output table
-Name       ResourceGroup    Priority    SourcePortRanges    SourceAddressPrefixes    SourceASG    Access    Protocol    Direction    DestinationPortRanges    DestinationAddressPrefixes    DestinationASG
----------  ---------------  ----------  ------------------  -----------------------  -----------  --------  ----------  -----------  -----------------------  ----------------------------  ----------------
-ALLOW-ALL  RG-LB-TEST      200         *                   *                        None         Allow     *           Inbound      *                        *                             None
-
-
-<b>Associate Trust vNICs with TRUST-NSG</b>
-az network nic update --resource-group RG-LB-TEST --name VSRX1-ge1 --network-security-group TRUST-NSG
-az network nic update --resource-group RG-LB-TEST --name VSRX2-ge1 --network-security-group TRUST-NSG
-</pre>
-<pre lang= >
-<b>Now we need to create a user defined route (UDR) which routes traffic to the internal load balancer VIP address. This address is applied to any VNET where you want traffic to be routed via the ILB.</b>
-az network route-table create  --name UDR-TO-ILB-1 --resource-group RG-LB-TEST -l eastus
-
-<b>UDR creationg check</b>
-az network route-table show --name UDR-TO-ILB-1 -g RG-LB-TEST --output table
-DisableBgpRoutePropagation    Location    Name          ProvisioningState    ResourceGroup
-----------------------------  ----------  ------------  -------------------  ---------------
-False                         eastus      UDR-TO-ILB-1  Succeeded            RG-LB-TEST
-
-<b>UDR creation</b>
-az network route-table route create --name DEFAULT-RT-TO-ILB -g RG-LB-TEST --route-table-name UDR-TO-ILB-1 --address-prefix 0.0.0.0/0 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.1.254
-
-<b>Route creation check</b>
-az network route-table route show -g RG-LB-TEST --name DEFAULT-RT-TO-ILB --route-table-name UDR-TO-ILB-1 --output table
-AddressPrefix    Name               NextHopIpAddress    NextHopType       ProvisioningState    ResourceGroup
----------------  -----------------  ------------------  ----------------  -------------------  ---------------
-0.0.0.0/0        DEFAULT-RT-TO-ILB  10.0.1.254          VirtualAppliance  Succeeded            RG-LB-TEST
-
-<b>Once the UDR is created, associate it or apply it to the VMWORKLOADS subnet.</b>
-az network vnet subnet update --vnet-name SPOKE-VNET --name VMWORKLOADS --resource-group RG-LB-TEST --route-table UDR-TO-ILB-1
-
-<b>After the UDR is applied to the subnet, you can check the effective route table to ensure the route is in effect. *Keep in mind after applying a UDR this can cake up to a minute to propagate.</b>
 az network nic show-effective-route-table --name WEB-eth0 --resource-group RG-LB-TEST --output table
-
-At this point you can check the effective route table of the VM vNIC to ensure the default points to the ILB IP
-az network nic show-effective-route-table -g RG-LB-TEST -n WEB-eth0 --output table
 </pre>
 
-<b>Output of the Web server effective route table</b>
-<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_%2B_Az_Pub_%2B_Int_LB/Route-table.png)</kbd>
+### Creating the Azure public load balancer
+az network lb create --resource-group RG-LB-TEST --name AZ-PUB-LB --sku Standard --public-ip-address AZ-PUB-LB-PIP --no-wait
 
-<pre lang= >
-<b>You can do the same with Azure CLI</b>
+### Create PLB the backend pool
+az network LB address-pool create --lb-name AZ-PUB-LB --name PLB-BEPOOL --resource-group RG-LB-TEST
 
-az network nic show-effective-route-table -g RG-LB-TEST -n WEB-eth0 --output table
-Source    State    Address Prefix    Next Hop Type     Next Hop IP
---------  -------  ----------------  ----------------  -------------
-Default   Active   10.80.0.0/16      VnetLocal
-Default   Active   10.0.0.0/16       VNetPeering
-Default   Invalid  0.0.0.0/0         Internet
-User      Active   0.0.0.0/0         VirtualAppliance  10.0.1.254
+### Create PLB the probe
+az network LB probe create --resource-group RG-LB-TEST --name BE-PROBE1 --protocol tcp --port 22 --interval 30 --threshold 2 --lb-name AZ-PUB-LB
 
-</pre>
-#### At this point we have:
-<p>
-<b>1-</b>The ILB configured with front end IP, probes, LB rules, and we have added the vSRX vNICs to the BE pool<br />
-<b>2-</b>The UDR with 0/0 (default) route is applied to the client/source/TRUST subnet pointing to the VIP<br />
-<b>3-</b>We have also created a TRUST side NSG<br />
-</p>
+### Create a PLB LB rule
+az network lb rule create --resource-group RG-LB-TEST --name LB-RULE-1 --backend-pool-name PLB-BEPOOL --probe-name BE-PROBE1 --protocol Tcp --frontend-port 80 --backend-port 80 --lb-name AZ-PUB-LB --floating-ip true --output table
 
-<b>*</b>Since the vSRX firewall now has LB's on both the TRUST and UNTRUST zones, each LB will send probes to health check the firewall. These probes will be originating/ingress via TRUST (Internal LB) and UNTRUST (Public LB) interfaces. We need to make some routing changes in the vSRX to handle probes coming from the same source IP, but that need to be routed back via its corresponding interface. In Junos, this is handled via the use of a 'Virtual Router' or L3 routing tables. In the previous lab, since we only had a Public LB, we were ok with a single virtual router (VR) since the probes were originating from a single side of the firewalls (UNTRUST). The addition of the Internal LB, creates the scenario where the probes will be originating on both sides of the firewall (TRUST and UNTRUST). We need to ensure these probes are routed back out the interface or zone where they originated. 
+### Add the VSRX1-ge0 & VSRX2-ge0 vNICs to the PLB LB backend pool
+az network nic ip-config update -g RG-LB-TEST --nic-name VSRX1-ge0 -n ipconfig1 --lb-address-pool PLB-BEPOOL --vnet-name hub-vnet --subnet UNTRUST --lb-name AZ-PUB-LB
+az network nic ip-config update -g RG-LB-TEST --nic-name VSRX2-ge0 -n ipconfig1 --lb-address-pool PLB-BEPOOL --vnet-name hub-vnet --subnet UNTRUST --lb-name AZ-PUB-LB
 
-<pre lang= >
-These are the updates required to the vSRX
 
-</pre>
