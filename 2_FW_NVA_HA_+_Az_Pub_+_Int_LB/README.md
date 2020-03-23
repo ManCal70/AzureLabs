@@ -89,7 +89,7 @@ Web Server VM
 az network nic create --resource-group RG-LB-TEST --location eastus --name WEB-eth0 --vnet-name SPOKE-VNET --subnet VMWORKLOADS --private-ip-address 10.80.99.10
 </pre>
 
-### Create NSGs - Since I selected to use 'Standard' SKU public IP addresses explicitly defined NSG is required
+### Create NSGs - Since I selected to use 'Standard' SKU public IP addresses explicitly defined NSG is required. It is also a good idea to plan subnet security and apply NSGs as a general best practice for security.
 <pre lang= >
 Contral Plane NSG
 az network nsg create --resource-group RG-LB-TEST --name CP-NSG --location eastus
