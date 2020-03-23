@@ -156,13 +156,13 @@ Once the VM is up and running, run the following to update and install apache2:
 
 ### Create ILB with front end IP, and backend pool name
 <pre lang= >
-az network lb create --resource-group RG-LB-TEST --name ILB-1 --frontend-ip-name ILB-1-FE --private-ip-address 10.0.0.254 --backend-pool-name ILB-BEPOOL --vnet-name HUB-VNET --subnet TRUST --location eastus --sku Standard
+az network lb create --resource-group RG-LB-TEST --name ILB-1 --frontend-ip-name ILB-1-FE --private-ip-address 10.0.1.254 --backend-pool-name ILB-BEPOOL --vnet-name HUB-VNET --subnet TRUST --location eastus --sku Standard
 
 Output after created:
 az network lb list -g RG-LB-TEST --output table
-Location    Name       ProvisioningState    ResourceGroup    ResourceGuid
-----------  ---------  -------------------  ---------------  ------------------------------------
-eastus      AZ-PUB-LB  Succeeded            RG-LB-TEST      75055a40-5f78-4502-acf3-71a5e6ad952f
+Location    Name    ProvisioningState    ResourceGroup    ResourceGuid
+----------  ------  -------------------  ---------------  ------------------------------------
+eastus      ILB-1   Succeeded            RG-LB-TEST       5deeeeb5-bfa9-4540-ab44-e94b7506c60f
 </pre>
 
 ### Create ILB the probe
@@ -170,7 +170,7 @@ eastus      AZ-PUB-LB  Succeeded            RG-LB-TEST      75055a40-5f78-4502-a
 az network LB probe create --resource-group RG-LB-TEST --name ILB-PROBE1 --protocol tcp --port 22 --interval 30 --threshold 2 --lb-name ILB-1
 
 Show the probe after created:
-az network lb probe list --resource-group RG-LB-TEST --lb-name AZ-PUB-LB --output table
+az network lb probe list --resource-group RG-LB-TEST --lb-name ILB-1 --output table
 IntervalInSeconds    Name       NumberOfProbes    Port    Protocol    ProvisioningState    ResourceGroup
 -------------------  ---------  ----------------  ------  ----------  -------------------  ---------------
 30                   BE-PROBE1  2                 22      Tcp         Succeeded            RG-LB-TEST
@@ -181,7 +181,12 @@ IntervalInSeconds    Name       NumberOfProbes    Port    Protocol    Provisioni
 az network lb rule create --resource-group RG-LB-TEST --name ILB-R1-HAPORTS --backend-pool-name ILB-BEPOOL --probe-name ILB-PROBE1 --protocol all --frontend-port 0 --backend-port 0 --lb-name ILB-1
 
 Show the rule created:
-az network lb rule list --lb-name AZ-PUB-LB -g RG-LB-TEST --output table
+az network lb rule list --lb-name ILB-1 -g RG-LB-TEST --output table
+
+BackendPort    DisableOutboundSnat    EnableFloatingIp    EnableTcpReset    FrontendPort    IdleTimeoutInMinutes    LoadDistribution    Name            Protocol    ProvisioningState    ResourceGroup
+-------------  ---------------------  ------------------  ----------------  --------------  ----------------------  ------------------  --------------  ----------  -------------------  ---------------
+0              False                  False               False             0               4                       Default             ILB-R1-HAPORTS  All         Succeeded            RG-LB-TEST
+
 </pre>
 
 ### Add trust side vNICs to backend pool utilized by the ILB
@@ -200,18 +205,25 @@ az network route-table route create --name DEF-TO-ILB -g RG-LB-TEST --route-tabl
 
 Route creation check
 az network route-table route show -g RG-LB-TEST --name DEF-TO-ILB --route-table-name UDR-TO-ILB --output table
+
+AddressPrefix    Name        NextHopIpAddress    NextHopType       ProvisioningState    ResourceGroup
+---------------  ----------  ------------------  ----------------  -------------------  ---------------
+0.0.0.0/0        DEF-TO-ILB  10.0.1.254          VirtualAppliance  Succeeded            RG-LB-TEST
+
 </pre>
 
 ### Once the UDR is created, associate it or apply it to the VMWORKLOADS subnet.
 <pre lang= >
-az network vnet subnet update --vnet-name SPOKE-VNET --name VMWORKLOADS --resource-group RG-PLB-TEST --route-table UDR-TO-ILB
+az network vnet subnet update --vnet-name SPOKE-VNET --name VMWORKLOADS --resource-group RG-LB-TEST --route-table UDR-TO-ILB
 </pre>
 
 ### Check web server effective route table to ensure UDR is applied
 <pre lang= >
 az network nic show-effective-route-table --name WEB-eth0 --resource-group RG-LB-TEST --output table
-</pre>
 
+
+
+</pre>
 
 ### Creating the Azure public load balancer (PLB)
 <pre lang= >
