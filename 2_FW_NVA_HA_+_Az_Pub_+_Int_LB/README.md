@@ -237,3 +237,10 @@ az network nic ip-config update -g RG-LB-TEST --nic-name VSRX1-ge0 -n ipconfig1 
 az network nic ip-config update -g RG-LB-TEST --nic-name VSRX2-ge0 -n ipconfig1 --lb-address-pool PLB-BEPOOL --vnet-name hub-vnet --subnet UNTRUST --lb-name AZ-PUB-LB
 </pre>
 
+### Get a list of the public IPs, or specific instances public IPs
+<pre lang= >
+az network public-ip list --output table
+
+Ror specific instance
+az network public-ip show -g RG-LB-TEST --name VSRX1-PIP-1 --output table
+</pre>
