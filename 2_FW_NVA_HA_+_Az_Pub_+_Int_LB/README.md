@@ -163,7 +163,7 @@ Location    Name       ProvisioningState    ResourceGroup    ResourceGuid
 eastus      AZ-PUB-LB  Succeeded            RG-LB-TEST      75055a40-5f78-4502-acf3-71a5e6ad952f
 </pre>
 
-### Create the probe
+### Create ILB the probe
 <pre lang= >
 az network LB probe create --resource-group RG-LB-TEST --name ILB-PROBE1 --protocol tcp --port 22 --interval 30 --threshold 2 --lb-name ILB-1
 
@@ -174,7 +174,7 @@ IntervalInSeconds    Name       NumberOfProbes    Port    Protocol    Provisioni
 30                   BE-PROBE1  2                 22      Tcp         Succeeded            RG-LB-TEST
 </pre>
 
-### Create the loab balancing rule with 'HA Ports'
+### Create the ILB LB rule with 'HA Ports'
 <pre lang= >
 az network lb rule create --resource-group RG-LB-TEST --name ILB-R1-HAPORTS --backend-pool-name ILB-BEPOOL --probe-name ILB-PROBE1 --protocol all --frontend-port 0 --backend-port 0 --lb-name ILB-1
 
@@ -210,20 +210,26 @@ az network vnet subnet update --vnet-name SPOKE-VNET --name VMWORKLOADS --resour
 az network nic show-effective-route-table --name WEB-eth0 --resource-group RG-LB-TEST --output table
 </pre>
 
-### Creating the Azure public load balancer
+### Creating the Azure public load balancer (PLB)
+<pre lang= >
 az network lb create --resource-group RG-LB-TEST --name AZ-PUB-LB --sku Standard --public-ip-address AZ-PUB-LB-PIP --no-wait
-
+</pre>
 ### Create PLB the backend pool
+<pre lang= >
 az network LB address-pool create --lb-name AZ-PUB-LB --name PLB-BEPOOL --resource-group RG-LB-TEST
-
+</pre>
 ### Create PLB the probe
+<pre lang= >
 az network LB probe create --resource-group RG-LB-TEST --name BE-PROBE1 --protocol tcp --port 22 --interval 30 --threshold 2 --lb-name AZ-PUB-LB
-
+</pre>
 ### Create a PLB LB rule
+<pre lang= >
 az network lb rule create --resource-group RG-LB-TEST --name LB-RULE-1 --backend-pool-name PLB-BEPOOL --probe-name BE-PROBE1 --protocol Tcp --frontend-port 80 --backend-port 80 --lb-name AZ-PUB-LB --floating-ip true --output table
+</pre>
 
 ### Add the VSRX1-ge0 & VSRX2-ge0 vNICs to the PLB LB backend pool
+<pre lang= >
 az network nic ip-config update -g RG-LB-TEST --nic-name VSRX1-ge0 -n ipconfig1 --lb-address-pool PLB-BEPOOL --vnet-name hub-vnet --subnet UNTRUST --lb-name AZ-PUB-LB
 az network nic ip-config update -g RG-LB-TEST --nic-name VSRX2-ge0 -n ipconfig1 --lb-address-pool PLB-BEPOOL --vnet-name hub-vnet --subnet UNTRUST --lb-name AZ-PUB-LB
-
+</pre>
 
