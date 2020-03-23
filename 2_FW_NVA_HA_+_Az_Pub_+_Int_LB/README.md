@@ -93,7 +93,7 @@ az network nic create --resource-group RG-LB-TEST --location eastus --name WEB-e
 <pre lang= >
 Contral Plane NSG
 az network nsg create --resource-group RG-LB-TEST --name CP-NSG --location eastus
-az network nsg rule create -g RG-LB-TEST --nsg-name CP-NSG -n ALLOW-SSH --priority 300 --source-address-prefixes Internet --destination-address-prefixes 10.0254.0/24 --destination-port-ranges 22 --access Allow --protocol Tcp --description "Allow SSH to Management Subnet"
+az network nsg rule create -g RG-LB-TEST --nsg-name CP-NSG -n ALLOW-SSH --priority 300 --source-address-prefixes Internet --destination-address-prefixes 10.0.254.0/24 --destination-port-ranges 22 --access Allow --protocol Tcp --description "Allow SSH to Management Subnet"
 az network nsg rule create -g RG-LB-TEST --nsg-name CP-NSG -n ALLOW-ICMP --priority 301 --source-address-prefixes Internet --destination-address-prefixes 10.0.54.0/24 --destination-port-ranges * --protocol Icmp --description "Allow ICMP to FW OOB interface"
 
 Untrust Subnet NSG
