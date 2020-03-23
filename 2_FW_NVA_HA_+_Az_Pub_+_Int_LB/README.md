@@ -106,7 +106,9 @@ az network nsg rule create -g RG-LB-TEST --nsg-name TRUST-NSG -n ALLOW-ALL --pri
 
 NSG Rule check
 az network nsg rule show --name ALLOW-ALL --nsg-name TRUST-NSG -g RG-LB-TEST --output table
-
+az network nsg rule show --name ALLOW-HTTP --nsg-name UNTRUST-NSG -g RG-LB-TEST --output table
+az network nsg rule show --name ALLOW-SSH --nsg-name CP-NSG -g RG-LB-TEST --output table
+az network nsg rule show --name ALLOW-ICMP --nsg-name CP-NSG -g RG-LB-TEST --output table
 
 Associate vNICs with corresponding NSGs
 az network nic update --resource-group RG-LB-TEST --name VSRX1-fxp0 --network-security-group CP-NSG
