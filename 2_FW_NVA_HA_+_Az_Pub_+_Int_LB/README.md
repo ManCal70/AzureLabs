@@ -368,3 +368,7 @@ set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST then l
 set security policies from-zone TRUST to-zone TRUST policy TRUST-TO-TRUST then log session-close
 </pre>
 
+### After configuring the firewalls, you should be able to connect to the web server through the public LB IP address
+
+<img src="
+https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_%2B_Az_Pub_%2B_Int_LB/apache2.png" />
