@@ -90,8 +90,8 @@ az network nic create --resource-group RG-FW-LAB-W --location westus --name VSRX
 az network nic create --resource-group RG-FW-LAB-W --location westus --name VSRX1-W-ge0 --vnet-name HUB-WEST --subnet FWSUB-WEST-SUB --private-ip-address 10.0.0.4 --ip-forwarding
 az network nic create --resource-group RG-FW-LAB-W --location westus --name VSRX2-W-ge0 --vnet-name HUB-WEST --subnet FWSUB-WEST-SUB --private-ip-address 10.0.0.5 --ip-forwarding
 
-az network nic create --resource-group RG-FW-LAB-W --location westus --name VM1-SPK1-W --vnet-name SPK1-WEST --subnet SPK1-WEST-SUB --private-ip-address 10.1.0.4
-az network nic create --resource-group RG-FW-LAB-W --location westus --name VM1-SPK2-W --vnet-name SPK2-WEST --subnet SPK2-WEST-SUB --private-ip-address 10.2.0.4
+az network nic create --resource-group RG-FW-LAB-W --location westus --name VM1-SPK1-W-eth0 --vnet-name SPK1-WEST --subnet SPK1-WEST-SUB --private-ip-address 10.1.0.4
+az network nic create --resource-group RG-FW-LAB-W --location westus --name VM1-SPK2-W-eth0 --vnet-name SPK2-WEST --subnet SPK2-WEST-SUB --private-ip-address 10.2.0.4
 
 EAST
 az network nic create --resource-group RG-FW-LAB-E --location eastus --name VSRX1-E-fxp0 --vnet-name HUB-EAST --subnet MGT-EAST-SUB --public-ip-address  VSRX1-E-PIP1 --private-ip-address 10.10.254.4
@@ -100,8 +100,8 @@ az network nic create --resource-group RG-FW-LAB-E --location eastus --name VSRX
 az network nic create --resource-group RG-FW-LAB-E --location eastus --name VSRX1-E-ge0 --vnet-name HUB-EAST --subnet FWSUB-EAST-SUB --private-ip-address 10.10.0.4 --ip-forwarding
 az network nic create --resource-group RG-FW-LAB-E --location eastus --name VSRX2-E-ge0 --vnet-name HUB-EAST --subnet FWSUB-EAST-SUB --private-ip-address 10.10.0.5 --ip-forwarding
 
-az network nic create --resource-group RG-FW-LAB-E --location eastus --name VM1-SPK1-E --vnet-name SPK1-EAST --subnet SPK1-EAST-SUB --private-ip-address 10.11.0.4
-az network nic create --resource-group RG-FW-LAB-E --location eastus --name VM1-SPK2-E --vnet-name SPK2-EAST --subnet SPK2-EAST-SUB --private-ip-address 10.12.0.4
+az network nic create --resource-group RG-FW-LAB-E --location eastus --name VM1-SPK1-E-eth0 --vnet-name SPK1-EAST --subnet SPK1-EAST-SUB --private-ip-address 10.11.0.4
+az network nic create --resource-group RG-FW-LAB-E --location eastus --name VM1-SPK2-E-eth0 --vnet-name SPK2-EAST --subnet SPK2-EAST-SUB --private-ip-address 10.12.0.4
 </pre>
 
 ### Create Contral Plane NSG
@@ -161,9 +161,23 @@ WEST
 az vm create --resource-group RG-FW-LAB-W --location westus --name VSRX1-W --size Standard_DS3_v2 --nics VSRX1-W-fxp0 VSRX1-W-ge0 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234 --boot-diagnostics-storage mcbootdiag --no-wait
 az vm create --resource-group RG-FW-LAB-W --location westus --name VSRX2-W --size Standard_DS3_v2 --nics VSRX2-W-fxp0 VSRX2-W-ge0 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234 --boot-diagnostics-storage mcbootdiag --no-wait
 
+az vm create -n WEB-SERVER -g RG-LB-TEST --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics VM1-SPK1-W-eth0 --boot-diagnostics-storage mcbootdiag --no-wait
+az vm create -n WEB-SERVER -g RG-LB-TEST --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics VM1-SPK2-W-eth0 --boot-diagnostics-storage mcbootdiag --no-wait
+
+
 EAST
 az vm create --resource-group RG-FW-LAB-E --location eastus --name VSRX1-E --size Standard_DS3_v2 --nics VSRX1-E-fxp0 VSRX1-E-ge0 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234 --boot-diagnostics-storage mcbootdiag --no-wait
 az vm create --resource-group RG-FW-LAB-E --location eastus --name VSRX2-E --size Standard_DS3_v2 --nics VSRX2-E-fxp0 VSRX2-E-ge0 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234 --boot-diagnostics-storage mcbootdiag --no-wait
+
+az vm create -n WEB-SERVER -g RG-LB-TEST --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics VM1-SPK1-E-eth0 --boot-diagnostics-storage mcbootdiag --no-wait
+az vm create -n WEB-SERVER -g RG-LB-TEST --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics VM1-SPK2-E-eth0 --boot-diagnostics-storage mcbootdiag --no-wait
+
+
+Once the VM is up and running, run the following to update and install apache2:
+1- sudo apt update
+2- sudo apt upgrade -y
+3- sudo apt install apache2 -y
+
 </pre>
 
 ### Create ILB
