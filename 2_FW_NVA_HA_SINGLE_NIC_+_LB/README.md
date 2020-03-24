@@ -328,7 +328,7 @@ set routing-instances VR1 interface ge-0/0/0.0
 <pre lang= >
 lab-user@VSRX1-E# run show security flow session
 Session ID: 29016, Policy name: self-traffic-policy/1, Timeout: 1792, Valid
-  In: 168.63.129.16/62474 --> 10.10.0.4/22;tcp, Conn Tag: 0x0, If: ge-0/0/0.0, Pkts: 3, Bytes: 132,
+  In: <b>168.63.129.16/62474</b> --> 10.10.0.4/22;tcp, Conn Tag: 0x0, If: <b>ge-0/0/0.0</b>, Pkts: 3, Bytes: 132,
   Out: 10.10.0.4/22 --> 168.63.129.16/62474;tcp, Conn Tag: 0x0, If: .local..6, Pkts: 2, Bytes: 112,
 Total sessions: 1
 </pre>
