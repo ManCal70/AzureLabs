@@ -388,5 +388,5 @@ Session ID: 5038, Policy name: self-traffic-policy/1, Timeout: 1792, Valid
   In: <b>168.63.129.16/54397</b> --> 10.0.0.4/22;tcp, Conn Tag: 0x0, If: <b>ge-0/0/0.0</b>, Pkts: 3, Bytes: 132,
   Out: 10.0.0.4/22 --> 168.63.129.16/54397;tcp, Conn Tag: 0x0, If: .local..7, Pkts: 2, Bytes: 112,
 Total sessions: 2
-
+</pre>
 
