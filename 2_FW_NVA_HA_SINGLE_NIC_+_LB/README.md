@@ -284,6 +284,7 @@ az network route-table route show -g RG-FW-LAB-E --name RT-2-LB-E --route-table-
 <pre lang= >
 <b>EAST Firewall config:</b>
 <b>First command you should run in firewall:</b>
+
 delete security
 
 set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 match source-address 10.11.0.0/24
@@ -317,12 +318,9 @@ set routing-instances VR1 routing-options static route 0.0.0.0/0 next-hop 10.10.
 set routing-instances VR1 interface ge-0/0/0.0
 
 <b>WEST Firewall Config:</b>
-set groups azure-provision system services netconf ssh
-set groups azure-provision interfaces fxp0 unit 0 family inet dhcp
-set apply-groups azure-provision
-set system services ssh
-set system syslog file messages any any
-set system license autoupdate url https://ae1.juniper.net/junos/key_retrieval
+<b>Same as east firewalls:</b>
+
+delete security
 
 set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 match source-address 10.1.0.0/24
 set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 match destination-address 10.2.0.0/24
