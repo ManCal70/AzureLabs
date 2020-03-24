@@ -104,6 +104,34 @@ az network nic create --resource-group RG-FW-LAB-E --location eastus --name VM1-
 az network nic create --resource-group RG-FW-LAB-E --location eastus --name VM1-SPK2-E --vnet-name SPK2-EAST --subnet SPK2-EAST-SUB --private-ip-address 10.12.0.4
 </pre>
 
+### Create Contral Plane NSG
+<pre lang= >
+az network nsg create --resource-group RG-FW-LAB-W --name CPNSG-WEST --location westus
+az network nsg create --resource-group RG-FW-LAB-E --name CPNSG-EAST --location eastus
+</pre>
+
+### Create CP NSG rule
+<pre lang= >
+WEST
+az network nsg rule create -g RG-FW-LAB-W --nsg-name CPNSG-WEST -n ALLOW-SSH --priority 300 --source-address-prefixes Internet --destination-address-prefixes 10.0.254.0/24 --destination-port-ranges 22 --access Allow --protocol Tcp --description "Allow SSH to Management Subnet"
+az network nsg rule create -g RG-FW-LAB-W --nsg-name CPNSG-WEST -n ALLOW-ICMP --priority 301 --source-address-prefixes Internet --destination-address-prefixes 10.0.254.0/24 --destination-port-ranges * --protocol Icmp --description "Allow ICMP to FW OOB interface"
+
+EAST
+az network nsg rule create -g RG-FW-LAB-E --nsg-name CPNSG-EAST -n ALLOW-SSH --priority 300 --source-address-prefixes Internet --destination-address-prefixes 10.10.254.0/24 --destination-port-ranges 22 --access Allow --protocol Tcp --description "Allow SSH to Management Subnet"
+az network nsg rule create -g RG-FW-LAB-E --nsg-name CPNSG-EAST -n ALLOW-ICMP --priority 301 --source-address-prefixes Internet --destination-address-prefixes 10.10.254.0/24 --destination-port-ranges * --protocol Icmp --description "Allow ICMP to FW OOB interface"
+</pre>
+
+### Create Data plane NSG
+<pre lang= >
+WEST
+az network nsg create --resource-group RG-FW-LAB-W --name DPNSG-WEST --location westus
+az network nsg create --resource-group RG-FW-LAB-E --name DPNSG-EAST --location eastus
+
+EAST
+az network nsg rule create -g RG-FW-LAB-W --nsg-name DPNSG-WEST -n ALLOW-ALL --priority 300 --source-address-prefixes Internet --destination-address-prefixes * --destination-port-ranges * --access Allow --protocol * --description "Allow All"
+az network nsg rule create -g RG-FW-LAB-E --nsg-name DPNSG-EAST -n ALLOW-ALL --priority 300 --source-address-prefixes Internet --destination-address-prefixes * --destination-port-ranges * --access Allow --protocol * --description "Allow All"
+</pre>
+
 
 ### NVA Firewall Configuration
 <pre lang= >
