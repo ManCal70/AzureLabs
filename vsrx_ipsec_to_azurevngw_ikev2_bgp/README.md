@@ -129,7 +129,7 @@ st0                     <b>up</b>    <b>up</b>
 st0.0                   <b>up</b>    <b>up</b>   inet 
 </div>
 </pre>
-
+<pre lang= >
 <b>show bgp summary</b>
 <div class="boxed">
 Threading mode: BGP I/O
@@ -140,13 +140,15 @@ inet.0
 Peer                     AS      InPkt     OutPkt    OutQ   Flaps Last Up/Dwn State|#Active/Received/Accepted/Damped...
 <b>10.225.254.254</b>        <b>65002</b>         99         96       0       1       42:37 1/1/1/0              0/0/0/0
 </div>
-
+</pre>
+<pre lang= >
 <b>show route receive-protocol bgp 10.225.254.254</b> ====> BGP routes received from VNG
 <div class="boxed">
 inet.0: 14 destinations, 14 routes (14 active, 0 holddown, 0 hidden)
   Prefix                  Nexthop              MED     Lclpref    AS path
 * <b>10.225.0.0/16</b>           <b>10.225.254.254</b>                          <b>65002</b> I
 </div>
+</pre>
 
 <b>You can ping the BGP neighbor VNG IP</b>
 <pre lang= >
