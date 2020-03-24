@@ -501,7 +501,7 @@ lab-user@VSRX2-W# <b>deactivate security policies from-zone TRUST to-zone TRUST 
 [edit]
 lab-user@VSRX2-W# <b>commit</b>
 
-<b>Now from SPK1 to SPK2 is being denied</b>
+<b>Traffic from SPK1 to SPK2 is now being denid (100% packet loss)</b>
 -------------------------------------------------
 lab-user@<b>W-SPK1-VM</b>:~$ <b>ping 10.2.0.4 -c 4</b>
 PING 10.2.0.4 (10.2.0.4) 56(84) bytes of data.
@@ -510,7 +510,7 @@ PING 10.2.0.4 (10.2.0.4) 56(84) bytes of data.
 4 packets transmitted, 0 received, <b>100%</b> <b>packet loss</b>, time 3073ms
 --------------------------------------------------
 
-<b>Traffic from SPK2 to SPK1 is still working</b>
+<b>Traffic from SPK2 to SPK1 is still working (different security policy)</b>
 lab-user@<b>W-SPK2-VM</b>:~$ <b>ping 10.1.0.4 -c 4</b>
 PING 10.1.0.4 (10.1.0.4) 56(84) bytes of data.
 64 bytes from 10.1.0.4: icmp_seq=1 ttl=63 time=1.76 ms
@@ -521,5 +521,6 @@ PING 10.1.0.4 (10.1.0.4) 56(84) bytes of data.
 --- 10.1.0.4 ping statistics ---
 4 packets transmitted, 4 received, 0% packet loss, time 3004ms
 rtt min/avg/max/mdev = 1.643/1.739/1.804/0.072 ms
-
 </pre>
+
+### I hope this lab was informative. Enjoy!
