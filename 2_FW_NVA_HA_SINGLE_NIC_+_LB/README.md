@@ -90,6 +90,7 @@ az network nic create --resource-group RG-FW-LAB-W --location westus --name VSRX
 az network nic create --resource-group RG-FW-LAB-W --location westus --name VSRX1-W-ge0 --vnet-name HUB-WEST --subnet FWSUB-WEST-SUB --private-ip-address 10.0.0.4 --ip-forwarding
 az network nic create --resource-group RG-FW-LAB-W --location westus --name VSRX2-W-ge0 --vnet-name HUB-WEST --subnet FWSUB-WEST-SUB --private-ip-address 10.0.0.5 --ip-forwarding
 
+West Test VM vNICs
 az network nic create --resource-group RG-FW-LAB-W --location westus --name VM1-SPK1-W-eth0 --vnet-name SPK1-WEST --subnet SPK1-WEST-SUB --private-ip-address 10.1.0.4
 az network nic create --resource-group RG-FW-LAB-W --location westus --name VM1-SPK2-W-eth0 --vnet-name SPK2-WEST --subnet SPK2-WEST-SUB --private-ip-address 10.2.0.4
 
@@ -100,6 +101,7 @@ az network nic create --resource-group RG-FW-LAB-E --location eastus --name VSRX
 az network nic create --resource-group RG-FW-LAB-E --location eastus --name VSRX1-E-ge0 --vnet-name HUB-EAST --subnet FWSUB-EAST-SUB --private-ip-address 10.10.0.4 --ip-forwarding
 az network nic create --resource-group RG-FW-LAB-E --location eastus --name VSRX2-E-ge0 --vnet-name HUB-EAST --subnet FWSUB-EAST-SUB --private-ip-address 10.10.0.5 --ip-forwarding
 
+East Test VM vNICs
 az network nic create --resource-group RG-FW-LAB-E --location eastus --name VM1-SPK1-E-eth0 --vnet-name SPK1-EAST --subnet SPK1-EAST-SUB --private-ip-address 10.11.0.4
 az network nic create --resource-group RG-FW-LAB-E --location eastus --name VM1-SPK2-E-eth0 --vnet-name SPK2-EAST --subnet SPK2-EAST-SUB --private-ip-address 10.12.0.4
 </pre>
