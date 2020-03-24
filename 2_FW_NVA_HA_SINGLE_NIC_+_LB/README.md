@@ -134,8 +134,12 @@ az network nsg create --resource-group RG-FW-LAB-E --name DPNSG-EAST --location 
 
 ### Create firewall data plane NSG rule
 <pre lang= >
-az network nsg rule create -g RG-FW-LAB-W --nsg-name DPNSG-WEST -n ALLOW-ALL --priority 300 --source-address-prefixes Internet --destination-address-prefixes * --destination-port-ranges * --access Allow --protocol * --description "Allow All"
-az network nsg rule create -g RG-FW-LAB-E --nsg-name DPNSG-EAST -n ALLOW-ALL --priority 300 --source-address-prefixes Internet --destination-address-prefixes * --destination-port-ranges * --access Allow --protocol * --description "Allow All"
+az network nsg rule create -g RG-FW-LAB-W --nsg-name DPNSG-WEST -n ALLOW-ALL --priority 300 --source-address-prefixes * --destination-address-prefixes * --destination-port-ranges * --access Allow --protocol * --description "Allow All" --direction Inbound
+az network nsg rule create -g RG-FW-LAB-E --nsg-name DPNSG-EAST -n ALLOW-ALL --priority 300 --source-address-prefixes * --destination-address-prefixes * --destination-port-ranges * --access Allow --protocol * --description "Allow All" --direction Inbound
+
+az network nsg rule create -g RG-FW-LAB-W --nsg-name DPNSG-WEST -n ALLOW-ALL-OUT --priority 300 --source-address-prefixes * --destination-address-prefixes * --destination-port-ranges * --access Allow --protocol * --description "Allow All" --direction Outbound
+az network nsg rule create -g RG-FW-LAB-E --nsg-name DPNSG-EAST -n ALLOW-ALL-OUT --priority 300 --source-address-prefixes * --destination-address-prefixes * --destination-port-ranges * --access Allow --protocol * --description "Allow All" --direction Outbound
+
 </pre>
 
 
