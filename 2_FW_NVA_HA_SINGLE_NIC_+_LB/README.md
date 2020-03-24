@@ -110,7 +110,7 @@ az network nic create --resource-group RG-FW-LAB-E --location eastus --name VM1-
 ### NVA Firewall Configuration
 <pre lang= >
 <b>Interface configuration</b>
-set interfaces ge-0/0/0 description VNETSUB
+set interfaces ge-0/0/0 description "Firewal vNIC"
 set interfaces ge-0/0/0 unit 0 family inet dhcp
 set interfaces ge-0/0/1 disable
 set interfaces fxp0 unit 0
@@ -123,15 +123,20 @@ set security zones security-zone TRUST host-inbound-traffic protocols all
 set security zones security-zone TRUST interfaces ge-0/0/0.0
 
 <b>Security Policies to allow Spokes to communicate with each other:</b>
-set security policies from-zone trust to-zone trust policy 11-TO-12 match source-address 10.11.0.0/24
-set security policies from-zone trust to-zone trust policy 11-TO-12 match destination-address 10.12.0.0/24
-set security policies from-zone trust to-zone trust policy 11-TO-12 match application any
-set security policies from-zone trust to-zone trust policy 11-TO-12 then permit
+set security policies from-zone TRUST to-zone TRUST policy 11-TO-12 match source-address 10.11.0.0/24
+set security policies from-zone TRUST to-zone TRUST policy 11-TO-12 match destination-address 10.12.0.0/24
+set security policies from-zone TRUST to-zone TRUST policy 11-TO-12 match application any
+set security policies from-zone TRUST to-zone TRUST policy 11-TO-12 then permit
 
-set security policies from-zone trust to-zone trust policy 12-TO-11 match source-address 10.12.0.0/24
-set security policies from-zone trust to-zone trust policy 12-TO-11 match destination-address 10.11.0.0/24
-set security policies from-zone trust to-zone trust policy 12-TO-11 match application any
-set security policies from-zone trust to-zone trust policy 12-TO-11 then permit
+set security policies from-zone TRUST to-zone TRUST policy 12-TO-11 match source-address 10.12.0.0/24
+set security policies from-zone TRUST to-zone TRUST policy 12-TO-11 match destination-address 10.11.0.0/24
+set security policies from-zone TRUST to-zone TRUST policy 12-TO-11 match application any
+set security policies from-zone TRUST to-zone TRUST policy 12-TO-11 then permit
 
+<b>Single routing instance config</b>
+set routing-instances VR1 instance-type virtual-router
+set routing-instances VR1 routing-options static route 168.63.129.16/32 next-hop 10.10.0.1 >>> Probe route
+set routing-instances VR1 routing-options static route 0.0.0.0/0 next-hop 10.10.0.1 >>> Default to fabric
+set routing-instances VR1 interface ge-0/0/0.0
 
 </pre>
