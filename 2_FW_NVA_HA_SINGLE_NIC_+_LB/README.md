@@ -471,10 +471,10 @@ PING 10.2.0.4 (10.2.0.4) 56(84) bytes of data.
 ### This is what the firewall session table looks like for the ping above
 <pre lang= >
 lab-user@VSRX2-W# <b>run show security flow session</b>
-Session ID: 30175, Policy name: SPK1-TO-SPOK2/7, Timeout: 2, Valid
-  In: <b>10.1.0.4/9</b> --> <b>10.2.0.4/27945</b>;icmp, Conn Tag: 0x0, If: ge-0/0/0.0, Pkts: 1, Bytes: 84,
-  Out: <b>10.2.0.4/27945</b> --> <b>10.1.0.4/9</b>;icmp, Conn Tag: 0x0, If: ge-0/0/0.0, Pkts: 1, Bytes: 84,
+Session ID: 30175, <b>Policy name</b>: <b>SPK1-TO-SPOK2/7</b>, Timeout: 2, Valid
+  In: <b>10.1.0.4/9</b> --> <b>10.2.0.4/27945</b>;icmp, Conn Tag: 0x0, If: ge-0/0/0.0, Pkts: 1, Bytes: 84, <b><<< Inbound ICMP</b>
+  Out: <b>10.2.0.4/27945</b> --> <b>10.1.0.4/9</b>;icmp, Conn Tag: 0x0, If: ge-0/0/0.0, Pkts: 1, Bytes: 84, <b>>>> Return ICMP</b>
 
-Session ID: 30176, Policy name: SPK1-TO-SPOK2/7, Timeout: 2, Valid
-  In: <b>10.1.0.4/10</b> --> <b>10.2.0.4/27945</b>;icmp, Conn Tag: 0x0, If: ge-0/0/0.0, Pkts: 1, Bytes: 84,
-  Out: <b>10.2.0.4/27945</b> --> <b>10.1.0.4/10</b>;icmp, Conn Tag: 0x0, If: ge-0/0/0.0, Pkts: 1, Bytes: 84,
+Session ID: 30176, <b>Policy name</b>: <b>SPK1-TO-SPOK2/7</b>, Timeout: 2, Valid 
+  In: <b>10.1.0.4/10</b> --> <b>10.2.0.4/27945</b>;icmp, Conn Tag: 0x0, If: ge-0/0/0.0, Pkts: 1, Bytes: 84, <b><<< Inbound ICMP</b>
+  Out: <b>10.2.0.4/27945</b> --> <b>10.1.0.4/10</b>;icmp, Conn Tag: 0x0, If: ge-0/0/0.0, Pkts: 1, Bytes: 84, <b> >>> Return ICMP</b>
