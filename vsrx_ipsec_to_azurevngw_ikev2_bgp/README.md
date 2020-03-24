@@ -129,7 +129,7 @@ st0                     <b>up</b>    <b>up</b>
 st0.0                   <b>up</b>    <b>up</b>   inet 
 </div>
 
-<b>>show bgp summary</b>
+<b>show bgp summary</b>
 <div class="boxed">
 Threading mode: BGP I/O
 Groups: 1 Peers: 1 Down peers: 0
