@@ -81,7 +81,7 @@ az network public-ip create --name VSRX1-W-PIP1 --allocation-method Static --res
 az network public-ip create --name VSRX2-W-PIP1 --allocation-method Static --resource-group RG-FW-LAB-W --location westus --sku Standard
 </pre>
 
-### Creat vNICs for all VMS
+### Create vNICs for all VMS
 <pre lang= >
 WEST
 az network nic create --resource-group RG-FW-LAB-W --location westus --name VSRX1-W-fxp0 --vnet-name HUB-WEST --subnet MGT-WEST-SUB --public-ip-address  VSRX1-W-PIP1 --private-ip-address 10.0.254.4
@@ -166,9 +166,12 @@ az vm create --resource-group RG-FW-LAB-E --location eastus --name VSRX1-E --siz
 az vm create --resource-group RG-FW-LAB-E --location eastus --name VSRX2-E --size Standard_DS3_v2 --nics VSRX2-E-fxp0 VSRX2-E-ge0 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234 --boot-diagnostics-storage mcbootdiag --no-wait
 </pre>
 
-### create ILB
+### Create ILB
 <pre lang= >
+WEST
 az network lb create --resource-group RG-FW-LAB-W --name ILB-W --frontend-ip-name ILBFE-W --private-ip-address 10.0.0.254 --backend-pool-name ILBBE-W --vnet-name HUB-WEST --subnet FWSUB-WEST-SUB --location westus --sku Standard
+
+EAST
 az network lb create --resource-group RG-FW-LAB-E --name ILB-E --frontend-ip-name ILBFE-E --private-ip-address 10.10.0.254 --backend-pool-name ILBBE-E --vnet-name HUB-EAST --subnet FWSUB-EAST-SUB --location eastus --sku Standard
 </pre>
 
@@ -185,40 +188,58 @@ az network nic ip-config update -g RG-FW-LAB-E --nic-name VSRX2-E-ge0 -n ipconfi
 
 ### Create probe
 <pre lang= >
+WEST
 az network lb probe create --lb-name ILB-W --name FWPROBE-W --port 22 --protocol tcp --resource-group  RG-FW-LAB-W
+
+EAST
 az network lb probe create --lb-name ILB-E --name FWPROBE-E --port 22 --protocol tcp --resource-group  RG-FW-LAB-E
 </pre>
 
 ### Create HA ports (route all traffc and ports to backe end) lb rule
 <pre lang= >
+WEST
 az network lb rule create -g RG-FW-LAB-W --lb-name ILB-W --name LBRULE-W  --protocol All --frontend-port 0 --backend-port 0 --frontend-ip-name  ILBFE-W --backend-pool-name ILBBE-W --probe-name FWPROBE-W
+
+
+EAST
 az network lb rule create -g RG-FW-LAB-E --lb-name ILB-E --name LBRULE-E  --protocol All --frontend-port 0 --backend-port 0 --frontend-ip-name  ILBFE-E --backend-pool-name ILBBE-E --probe-name FWPROBE-E
 </pre>
 
 ### UDR route table
 <pre lang= >
+WEST
 az network route-table create --name RT-2-LB-W -g RG-FW-LAB-W --location westus --disable-bgp-route-propagation true
+
+EAST
 az network route-table create --name RT-2-LB-E -g RG-FW-LAB-E --location eastus --disable-bgp-route-propagation true
 </pre>
 
 ### Create Routes
 <pre lang= >
+EAST
 az network route-table route create --name RT-2-LB-E -g RG-FW-LAB-E --route-table-name RT-2-LB-E --address-prefix 0.0.0.0/0 --next-hop-type VirtualAppliance --next-hop-ip-address 10.10.0.254
+
+WEST
 az network route-table route create --name RT-2-LB-W -g RG-FW-LAB-W --route-table-name RT-2-LB-W --address-prefix 0.0.0.0/0 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.0.254
 </pre>
 
 ### Apply UDR to the Spoke VNETS
 <pre lang= >
+WEST
 az network vnet subnet update --vnet-name SPK1-WEST --name SPK1-WEST-SUB --resource-group RG-FW-LAB-W --route-table RT-2-LB-W
 az network vnet subnet update --vnet-name SPK2-WEST --name SPK2-WEST-SUB --resource-group RG-FW-LAB-W --route-table RT-2-LB-W
 
+EAST
 az network vnet subnet update --vnet-name SPK1-EAST --name SPK1-EAST-SUB --resource-group RG-FW-LAB-E --route-table RT-2-LB-E
 az network vnet subnet update --vnet-name SPK2-EAST --name SPK2-EAST-SUB --resource-group RG-FW-LAB-E --route-table RT-2-LB-E
 </pre>
 
 ### view the UDR
 <pre lang= >
+WEST
 az network route-table route show -g RG-FW-LAB-W --name RT-2-LB-W --route-table-name RT-2-LB-W --output table
+
+EAST
 az network route-table route show -g RG-FW-LAB-E --name RT-2-LB-E --route-table-name RT-2-LB-E --output table
 </pre>
 
