@@ -109,11 +109,13 @@ az network nic create --resource-group RG-FW-LAB-E --location eastus --name VM1-
 
 ### NVA Firewall Configuration
 <pre lang= >
+<b>Interface configuration</b>
 set interfaces ge-0/0/0 description VNETSUB
 set interfaces ge-0/0/0 unit 0 family inet dhcp
 set interfaces ge-0/0/1 disable
 set interfaces fxp0 unit 0
 
+<b>Configure security zone, spoke address prefixes</b>
 set security zones security-zone TRUST address-book address 10.11.0.0/24 10.11.0.0/24 >>> Spoke Subnet
 set security zones security-zone TRUST address-book address 10.12.0.0/24 10.12.0.0/24 >>> Spoke Subnet
 set security zones security-zone TRUST host-inbound-traffic system-services all
