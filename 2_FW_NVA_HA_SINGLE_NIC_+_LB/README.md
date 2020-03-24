@@ -246,33 +246,77 @@ az network route-table route show -g RG-FW-LAB-E --name RT-2-LB-E --route-table-
 
 ### NVA Firewall Configuration
 <pre lang= >
-<b>Interface configuration</b>
-set interfaces ge-0/0/0 description "Firewal vNIC"
-set interfaces ge-0/0/0 unit 0 family inet dhcp
-set interfaces ge-0/0/1 disable
-set interfaces fxp0 unit 0
+<b>EAST Firewall config:</b>
+set groups azure-provision system services netconf ssh
+set groups azure-provision interfaces fxp0 unit 0 family inet dhcp
+set apply-groups azure-provision
+set system services ssh
+set system syslog file messages any any
+set system license autoupdate url https://ae1.juniper.net/junos/key_retrieval
 
-<b>Configure security zone, spoke address prefixes</b>
-set security zones security-zone TRUST address-book address 10.11.0.0/24 10.11.0.0/24 <b>>>> Spoke Subnet</b>
-set security zones security-zone TRUST address-book address 10.12.0.0/24 10.12.0.0/24 <b>>>> Spoke Subnet</b>
+set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 match source-address 10.11.0.0/24
+set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 match destination-address 10.12.0.0/24
+set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 match application any
+set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 then permit
+set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 then log session-init
+set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 then log session-close
+
+set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 match source-address 10.12.0.0/24
+set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 match destination-address 10.11.0.0/24
+set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 match application any
+set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 then permit
+set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 then log session-init
+set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 then log session-close
+
+set security zones security-zone TRUST address-book address 10.11.0.0/24 10.11.0.0/24
+set security zones security-zone TRUST address-book address 10.12.0.0/24 10.12.0.0/24
 set security zones security-zone TRUST host-inbound-traffic system-services all
 set security zones security-zone TRUST host-inbound-traffic protocols all
 set security zones security-zone TRUST interfaces ge-0/0/0.0
 
-<b>Security Policies to allow Spokes to communicate with each other:</b>
-set security policies from-zone TRUST to-zone TRUST policy 11-TO-12 match source-address 10.11.0.0/24
-set security policies from-zone TRUST to-zone TRUST policy 11-TO-12 match destination-address 10.12.0.0/24
-set security policies from-zone TRUST to-zone TRUST policy 11-TO-12 match application any
-set security policies from-zone TRUST to-zone TRUST policy 11-TO-12 then permit
+set interfaces ge-0/0/0 description VNETSUB
+set interfaces ge-0/0/0 unit 0 family inet dhcp
+set interfaces ge-0/0/1 disable
+set interfaces fxp0 unit 0
 
-set security policies from-zone TRUST to-zone TRUST policy 12-TO-11 match source-address 10.12.0.0/24
-set security policies from-zone TRUST to-zone TRUST policy 12-TO-11 match destination-address 10.11.0.0/24
-set security policies from-zone TRUST to-zone TRUST policy 12-TO-11 match application any
-set security policies from-zone TRUST to-zone TRUST policy 12-TO-11 then permit
-
-<b>Single routing instance config</b>
 set routing-instances VR1 instance-type virtual-router
-set routing-instances VR1 routing-options static route 168.63.129.16/32 next-hop 10.10.0.1 <b>>>> Probe route</b>
-set routing-instances VR1 routing-options static route 0.0.0.0/0 next-hop 10.10.0.1 <b>>>> Default to fabric</b>
+set routing-instances VR1 routing-options static route 168.63.129.16/32 next-hop 10.10.0.1
+set routing-instances VR1 routing-options static route 0.0.0.0/0 next-hop 10.10.0.1
+set routing-instances VR1 interface ge-0/0/0.0
+
+<b>WEST Firewall Config:</b>
+set groups azure-provision system services netconf ssh
+set groups azure-provision interfaces fxp0 unit 0 family inet dhcp
+set apply-groups azure-provision
+set system services ssh
+set system syslog file messages any any
+set system license autoupdate url https://ae1.juniper.net/junos/key_retrieval
+
+set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 match source-address 10.1.0.0/24
+set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 match destination-address 10.2.0.0/24
+set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 match application any
+set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 then permit
+set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 then log session-init
+set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 then log session-close
+
+set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 match source-address 10.2.0.0/24
+set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 match destination-address 10.1.0.0/24
+set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 match application any
+set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 then permit
+set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 then log session-init
+set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 then log session-close
+
+set security zones security-zone TRUST address-book address 10.1.0.0/24 10.1.0.0/24
+set security zones security-zone TRUST address-book address 10.2.0.0/24 10.2.0.0/24
+set security zones security-zone TRUST host-inbound-traffic system-services all
+set security zones security-zone TRUST host-inbound-traffic protocols all
+set security zones security-zone TRUST interfaces ge-0/0/0.0
+set interfaces ge-0/0/0 description VNETSUB
+set interfaces ge-0/0/0 unit 0 family inet dhcp
+set interfaces ge-0/0/1 disable
+set interfaces fxp0 unit 0
+set routing-instances VR1 instance-type virtual-router
+set routing-instances VR1 routing-options static route 168.63.129.16/32 next-hop 10.0.0.1
+set routing-instances VR1 routing-options static route 0.0.0.0/0 next-hop 10.0.0.1
 set routing-instances VR1 interface ge-0/0/0.0
 </pre>
