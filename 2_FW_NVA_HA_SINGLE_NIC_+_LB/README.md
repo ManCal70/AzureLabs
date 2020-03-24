@@ -107,4 +107,29 @@ az network nic create --resource-group RG-FW-LAB-E --location eastus --name VM1-
 </pre>
 
 
-### Key details
+### NVA Firewall Configuration
+<pre lang= >
+set interfaces ge-0/0/0 description VNETSUB
+set interfaces ge-0/0/0 unit 0 family inet dhcp
+set interfaces ge-0/0/1 disable
+set interfaces fxp0 unit 0
+
+set security zones security-zone TRUST address-book address 10.11.0.0/24 10.11.0.0/24 >>> Spoke Subnet
+set security zones security-zone TRUST address-book address 10.12.0.0/24 10.12.0.0/24 >>> Spoke Subnet
+set security zones security-zone TRUST host-inbound-traffic system-services all
+set security zones security-zone TRUST host-inbound-traffic protocols all
+set security zones security-zone TRUST interfaces ge-0/0/0.0
+
+<b>Security Policies to allow Spokes to communicate with each other:</b>
+set security policies from-zone trust to-zone trust policy 11-TO-12 match source-address 10.11.0.0/24
+set security policies from-zone trust to-zone trust policy 11-TO-12 match destination-address 10.12.0.0/24
+set security policies from-zone trust to-zone trust policy 11-TO-12 match application any
+set security policies from-zone trust to-zone trust policy 11-TO-12 then permit
+
+set security policies from-zone trust to-zone trust policy 12-TO-11 match source-address 10.12.0.0/24
+set security policies from-zone trust to-zone trust policy 12-TO-11 match destination-address 10.11.0.0/24
+set security policies from-zone trust to-zone trust policy 12-TO-11 match application any
+set security policies from-zone trust to-zone trust policy 12-TO-11 then permit
+
+
+</pre>
