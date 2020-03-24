@@ -55,6 +55,7 @@ az network vnet create --name HUB-EAST --resource-group RG-FW-LAB-E --location e
 az network vnet create --name SPK1-EAST --resource-group RG-FW-LAB-E --location eastus --address-prefix 10.11.0.0/16
 az network vnet create --name SPK2-EAST --resource-group RG-FW-LAB-E --location eastus --address-prefix 10.12.0.0/16
 </pre>
+
 ### Create Subnets
 <pre lang= >
 WEST
@@ -71,7 +72,7 @@ az network vnet subnet create --vnet-name SPK1-EAST --name SPK1-EAST-SUB --resou
 az network vnet subnet create --vnet-name SPK2-EAST --name SPK2-EAST-SUB --resource-group RG-FW-LAB-E --address-prefixes 10.12.0.0/24 --output table
 </pre>
 
-Create vSRX PIPs for management"
+### Create vSRX PIPs for management
 <pre lang= >
 az network public-ip create --name VSRX1-E-PIP1 --allocation-method Static --resource-group RG-FW-LAB-E --location eastus --sku Standard
 az network public-ip create --name VSRX2-E-PIP1 --allocation-method Static --resource-group RG-FW-LAB-E --location eastus --sku Standard
@@ -80,7 +81,7 @@ az network public-ip create --name VSRX1-W-PIP1 --allocation-method Static --res
 az network public-ip create --name VSRX2-W-PIP1 --allocation-method Static --resource-group RG-FW-LAB-W --location westus --sku Standard
 </pre>
 
-Creat vNICs for all VMS
+### Creat vNICs for all VMS
 <pre lang= >
 WEST
 az network nic create --resource-group RG-FW-LAB-W --location westus --name VSRX1-W-fxp0 --vnet-name HUB-WEST --subnet MGT-WEST-SUB --public-ip-address  VSRX1-W-PIP1 --private-ip-address 10.0.254.4
