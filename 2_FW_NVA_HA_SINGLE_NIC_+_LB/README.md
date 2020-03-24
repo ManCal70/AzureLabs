@@ -15,8 +15,7 @@ When utilizing VMs/NVAs with multiple vNICs for ingress and egress (like firewal
 ## How to maintain flow symmetry/affinity with out source NAT?
 The Azure load balancer hashing algorithm takes into account source IP/Port & destination IP/Port, and it is programmed in a way that is independent of the order of the fields. Means both flows/wings of the connection will maintain symmetry.
 
-<p align="left">
-<b>Design</left></b>
+### Design
 <pre lang= >
 <b>* 2 x single vNIC Network Virtual Appliances (NVA) Firewalls (Juniper vSRX)</b>
 <b>* Active/Active design front ended by an Internal LB.</b>
