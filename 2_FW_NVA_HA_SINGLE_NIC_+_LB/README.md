@@ -480,7 +480,7 @@ Session ID: 30176, <b>Policy name</b>: <b>SPK1-TO-SPOK2/7</b>, Timeout: 2, Valid
   Out: <b>10.2.0.4/27945</b> --> <b>10.1.0.4/10</b>;icmp, Conn Tag: 0x0, If: ge-0/0/0.0, Pkts: 1, Bytes: 84, <b> >>> Return ICMP</b>
 </pre>
 
-### Traffic from SPK1-W to SPOKE2-W subnet is being permitted by security policy SPK1-TO-SPOK2. I am going to deactivate this policy to show that traffic will not be allowed to traverse the firewall from SPK1 to SPKE2, but since SPK2 to SPK1 is configured with a different security policy, it will still work.
+### Traffic from SPK1-W to SPOKE2-W subnet is being permitted by security policy SPK1-TO-SPOK2. Now I will deactivate this policy, to show that traffic will not be allowed to traverse the firewall from SPK1 to SPKE2. Since SPK2 to SPK1 traffic is configured with a different security policy (SPK2-TO-SPOK1), that flow will continue to work. 
 
 <pre lang= >
 lab-user@<b>VSRX1-W</b>> edit
