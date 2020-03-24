@@ -376,6 +376,7 @@ Complete firewall configuration is attached to the lab folder.
 
 
 ### Lab Verification
+
 <pre lang= >
 <b>Check the firewall session table to ensure the load balancer health checks are being received from both public and internal load balancers</b>
 
