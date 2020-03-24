@@ -4,7 +4,7 @@ In this lab, I will configure two firewalls (Juniper vSRX NVAs) each with a sing
 
 ## Dual NVA + single vNIC Firewalls Topology
 
-<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/tree/master/2_FW_NVA_HA_SINGLE_NIC_%2B_LB/single-vnic-topo.png)</kbd>
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_SINGLE_NIC_%2B_LB/single-vnic-topo.png)</kbd>
 
 
 ## Why single vNIC firewalls? 
