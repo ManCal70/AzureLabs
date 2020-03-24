@@ -501,7 +501,7 @@ lab-user@VSRX2-W# <b>deactivate security policies from-zone TRUST to-zone TRUST 
 [edit]
 lab-user@VSRX2-W# <b>commit</b>
 
-<b>Traffic from SPK1 to SPK2 is now being denid (100% packet loss)</b>
+<b>Traffic from SPK1 to SPK2 is now being denied (100% packet loss)</b>
 -------------------------------------------------
 lab-user@<b>W-SPK1-VM</b>:~$ <b>ping 10.2.0.4 -c 4</b>
 PING 10.2.0.4 (10.2.0.4) 56(84) bytes of data.
