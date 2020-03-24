@@ -468,7 +468,7 @@ PING 10.2.0.4 (10.2.0.4) 56(84) bytes of data.
 64 bytes from 10.2.0.4: icmp_seq=3 ttl=63 time=1.61 ms
 </pre>
 
-### This is what the firewall session table looks like for the ping above
+### This is what the firewall session table looks like for the ping above: Traffic allowed by policy: SPK1-TO-SPOK2/7 - Command output shows both wings of the session/connection.
 <pre lang= >
 lab-user@VSRX2-W# <b>run show security flow session</b>
 Session ID: 30175, <b>Policy name</b>: <b>SPK1-TO-SPOK2/7</b>, Timeout: 2, Valid
@@ -478,3 +478,5 @@ Session ID: 30175, <b>Policy name</b>: <b>SPK1-TO-SPOK2/7</b>, Timeout: 2, Valid
 Session ID: 30176, <b>Policy name</b>: <b>SPK1-TO-SPOK2/7</b>, Timeout: 2, Valid 
   In: <b>10.1.0.4/10</b> --> <b>10.2.0.4/27945</b>;icmp, Conn Tag: 0x0, If: ge-0/0/0.0, Pkts: 1, Bytes: 84, <b><<< Inbound ICMP</b>
   Out: <b>10.2.0.4/27945</b> --> <b>10.1.0.4/10</b>;icmp, Conn Tag: 0x0, If: ge-0/0/0.0, Pkts: 1, Bytes: 84, <b> >>> Return ICMP</b>
+</pre>
+
