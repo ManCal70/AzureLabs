@@ -125,9 +125,13 @@ az network nsg rule create -g RG-FW-LAB-E --nsg-name CPNSG-EAST -n ALLOW-ICMP --
 <pre lang= >
 WEST
 az network nsg create --resource-group RG-FW-LAB-W --name DPNSG-WEST --location westus
-az network nsg create --resource-group RG-FW-LAB-E --name DPNSG-EAST --location eastus
 
 EAST
+az network nsg create --resource-group RG-FW-LAB-E --name DPNSG-EAST --location eastus
+</pre>
+
+### Create data plane NSG rule
+<pre lang= >
 az network nsg rule create -g RG-FW-LAB-W --nsg-name DPNSG-WEST -n ALLOW-ALL --priority 300 --source-address-prefixes Internet --destination-address-prefixes * --destination-port-ranges * --access Allow --protocol * --description "Allow All"
 az network nsg rule create -g RG-FW-LAB-E --nsg-name DPNSG-EAST -n ALLOW-ALL --priority 300 --source-address-prefixes Internet --destination-address-prefixes * --destination-port-ranges * --access Allow --protocol * --description "Allow All"
 </pre>
