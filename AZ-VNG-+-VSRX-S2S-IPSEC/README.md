@@ -1,5 +1,6 @@
 ### IPSec VPN Lab - Azure Virtual Network Gateway site-to-site IPSec VPN with Juniper vSRX
 
+### Steps
 <pre lang= >
 <b>1-</b> Create a resource group
 <b>2-</b> Create the VNET with GatewaySubnet
