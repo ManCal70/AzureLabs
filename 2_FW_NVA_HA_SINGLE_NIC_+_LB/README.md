@@ -480,3 +480,45 @@ Session ID: 30176, <b>Policy name</b>: <b>SPK1-TO-SPOK2/7</b>, Timeout: 2, Valid
   Out: <b>10.2.0.4/27945</b> --> <b>10.1.0.4/10</b>;icmp, Conn Tag: 0x0, If: ge-0/0/0.0, Pkts: 1, Bytes: 84, <b> >>> Return ICMP</b>
 </pre>
 
+### Traffic from SPK1-W to SPOKE2-W subnet is being permitted by security policy SPK1-TO-SPOK2. I am going to deactivate this policy to show that traffic will not be allowed to traverse the firewall from SPK1 to SPKE2, but SPK2 to SPK1 will still work.
+<pre lang= >
+lab-user@<b>VSRX1-W</b>> edit
+Entering configuration mode
+
+[edit]
+lab-user@VSRX1-W# <b>deactivate security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2</b>
+
+[edit]
+lab-user@VSRX1-W# <b>commit</b>
+
+lab-user@<b>VSRX2-W</b>> edit
+Entering configuration mode
+
+[edit]
+lab-user@VSRX2-W# <b>deactivate security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2</b>
+
+[edit]
+lab-user@VSRX2-W# <b>commit</b>
+
+
+<b>Now from SPK1 to SPK2 is being denied</b>
+-------------------------------------------------
+lab-user@<b>W-SPK1-VM</b>:~$ <b>ping 10.2.0.4</b>
+PING 10.2.0.4 (10.2.0.4) 56(84) bytes of data.
+*
+*
+*
+--------------------------------------------------
+
+<b>Traffic from SPK2 to SPK1 is still working</b>
+lab-user@<b>W-SPK2-VM</b>:~$ <b>ping 10.1.0.4 -c 4</b>
+PING 10.1.0.4 (10.1.0.4) 56(84) bytes of data.
+64 bytes from 10.1.0.4: icmp_seq=1 ttl=63 time=1.76 ms
+64 bytes from 10.1.0.4: icmp_seq=2 ttl=63 time=1.64 ms
+64 bytes from 10.1.0.4: icmp_seq=3 ttl=63 time=1.80 ms
+64 bytes from 10.1.0.4: icmp_seq=4 ttl=63 time=1.75 ms
+
+--- 10.1.0.4 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3004ms
+rtt min/avg/max/mdev = 1.643/1.739/1.804/0.072 ms
+</pre>
