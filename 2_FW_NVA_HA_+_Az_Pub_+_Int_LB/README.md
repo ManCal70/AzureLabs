@@ -376,8 +376,8 @@ Complete firewall configuration is attached to the lab folder.
 
 
 ### Lab Verification
+### Check the firewall session table to ensure the load balancer health checks are being received from both public and internal load balancers
 
-<b>Check the firewall session table to ensure the load balancer health checks are being received from both public and internal load balancers</b>
 <pre lang= >
 lab-user@VSRX1# run show security flow session
 Session ID: 5037, Policy name: self-traffic-policy/1, Timeout: 1782, Valid
