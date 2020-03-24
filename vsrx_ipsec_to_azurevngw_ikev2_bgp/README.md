@@ -11,7 +11,7 @@
   - ASN = 65002
   - bgp-peering-address = 10.225.254.254 (GatewaySubnet highest IP)
 <b>5-</b> Create the 'Local Network Gateway' - remote firewall settings
-  - gateway-ip-address = 71.59.10.124
+  - gateway-ip-address = 71.xx.xx.xx.xx
   - asn = 65001 
   - bgp-peering-address = 10.250.250.250
   - local-address-prefixes = 10.250.0.0/16
