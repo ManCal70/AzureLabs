@@ -449,7 +449,6 @@ User      Active   10.2.0.0/24       VirtualAppliance  10.0.0.254 <b>>>>> LB VIP
 
 ### Now that we checked the effective route, and they are showeing that to reach each spoke VNET, the next-hop is the LB VIP, we can test ICMP between spokes. We can also look at the firewall session table to view the flows.
 <pre lang= >
-
 <b>Ifconfig shows the VMs Ip address 10.1.0.4</b>
 lab-user@W-SPK1-VM:~$ <b>ifconfig eth0</b>
 eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
@@ -461,11 +460,21 @@ eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         TX packets 67573  bytes 13433299 (13.4 MB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 
-<b>Ping test from spoke 1 to spoke 2</b>
+<b>Ping test from spoke 1 VM (10.1.0.4) to spoke 2 VM (10.2.0.5)</b>
 lab-user@W-SPK1-VM:~$ <b>ping 10.2.0.4</b>
 PING 10.2.0.4 (10.2.0.4) 56(84) bytes of data.
 64 bytes from 10.2.0.4: icmp_seq=1 ttl=63 time=1.94 ms
 64 bytes from 10.2.0.4: icmp_seq=2 ttl=63 time=1.58 ms
 64 bytes from 10.2.0.4: icmp_seq=3 ttl=63 time=1.61 ms
+</pre>
 
+### This is what the firewall session table looks like for the ping above
+<pre lang= >
+lab-user@VSRX2-W# <b>run show security flow session</b>
+Session ID: 30175, Policy name: SPK1-TO-SPOK2/7, Timeout: 2, Valid
+  In: <b>10.1.0.4/9</b> --> <b>10.2.0.4/27945</b>;icmp, Conn Tag: 0x0, If: ge-0/0/0.0, Pkts: 1, Bytes: 84,
+  Out: <b>10.2.0.4/27945</b> --> <b>10.1.0.4/9</b>;icmp, Conn Tag: 0x0, If: ge-0/0/0.0, Pkts: 1, Bytes: 84,
 
+Session ID: 30176, Policy name: SPK1-TO-SPOK2/7, Timeout: 2, Valid
+  In: <b>10.1.0.4/10</b> --> <b>10.2.0.4/27945</b>;icmp, Conn Tag: 0x0, If: ge-0/0/0.0, Pkts: 1, Bytes: 84,
+  Out: <b>10.2.0.4/27945</b> --> <b>10.1.0.4/10</b>;icmp, Conn Tag: 0x0, If: ge-0/0/0.0, Pkts: 1, Bytes: 84,
