@@ -116,8 +116,8 @@ set interfaces ge-0/0/1 disable
 set interfaces fxp0 unit 0
 
 <b>Configure security zone, spoke address prefixes</b>
-set security zones security-zone TRUST address-book address 10.11.0.0/24 10.11.0.0/24 >>> Spoke Subnet
-set security zones security-zone TRUST address-book address 10.12.0.0/24 10.12.0.0/24 >>> Spoke Subnet
+set security zones security-zone TRUST address-book address 10.11.0.0/24 10.11.0.0/24 <b>>>> Spoke Subnet</b>
+set security zones security-zone TRUST address-book address 10.12.0.0/24 10.12.0.0/24 <b>>>> Spoke Subnet</b>
 set security zones security-zone TRUST host-inbound-traffic system-services all
 set security zones security-zone TRUST host-inbound-traffic protocols all
 set security zones security-zone TRUST interfaces ge-0/0/0.0
@@ -135,8 +135,8 @@ set security policies from-zone TRUST to-zone TRUST policy 12-TO-11 then permit
 
 <b>Single routing instance config</b>
 set routing-instances VR1 instance-type virtual-router
-set routing-instances VR1 routing-options static route 168.63.129.16/32 next-hop 10.10.0.1 >>> Probe route
-set routing-instances VR1 routing-options static route 0.0.0.0/0 next-hop 10.10.0.1 >>> Default to fabric
+set routing-instances VR1 routing-options static route 168.63.129.16/32 next-hop 10.10.0.1 <b>>>> Probe route</b>
+set routing-instances VR1 routing-options static route 0.0.0.0/0 next-hop 10.10.0.1 <b>>>> Default to fabric</b>
 set routing-instances VR1 interface ge-0/0/0.0
 
 </pre>
