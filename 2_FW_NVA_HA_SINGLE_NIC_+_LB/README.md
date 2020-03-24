@@ -138,5 +138,4 @@ set routing-instances VR1 instance-type virtual-router
 set routing-instances VR1 routing-options static route 168.63.129.16/32 next-hop 10.10.0.1 <b>>>> Probe route</b>
 set routing-instances VR1 routing-options static route 0.0.0.0/0 next-hop 10.10.0.1 <b>>>> Default to fabric</b>
 set routing-instances VR1 interface ge-0/0/0.0
-
 </pre>
