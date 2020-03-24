@@ -133,6 +133,24 @@ az network nsg rule create -g RG-FW-LAB-E --nsg-name DPNSG-EAST -n ALLOW-ALL --p
 </pre>
 
 
+### Associate vNICs with corresponding CP NSGs
+<pre lang= >
+az network nic update --resource-group RG-FW-LAB-W --name VSRX1-W-fxp0 --network-security-group CPNSG-WEST
+az network nic update --resource-group RG-FW-LAB-W --name VSRX2-W-fxp0 --network-security-group CPNSG-WEST
+
+az network nic update --resource-group RG-FW-LAB-E --name VSRX1-E-fxp0 --network-security-group CPNSG-EAST
+az network nic update --resource-group RG-FW-LAB-E --name VSRX2-E-fxp0 --network-security-group CPNSG-EAST
+</pre>
+
+### Associate vNICs with corresponding DP NSGs
+<pre lang= >
+az network nic update --resource-group RG-FW-LAB-E --name VSRX1-E-ge0 --network-security-group DPNSG-EAST
+az network nic update --resource-group RG-FW-LAB-E --name VSRX2-E-ge0 --network-security-group DPNSG-EAST
+
+az network nic update --resource-group RG-FW-LAB-W --name VSRX1-W-ge0 --network-security-group DPNSG-WEST
+az network nic update --resource-group RG-FW-LAB-W --name VSRX2-W-ge0 --network-security-group DPNSG-WEST
+</pre>
+
 ### NVA Firewall Configuration
 <pre lang= >
 <b>Interface configuration</b>
