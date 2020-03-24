@@ -363,7 +363,7 @@ Session ID: 29016, Policy name: self-traffic-policy/1, Timeout: 1792, Valid
 Total sessions: 1
 </pre>
 
-### Check VM effective route tables
+### View route tables and routes (UDRs) created
 <pre lang= >
 az network route-table route show -g RG-FW-LAB-E  --route-table-name RT-2-LB-E --name TO-SPK1-E --output table
 
@@ -389,6 +389,26 @@ az network route-table route show -g RG-FW-LAB-W  --route-table-name RT-2-LB-W -
 AddressPrefix    Name       NextHopIpAddress    NextHopType       ProvisioningState    ResourceGroup
 ---------------  ---------  ------------------  ----------------  -------------------  ---------------
 10.2.0.0/24      TO-SPK2-W  10.0.0.254          VirtualAppliance  Succeeded            RG-FW-LAB-W
-
 </pre>
 
+### Show spoke VM effective route tables
+<pre lang= >
+<b>az network nic show-effective-route-table -g RG-FW-LAB-E --name VM1-SPK1-E-eth0 --output table</b>
+
+Source    State    Address Prefix    Next Hop Type     Next Hop IP
+--------  -------  ----------------  ----------------  -------------
+Default   Active   10.11.0.0/16      VnetLocal
+Default   Active   10.10.0.0/16      VNetPeering
+Default   Active   0.0.0.0/0         Internet
+Default   Active   10.0.0.0/8        None
+Default   Active   100.64.0.0/10     None
+Default   Active   192.168.0.0/16    None
+User      Active   10.11.0.0/24      VirtualAppliance  10.10.0.254
+User      Active   10.12.0.0/24      VirtualAppliance  10.10.0.254
+
+
+<b>az network nic show-effective-route-table -g RG-FW-LAB-E --name VM1-SPK2-E-eth0 --output table</b>
+
+<b>az network nic show-effective-route-table -g RG-FW-LAB-W --name VM1-SPK1-W-eth0 --output table</b>
+<b>az network nic show-effective-route-table -g RG-FW-LAB-W --name VM1-SPK2-W-eth0 --output table</b>
+</pre>
