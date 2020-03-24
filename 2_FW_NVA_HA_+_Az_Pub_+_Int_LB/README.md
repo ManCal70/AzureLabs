@@ -378,15 +378,16 @@ Complete firewall configuration is attached to the lab folder.
 ### Lab Verification
 
 <b>Check the firewall session table to ensure the load balancer health checks are being received from both public and internal load balancers</b>
-
+<pre lang= >
 lab-user@VSRX1# run show security flow session
 Session ID: 5037, Policy name: self-traffic-policy/1, Timeout: 1782, Valid
   In: <mark>168.63.129.16/54346</mark> --> 10.0.1.4/22;tcp, Conn Tag: 0x0, If: <b>ge-0/0/1.0</b>, Pkts: 3, Bytes: 132,
   Out: 10.0.1.4/22 --> 168.63.129.16/54346;tcp, Conn Tag: 0x0, If: .local..6, Pkts: 2, Bytes: 112,
-
+</pre>
+<pre lang= >
 Session ID: 5038, Policy name: self-traffic-policy/1, Timeout: 1792, Valid
   In: <mark>168.63.129.16/54397</mark> --> 10.0.0.4/22;tcp, Conn Tag: 0x0, If: <b>ge-0/0/0.0</b>, Pkts: 3, Bytes: 132,
   Out: 10.0.0.4/22 --> 168.63.129.16/54397;tcp, Conn Tag: 0x0, If: .local..7, Pkts: 2, Bytes: 112,
 Total sessions: 2
-
+</pre>
 
