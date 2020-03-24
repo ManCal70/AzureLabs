@@ -2,6 +2,11 @@
 
 In this lab, I will configure two firewalls (Juniper vSRX NVAs) each with a single vNIC. The two firewalls will be front ended by an Azure internal load balancer.
 
+## Dual NVA + single vNIC Firewalls Topology
+
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/tree/master/2_FW_NVA_HA_SINGLE_NIC_%2B_LB/single-vnic-topo.png)</kbd>
+
+
 ## Why single vNIC firewalls? 
 When utilizing VMs/NVAs with multiple vNICs for ingress and egress (like firewalls), the use of source NAT is necessary to maintain flow symmetry/affinity. This becomes a obstable with some applications that break when NATed, like Active Directory. A single vNIC design removes this obstacle. 
 
