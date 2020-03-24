@@ -363,5 +363,32 @@ Session ID: 29016, Policy name: self-traffic-policy/1, Timeout: 1792, Valid
 Total sessions: 1
 </pre>
 
+### Check VM effective route tables
+<pre lang= >
+az network route-table route show -g RG-FW-LAB-E  --route-table-name RT-2-LB-E --name TO-SPK1-E --output table
 
+AddressPrefix    Name       NextHopIpAddress    NextHopType       ProvisioningState    ResourceGroup
+---------------  ---------  ------------------  ----------------  -------------------  ---------------
+10.11.0.0/24     TO-SPK1-E  10.10.0.254         VirtualAppliance  Succeeded            RG-FW-LAB-E
+
+
+az network route-table route show -g RG-FW-LAB-E  --route-table-name RT-2-LB-E --name TO-SPK2-E --output table
+
+AddressPrefix    Name       NextHopIpAddress    NextHopType       ProvisioningState    ResourceGroup
+---------------  ---------  ------------------  ----------------  -------------------  ---------------
+10.12.0.0/24     TO-SPK2-E  10.10.0.254         VirtualAppliance  Succeeded            RG-FW-LAB-E
+
+az network route-table route show -g RG-FW-LAB-W  --route-table-name RT-2-LB-W --name TO-SPK1-W --output table
+
+AddressPrefix    Name       NextHopIpAddress    NextHopType       ProvisioningState    ResourceGroup
+---------------  ---------  ------------------  ----------------  -------------------  ---------------
+10.1.0.0/24      TO-SPK1-W  10.0.0.254          VirtualAppliance  Succeeded            RG-FW-LAB-W
+
+az network route-table route show -g RG-FW-LAB-W  --route-table-name RT-2-LB-W --name TO-SPK2-W --output table
+
+AddressPrefix    Name       NextHopIpAddress    NextHopType       ProvisioningState    ResourceGroup
+---------------  ---------  ------------------  ----------------  -------------------  ---------------
+10.2.0.0/24      TO-SPK2-W  10.0.0.254          VirtualAppliance  Succeeded            RG-FW-LAB-W
+
+</pre>
 
