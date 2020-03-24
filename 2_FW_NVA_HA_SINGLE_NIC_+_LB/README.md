@@ -2,6 +2,8 @@
 
 In this lab, I will configure two firewalls (Juniper vSRX NVAs) each with a single vNIC. The two firewalls will be front ended by an Azure internal load balancer.
 
+This design can be applied across multiple 3rd party NVA vendors that are able to support intra-zone security policies and enforcement.
+
 ## Dual NVA + single vNIC Firewalls Topology
 
 <table><tr><td>
@@ -28,10 +30,6 @@ The Azure load balancer hashing algorithm takes into account source IP/Port & de
 
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_SINGLE_NIC_%2B_LB/topology.png)</kbd>
 <p align="center">
-
-
-<p align="left"><b>This design can be applied across multiple 3rd party NVA vendors that are able to support intra-zone security policies and enforcement</p></b>
-</p>
 
 ### Create two resource groups - to separate East and West region elements
 <pre lang= >
