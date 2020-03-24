@@ -63,13 +63,27 @@ az network vnet subnet create --vnet-name HUB-WEST --name MGT-WEST-SUB --resourc
 az network vnet subnet create --vnet-name HUB-WEST --name FWSUB-WEST-SUB --resource-group RG-FW-LAB-W --address-prefixes 10.0.0.0/24 --output table
 az network vnet subnet create --vnet-name SPK1-WEST --name SPK1-WEST-SUB --resource-group RG-FW-LAB-W --address-prefixes 10.1.0.0/24 --output table
 az network vnet subnet create --vnet-name SPK2-WEST --name SPK2-WEST-SUB --resource-group RG-FW-LAB-W --address-prefixes 10.2.0.0/24 --output table
-</pre>
-<pre lang= >
+
 EAST
 az network vnet subnet create --vnet-name HUB-EAST --name MGT-EAST-SUB --resource-group RG-FW-LAB-E --address-prefixes 10.10.254.0/24 --output table
 az network vnet subnet create --vnet-name HUB-EAST --name FWSUB-EAST-SUB --resource-group RG-FW-LAB-E --address-prefixes 10.10.0.0/24 --output table
 az network vnet subnet create --vnet-name SPK1-EAST --name SPK1-EAST-SUB --resource-group RG-FW-LAB-E --address-prefixes 10.11.0.0/24 --output table
 az network vnet subnet create --vnet-name SPK2-EAST --name SPK2-EAST-SUB --resource-group RG-FW-LAB-E --address-prefixes 10.12.0.0/24 --output table
+</pre>
+
+### Create hub to spoke VNET peerings
+<pre lang= >
+az network vnet peering create -g RG-FW-LAB-W --name HUB-W-SPK1 --vnet-name HUB-WEST --remote-vnet SPK1-WEST --allow-forwarded-traffic --allow-vnet-access --output table
+az network vnet peering create -g RG-FW-LAB-W --name SPK1-HUB-W --vnet-name SPK1-WEST --remote-vnet HUB-WEST --allow-forwarded-traffic --allow-vnet-access --output table
+
+az network vnet peering create -g RG-FW-LAB-W --name HUB-W-SPK2 --vnet-name HUB-WEST --remote-vnet SPK2-WEST --allow-forwarded-traffic --allow-vnet-access --output table
+az network vnet peering create -g RG-FW-LAB-W --name SPK2-HUB-W --vnet-name SPK2-WEST --remote-vnet HUB-WEST --allow-forwarded-traffic --allow-vnet-access --output table
+
+az network vnet peering create -g RG-FW-LAB-E --name HUB-E-SPK1 --vnet-name HUB-EAST --remote-vnet SPK1-EAST --allow-forwarded-traffic --allow-vnet-access --output table
+az network vnet peering create -g RG-FW-LAB-E --name SPK1-E-HUB --vnet-name SPK1-EAST --remote-vnet HUB-EAST --allow-forwarded-traffic --allow-vnet-access --output table
+
+az network vnet peering create -g RG-FW-LAB-E  --name HUB-E-SPK2 --vnet-name HUB-EAST --remote-vnet SPK2-EAST --allow-forwarded-traffic --allow-vnet-access --output table
+az network vnet peering create -g RG-FW-LAB-E  --name SPK2-E-HUB --vnet-name SPK2-EAST --remote-vnet HUB-EAST --allow-forwarded-traffic --allow-vnet-access --output table
 </pre>
 
 ### Create vSRX PIPs for management
