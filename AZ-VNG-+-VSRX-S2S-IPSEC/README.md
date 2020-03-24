@@ -42,7 +42,7 @@ az network vpn-connection create -g RG-GW-TEST -n CONNECITON-1 --vnet-gateway1 G
 <pre lang= >
 <b>Azure VNG details Portal view</b>
 </pre>
-<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/vsrx_ipsec_to_azurevngw_ikev2_bgp/gw-view.png)</kbd>
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/AZ-VNG-%2B-VSRX-S2S-IPSEC/gw-view.png)</kbd>
 
 
 ### Juniper SRX Configuration
