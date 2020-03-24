@@ -1,6 +1,4 @@
-### JunOS SRX/vSRX IPSec connection to Azure Virtual Network Gateway (VNG)
-
-#### This example includes BGP peering configuration.
+### IPSec VPN Lab - Azure Virtual Network Gateway site-to-site IPSec VPN with Juniper vSRX
 
 <pre lang= >
 <b>1-</b> Create a resource group
