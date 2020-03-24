@@ -320,3 +320,18 @@ set routing-instances VR1 routing-options static route 168.63.129.16/32 next-hop
 set routing-instances VR1 routing-options static route 0.0.0.0/0 next-hop 10.0.0.1
 set routing-instances VR1 interface ge-0/0/0.0
 </pre>
+
+### As you can see in the firewall config, we have two "intra-zone" policies. Each security policy allows specific VNET to VNET traffic. 
+
+### Here are some verification commands
+#### Health probe in firewall session table
+<pre lang= >
+lab-user@VSRX1-E# run show security flow session
+Session ID: 29016, Policy name: self-traffic-policy/1, Timeout: 1792, Valid
+  In: 168.63.129.16/62474 --> 10.10.0.4/22;tcp, Conn Tag: 0x0, If: ge-0/0/0.0, Pkts: 3, Bytes: 132,
+  Out: 10.10.0.4/22 --> 168.63.129.16/62474;tcp, Conn Tag: 0x0, If: .local..6, Pkts: 2, Bytes: 112,
+Total sessions: 1
+</pre>
+
+
+
