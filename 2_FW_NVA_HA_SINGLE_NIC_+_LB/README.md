@@ -7,7 +7,7 @@ This design can be applied across multiple 3rd party NVA vendors that are able t
 ## Dual NVA + single vNIC Firewalls Topology
 
 <table><tr><td>
-    <img src="https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_SINGLE_NIC_%2B_LB/single-vnic-topo.png" lt="" title="Lab Topology" width="400" height="500"  />
+    <img src="https://github.com/ManCalAzure/AzureLabs/blob/master/2_FW_NVA_HA_SINGLE_NIC_%2B_LB/single-vnic-topo.png" lt="" title="Lab Topology" width="350" height="500"  />
 </td></tr></table>
 
 
