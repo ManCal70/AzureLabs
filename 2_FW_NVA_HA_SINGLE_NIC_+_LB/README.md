@@ -121,7 +121,7 @@ az network nsg rule create -g RG-FW-LAB-E --nsg-name CPNSG-EAST -n ALLOW-SSH --p
 az network nsg rule create -g RG-FW-LAB-E --nsg-name CPNSG-EAST -n ALLOW-ICMP --priority 301 --source-address-prefixes Internet --destination-address-prefixes 10.10.254.0/24 --destination-port-ranges * --protocol Icmp --description "Allow ICMP to FW OOB interface"
 </pre>
 
-### Create Data plane NSG
+### Create firewall Data plane NSG
 <pre lang= >
 WEST
 az network nsg create --resource-group RG-FW-LAB-W --name DPNSG-WEST --location westus
@@ -130,7 +130,7 @@ EAST
 az network nsg create --resource-group RG-FW-LAB-E --name DPNSG-EAST --location eastus
 </pre>
 
-### Create data plane NSG rule
+### Create firewall data plane NSG rule
 <pre lang= >
 az network nsg rule create -g RG-FW-LAB-W --nsg-name DPNSG-WEST -n ALLOW-ALL --priority 300 --source-address-prefixes Internet --destination-address-prefixes * --destination-port-ranges * --access Allow --protocol * --description "Allow All"
 az network nsg rule create -g RG-FW-LAB-E --nsg-name DPNSG-EAST -n ALLOW-ALL --priority 300 --source-address-prefixes Internet --destination-address-prefixes * --destination-port-ranges * --access Allow --protocol * --description "Allow All"
@@ -161,19 +161,19 @@ WEST
 az vm create --resource-group RG-FW-LAB-W --location westus --name VSRX1-W --size Standard_DS3_v2 --nics VSRX1-W-fxp0 VSRX1-W-ge0 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234 --boot-diagnostics-storage mcbootdiag --no-wait
 az vm create --resource-group RG-FW-LAB-W --location westus --name VSRX2-W --size Standard_DS3_v2 --nics VSRX2-W-fxp0 VSRX2-W-ge0 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234 --boot-diagnostics-storage mcbootdiag --no-wait
 
-az vm create -n WEB-SERVER -g RG-LB-TEST --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics VM1-SPK1-W-eth0 --boot-diagnostics-storage mcbootdiag --no-wait
-az vm create -n WEB-SERVER -g RG-LB-TEST --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics VM1-SPK2-W-eth0 --boot-diagnostics-storage mcbootdiag --no-wait
+az vm create -n W-SPK1-VM -g RG-LB-TEST --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics VM1-SPK1-W-eth0 --boot-diagnostics-storage mcbootdiag --no-wait
+az vm create -n W-SPK2-VM -g RG-LB-TEST --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics VM1-SPK2-W-eth0 --boot-diagnostics-storage mcbootdiag --no-wait
 
 
 EAST
 az vm create --resource-group RG-FW-LAB-E --location eastus --name VSRX1-E --size Standard_DS3_v2 --nics VSRX1-E-fxp0 VSRX1-E-ge0 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234 --boot-diagnostics-storage mcbootdiag --no-wait
 az vm create --resource-group RG-FW-LAB-E --location eastus --name VSRX2-E --size Standard_DS3_v2 --nics VSRX2-E-fxp0 VSRX2-E-ge0 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234 --boot-diagnostics-storage mcbootdiag --no-wait
 
-az vm create -n WEB-SERVER -g RG-LB-TEST --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics VM1-SPK1-E-eth0 --boot-diagnostics-storage mcbootdiag --no-wait
-az vm create -n WEB-SERVER -g RG-LB-TEST --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics VM1-SPK2-E-eth0 --boot-diagnostics-storage mcbootdiag --no-wait
+az vm create -n E-SPK1-VM -g RG-LB-TEST --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics VM1-SPK1-E-eth0 --boot-diagnostics-storage mcbootdiag --no-wait
+az vm create -n E-SPK2-VM -g RG-LB-TEST --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics VM1-SPK2-E-eth0 --boot-diagnostics-storage mcbootdiag --no-wait
 
 
-Once the VM is up and running, run the following to update and install apache2:
+<b>Once the VM is up and running, run the following to update and install apache2:</b>
 1- sudo apt update
 2- sudo apt upgrade -y
 3- sudo apt install apache2 -y
