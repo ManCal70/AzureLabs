@@ -354,7 +354,7 @@ set routing-instances VR1 interface ge-0/0/0.0
 ### As you can see in the firewall config, we have two "intra-zone" policies. Each security policy allows specific VNET to VNET traffic. 
 
 ### Here are some verification commands
-#### Health probe in firewall session table
+#### This output shows the health probe check for firewall health. 
 <pre lang= >
 lab-user@VSRX1-E# run show security flow session
 Session ID: 29016, Policy name: self-traffic-policy/1, Timeout: 1792, Valid
