@@ -128,6 +128,7 @@ Interface               Admin Link Proto    Local                 Remote
 st0                     <b>up</b>    <b>up</b>
 st0.0                   <b>up</b>    <b>up</b>   inet 
 </div>
+</pre>
 
 <b>show bgp summary</b>
 <div class="boxed">
