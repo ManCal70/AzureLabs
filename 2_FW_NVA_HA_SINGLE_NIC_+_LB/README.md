@@ -446,3 +446,26 @@ Default   Active   192.168.0.0/16    None
 User      Active   10.1.0.0/24       VirtualAppliance  10.0.0.254 <b>>>>> LB VIP</b>
 User      Active   10.2.0.0/24       VirtualAppliance  10.0.0.254 <b>>>>> LB VIP</b>
 </pre>
+
+### Now that we checked the effective route, and they are showeing that to reach each spoke VNET, the next-hop is the LB VIP, we can test ICMP between spokes. We can also look at the firewall session table to view the flows.
+<pre lang= >
+
+<b>Ifconfig shows the VMs Ip address 10.1.0.4</b>
+lab-user@W-SPK1-VM:~$ <b>ifconfig eth0</b>
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet <b>10.1.0.4</b>  netmask 255.255.255.0  broadcast 10.1.0.255
+        inet6 fe80::20d:3aff:fe5b:1de0  prefixlen 64  scopeid 0x20<link>
+        ether 00:0d:3a:5b:1d:e0  txqueuelen 1000  (Ethernet)
+        RX packets 110477  bytes 111205356 (111.2 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 67573  bytes 13433299 (13.4 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+<b>Ping test from spoke 1 to spoke 2</b>
+lab-user@W-SPK1-VM:~$ <b>ping 10.2.0.4</b>
+PING 10.2.0.4 (10.2.0.4) 56(84) bytes of data.
+64 bytes from 10.2.0.4: icmp_seq=1 ttl=63 time=1.94 ms
+64 bytes from 10.2.0.4: icmp_seq=2 ttl=63 time=1.58 ms
+64 bytes from 10.2.0.4: icmp_seq=3 ttl=63 time=1.61 ms
+
+
