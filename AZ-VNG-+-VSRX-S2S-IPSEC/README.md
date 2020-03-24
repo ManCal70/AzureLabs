@@ -108,8 +108,8 @@ set security policies from-zone VPN-ZONE to-zone TRUST policy VPN-ZONE-TRUST the
 <b>Portal verification that tunnel is connected</b>
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/AZ-VNG-%2B-VSRX-S2S-IPSEC/portal-up.png)</kbd>
 
-<pre lang= >
 <b>SRX on-prem tunnel verification</b>
+<pre lang= >
 <b>show security ike security associations</b>
 <div class="boxed">
 Index   State  Initiator cookie  Responder cookie  Mode           Remote Address   
