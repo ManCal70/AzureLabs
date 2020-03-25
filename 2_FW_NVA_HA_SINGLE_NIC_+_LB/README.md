@@ -12,7 +12,7 @@ This design can be applied across multiple 3rd party NVA vendors that are able t
 
 
 ## Why single vNIC firewalls? 
-When utilizing VMs/NVAs with multiple vNICs for ingress and egress (like firewalls), the use of source NAT is necessary to maintain flow symmetry/affinity. NAT can be an obstable with some applications which break when NATed, like Active Directory. A single vNIC NVA design, front ended with an Azure internal load balancer, provides the flow symmetry required when utilizing stateful firewalls.
+When utilizing VMs/NVAs with multiple vNICs for ingress and egress (like firewalls), the use of source NAT is necessary to maintain flow symmetry/affinity. NAT can be an obstable with some applications which break when NATed, like Active Directory. A single vNIC NVA design, front ended with an Azure internal load balancer, provides both HA and solves the flow symmetry required when utilizing stateful firewalls.
 
 ## How to maintain flow symmetry/affinity with out source NAT?
 The Azure load balancer hashing algorithm takes into account source IP/Port & destination IP/Port, and it is programmed in a way that is independent of the order of the fields. Means both flows/wings of the connection will maintain symmetry.
