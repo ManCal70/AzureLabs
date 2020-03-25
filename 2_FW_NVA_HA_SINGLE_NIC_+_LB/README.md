@@ -73,6 +73,11 @@ az network vnet subnet create --vnet-name SPK2-EAST --name SPK2-EAST-SUB --resou
 
 ### Create hub to spoke VNET peerings
 <pre lang= >
+<b>Since the Hubs reside in different resource groups, you have to use the resource ID of the remote VNET in order to perform the VNET peering via the CLI.</b>
+az network vnet peering create -g RG-FW-LAB-W --name HUB-W-TO-E --vnet-name HUB-WEST --remote-vnet /subscriptions/a2cc8bd1-47cb-4467-98f0-bb7fd82bc065/resourceGroups/RG-FW-LAB-E/providers/Microsoft.Network/virtualNetworks/HUB-EAST --allow-forwarded-traffic --allow-vnet-access --output table
+
+
+
 az network vnet peering create -g RG-FW-LAB-W --name HUB-W-SPK1 --vnet-name HUB-WEST --remote-vnet SPK1-WEST --allow-forwarded-traffic --allow-vnet-access --output table
 az network vnet peering create -g RG-FW-LAB-W --name SPK1-HUB-W --vnet-name SPK1-WEST --remote-vnet HUB-WEST --allow-forwarded-traffic --allow-vnet-access --output table
 
@@ -153,9 +158,7 @@ az network nsg rule create -g RG-FW-LAB-E --nsg-name DPNSG-EAST -n ALLOW-ALL-IN 
 
 az network nsg rule create -g RG-FW-LAB-W --nsg-name DPNSG-WEST -n ALLOW-ALL-OUT --priority 300 --source-address-prefixes * --destination-address-prefixes * --destination-port-ranges * --access Allow --protocol * --description "Allow All" --direction Outbound
 az network nsg rule create -g RG-FW-LAB-E --nsg-name DPNSG-EAST -n ALLOW-ALL-OUT --priority 300 --source-address-prefixes * --destination-address-prefixes * --destination-port-ranges * --access Allow --protocol * --description "Allow All" --direction Outbound
-
 </pre>
-
 
 ### Associate vNICs with corresponding CP NSGs
 <pre lang= >
@@ -185,7 +188,6 @@ Test VMS
 az vm create -n W-SPK1-VM -g RG-FW-LAB-W --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics VM1-SPK1-W-eth0 --boot-diagnostics-storage mcbootdiag --no-wait
 az vm create -n W-SPK2-VM -g RG-FW-LAB-W --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics VM1-SPK2-W-eth0 --boot-diagnostics-storage mcbootdiag --no-wait
 
-
 EAST firewalls
 az vm create --resource-group RG-FW-LAB-E --location eastus --name VSRX1-E --size Standard_DS3_v2 --nics VSRX1-E-fxp0 VSRX1-E-ge0 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234 --boot-diagnostics-storage mcbootdiag --no-wait
 az vm create --resource-group RG-FW-LAB-E --location eastus --name VSRX2-E --size Standard_DS3_v2 --nics VSRX2-E-fxp0 VSRX2-E-ge0 --image juniper-networks:vsrx-next-generation-firewall:vsrx-byol-azure-image:19.2.1 --admin-username lab-user --admin-password AzLabPass1234 --boot-diagnostics-storage mcbootdiag --no-wait
@@ -194,12 +196,10 @@ Test VMs
 az vm create -n E-SPK1-VM -g RG-FW-LAB-E --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics VM1-SPK1-E-eth0 --boot-diagnostics-storage mcbootdiag --no-wait
 az vm create -n E-SPK2-VM -g RG-FW-LAB-E --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics VM1-SPK2-E-eth0 --boot-diagnostics-storage mcbootdiag --no-wait
 
-
 <b>Once the VM is up and running, run the following to update and install apache2:</b>
 1- sudo apt update
 2- sudo apt upgrade -y
 3- sudo apt install apache2 -y
-
 </pre>
 
 ### Create ILB
@@ -255,8 +255,19 @@ az network route-table create --name RT-2-LB-E -g RG-FW-LAB-E --location eastus 
 EAST
 az network route-table route create --name RT-2-LB-E -g RG-FW-LAB-E --route-table-name RT-2-LB-E --address-prefix 0.0.0.0/0 --next-hop-type VirtualAppliance --next-hop-ip-address 10.10.0.254
 
+<b>UDR to WEST region VNETs (Cross region)</b>
+az network route-table route create --name RT-2-W-SPK1 -g RG-FW-LAB-W --route-table-name RT-2-LB-E --address-prefix 10.1.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.0.254
+
+az network route-table route create --name RT-2-W-SPK2 -g RG-FW-LAB-W --route-table-name RT-2-LB-E --address-prefix 10.2.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.0.254
+
 WEST
 az network route-table route create --name RT-2-LB-W -g RG-FW-LAB-W --route-table-name RT-2-LB-W --address-prefix 0.0.0.0/0 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.0.254
+
+<b>UDR to WEST region VNETs (Cross region)</b>
+az network route-table route create --name RT-2-E-SPK1 -g RG-FW-LAB-E --route-table-name RT-2-LB-E --address-prefix 10.11.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.10.0.254
+
+az network route-table route create --name RT-2-E-SPK2 -g RG-FW-LAB-E --route-table-name RT-2-LB-E --address-prefix 10.12.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.10.0.254
+
 </pre>
 
 ### Apply UDR to the Spoke VNETS
