@@ -73,7 +73,7 @@ az network vnet subnet create --vnet-name SPK2-EAST --name SPK2-EAST-SUB --resou
 
 ### Create hub to spoke VNET peerings
 <pre lang= >
-<b>Since the Hubs reside in different resource groups, you have to use the resource ID of the remote VNET in order to perform the VNET peering via the CLI.</b>
+<b>Since the Hubs reside in different resource groups, you have to use the resource ID of the remote VNET in order to perform the VNET peering via the CLI. You can find these in the properties of the respective VNET.</b>
 az network vnet peering create -g RG-FW-LAB-W --name HUB-W-TO-E --vnet-name HUB-WEST --remote-vnet /subscriptions/a2cc8bd1-47cb-4467-98f0-bb7fd82bc065/resourceGroups/RG-FW-LAB-E/providers/Microsoft.Network/virtualNetworks/HUB-EAST --allow-forwarded-traffic --allow-vnet-access --output table
 az network vnet peering create -g RG-FW-LAB-E --name HUB-W-TO-W --vnet-name HUB-EAST --remote-vnet /subscriptions/a2cc8bd1-47cb-4467-98f0-bb7fd82bc065/resourceGroups/RG-FW-LAB-W/providers/Microsoft.Network/virtualNetworks/HUB-WEST --allow-forwarded-traffic --allow-vnet-access --output table
 
