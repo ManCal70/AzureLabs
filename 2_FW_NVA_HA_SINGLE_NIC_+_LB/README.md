@@ -243,7 +243,9 @@ az network lb rule create -g RG-FW-LAB-E --lb-name ILB-E --name LBRULE-E  --prot
 
 ### UDR route table
 <pre lang= >
-EAST hub
+<b>In this lab, since the Firewall instances in the Hub have a default route to the fabric .1 IP address of the firewall subnet, we need to tell the fabric where the remote spokes are. This is done by UDR</b>
+
+EAST hub 
 az network route-table create --name E-HUB-RT -g RG-FW-LAB-E --location eastus --disable-bgp-route-propagation true
 
 EAST Spokes
