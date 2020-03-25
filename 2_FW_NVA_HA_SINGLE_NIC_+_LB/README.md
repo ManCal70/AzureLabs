@@ -243,17 +243,29 @@ az network lb rule create -g RG-FW-LAB-E --lb-name ILB-E --name LBRULE-E  --prot
 
 ### UDR route table
 <pre lang= >
-EAST
+EAST hub
 az network route-table create --name E-HUB-RT -g RG-FW-LAB-E --location eastus --disable-bgp-route-propagation true
+
+EAST Spokes
 az network route-table create --name E-SPK-RT -g RG-FW-LAB-E --location eastus --disable-bgp-route-propagation true
 
-WEST
+WEST hub
 az network route-table create --name W-HUB-RT -g RG-FW-LAB-W --location westus --disable-bgp-route-propagation true
+
+EAST spokes
 az network route-table create --name W-SPK-RT -g RG-FW-LAB-W --location westus --disable-bgp-route-propagation true
 </pre>
 
 ### Create Routes
 <pre lang= >
+EAST hub routes
+az network route-table route create -g RG-FW-LAB-E --name RT-W-SPK1 --route-table-name E-HUB-RT --address-prefix 10.1.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.0.254
+az network route-table route create -g RG-FW-LAB-E --name RT-W-SPK2 --route-table-name E-HUB-RT --address-prefix 10.2.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.0.254
+
+WEST hub routes
+az network route-table route create -g RG-FW-LAB-W --name RT-E-SPK1 --route-table-name W-HUB-RT --address-prefix 10.11.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.10.0.254
+az network route-table route create -g RG-FW-LAB-W --name RT-E-SPK2 --route-table-name W-HUB-RT --address-prefix 10.12.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.10.0.254
+
 EAST spoke routes
 az network route-table route create --name RT-SPK1-E -g RG-FW-LAB-E --route-table-name E-SPK-RT --address-prefix 10.11.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.10.0.254
 
@@ -275,12 +287,17 @@ az network route-table route create --name RT-E-SPK1 -g RG-FW-LAB-W --route-tabl
 
 az network route-table route create --name RT-E-SPK2 -g RG-FW-LAB-W --route-table-name W-SPK-RT --address-prefix 10.12.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.0.254
 
-
-
 </pre>
 
 ### Apply UDR to the hub and spoke VNETS
 <pre lang= >
+WEST hub
+az network vnet subnet update --vnet-name HUB-WEST --name FWSUB-WEST-SUB --resource-group RG-FW-LAB-W --route-table W-HUB-RT
+
+EAST hub
+az network vnet subnet update --vnet-name HUB-EAST --name FWSUB-EAST-SUB --resource-group RG-FW-LAB-E --route-table E-HUB-RT
+
+
 WEST spokes
 az network vnet subnet update --vnet-name SPK1-WEST --name SPK1-WEST-SUB --resource-group RG-FW-LAB-W --route-table W-SPK-RT
 az network vnet subnet update --vnet-name SPK2-WEST --name SPK2-WEST-SUB --resource-group RG-FW-LAB-W --route-table W-SPK-RT
