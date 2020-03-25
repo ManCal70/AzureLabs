@@ -324,22 +324,34 @@ az network route-table route show -g RG-FW-LAB-E --name RT-2-LB-E --route-table-
 
 delete security
 
-set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 match source-address 10.11.0.0/24
-set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 match destination-address 10.12.0.0/24
+set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 match source-address E-SPK1
+set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 match destination-address E-SPK2
 set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 match application any
 set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 then permit
-set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 then log session-init
-set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 then log session-close
 
-set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 match source-address 10.12.0.0/24
-set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 match destination-address 10.11.0.0/24
+set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 match source-address E-SPK2
+set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 match destination-address E-SPK1
 set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 match application any
 set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 then permit
-set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 then log session-init
-set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 then log session-close
 
-set security zones security-zone TRUST address-book address 10.11.0.0/24 10.11.0.0/24
-set security zones security-zone TRUST address-book address 10.12.0.0/24 10.12.0.0/24
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-W-TO-E match source-address W-SPK1
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-W-TO-E match source-address W-SPK2
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-W-TO-E match destination-address E-SPK1
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-W-TO-E match destination-address E-SPK2
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-W-TO-E match application any
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-W-TO-E then permit
+
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-E-TO-W match source-address E-SPK1
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-E-TO-W match source-address E-SPK2
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-E-TO-W match destination-address W-SPK1
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-E-TO-W match destination-address W-SPK2
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-E-TO-W match application any
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-E-TO-W then permit
+
+set security zones security-zone TRUST address-book address W-SPK1 10.1.0.0/24
+set security zones security-zone TRUST address-book address W-SPK2 10.2.0.0/24
+set security zones security-zone TRUST address-book address E-SPK1 10.11.0.0/24
+set security zones security-zone TRUST address-book address E-SPK2 10.12.0.0/24
 set security zones security-zone TRUST host-inbound-traffic system-services all
 set security zones security-zone TRUST host-inbound-traffic protocols all
 set security zones security-zone TRUST interfaces ge-0/0/0.0
@@ -359,25 +371,39 @@ set routing-instances VR1 interface ge-0/0/0.0
 
 delete security
 
-set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 match source-address 10.1.0.0/24
-set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 match destination-address 10.2.0.0/24
-set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 match application any
-set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 then permit
-set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 then log session-init
-set security policies from-zone TRUST to-zone TRUST policy SPK1-TO-SPOK2 then log session-close
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-SPK1-TO-SPK2 match source-address E-SPK1
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-SPK1-TO-SPK2 match destination-address E-SPK2
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-SPK1-TO-SPK2 match application any
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-SPK1-TO-SPK2 then permit
 
-set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 match source-address 10.2.0.0/24
-set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 match destination-address 10.1.0.0/24
-set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 match application any
-set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 then permit
-set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 then log session-init
-set security policies from-zone TRUST to-zone TRUST policy SPK2-TO-SPOK1 then log session-close
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-SPK2-TO-SPK1 match source-address E-SPK2
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-SPK2-TO-SPK1 match destination-address E-SPK1
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-SPK2-TO-SPK1 match application any
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-SPK2-TO-SPK1 then permit
 
-set security zones security-zone TRUST address-book address 10.1.0.0/24 10.1.0.0/24
-set security zones security-zone TRUST address-book address 10.2.0.0/24 10.2.0.0/24
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-E-TO-W match source-address E-SPK1
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-E-TO-W match source-address E-SPK2
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-E-TO-W match destination-address W-SPK1
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-E-TO-W match destination-address W-SPK2
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-E-TO-W match application any
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-E-TO-W then permit
+
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-W-TO-E match source-address W-SPK1
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-W-TO-E match source-address W-SPK2
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-W-TO-E match destination-address E-SPK1
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-W-TO-E match destination-address E-SPK2
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-W-TO-E match application any
+set security policies from-zone TRUST to-zone TRUST policy ALLOW-W-TO-E then permit
+
+set security zones security-zone TRUST address-book address W-SPK1 10.1.0.0/24
+set security zones security-zone TRUST address-book address W-SPK2 10.2.0.0/24
+set security zones security-zone TRUST address-book address E-SPK1 10.11.0.0/24
+set security zones security-zone TRUST address-book address E-SPK2 10.12.0.0/24
 set security zones security-zone TRUST host-inbound-traffic system-services all
 set security zones security-zone TRUST host-inbound-traffic protocols all
 set security zones security-zone TRUST interfaces ge-0/0/0.0
+
+
 set interfaces ge-0/0/0 description VNETSUB
 set interfaces ge-0/0/0 unit 0 family inet dhcp
 set interfaces ge-0/0/1 disable
