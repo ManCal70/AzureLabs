@@ -243,38 +243,38 @@ az network lb rule create -g RG-FW-LAB-E --lb-name ILB-E --name LBRULE-E  --prot
 
 ### UDR route table
 <pre lang= >
-WEST
-az network route-table create --name RT-HUB-W -g RG-FW-LAB-W --location westus --disable-bgp-route-propagation true
-
-az network route-table create --name RT-SPKS-W -g RG-FW-LAB-W --location westus --disable-bgp-route-propagation true
-
 EAST
-az network route-table create --name RT-HUB-E -g RG-FW-LAB-E --location westus --disable-bgp-route-propagation true
+az network route-table create --name E-HUB-RT -g RG-FW-LAB-E --location eastus --disable-bgp-route-propagation true
+az network route-table create --name E-SPK-RT -g RG-FW-LAB-E --location eastus --disable-bgp-route-propagation true
 
-az network route-table create --name RT-SPKS-E -g RG-FW-LAB-E --location eastus --disable-bgp-route-propagation true
+WEST
+az network route-table create --name W-HUB-RT -g RG-FW-LAB-W --location westus --disable-bgp-route-propagation true
+az network route-table create --name W-SPK-RT -g RG-FW-LAB-W --location westus --disable-bgp-route-propagation true
 </pre>
 
 ### Create Routes
 <pre lang= >
-EAST
-az network route-table route create --name RT-SPK1-E -g RG-FW-LAB-E --route-table-name RT-SPKS-E --address-prefix 10.11.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.10.0.254
-
-az network route-table route create --name RT-SPK2-E -g RG-FW-LAB-E --route-table-name RT-SPKS-E --address-prefix 10.12.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.10.0.254
-
+EAST bub routes
 <b>UDR to WEST region VNETs (Cross region)</b>
-az network route-table route create --name RT-TO-W-SPK1 -g RG-FW-LAB-E --route-table-name RT-HUB-TO-W --address-prefix 10.1.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.0.254
+az network route-table route create --name RT-TO-W-SPK1 -g RG-FW-LAB-E --route-table-name E-HUB-RT --address-prefix 10.1.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.0.254
 
-az network route-table route create --name RT-TO-W-SPK2 -g RG-FW-LAB-E --route-table-name RT-HUB-TO-W --address-prefix 10.2.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.0.254
+az network route-table route create --name RT-TO-W-SPK2 -g RG-FW-LAB-E --route-table-name E-HUB-RT --address-prefix 10.2.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.0.254
 
-WEST
-az network route-table route create --name RT-SPK1-W -g RG-FW-LAB-W --route-table-name RT-SPKS-W--address-prefix 10.1.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.0.254
+EAST spoke routes
+az network route-table route create --name RT-SPK1-E -g RG-FW-LAB-E --route-table-name E-SPK-RT --address-prefix 10.11.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.10.0.254
 
-az network route-table route create --name RT-SPK2-W -g RG-FW-LAB-W --route-table-name RT-SPKS-W --address-prefix 10.1.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.0.254
+az network route-table route create --name RT-SPK2-E -g RG-FW-LAB-E --route-table-name E-SPK-RT --address-prefix 10.12.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.10.0.254
 
+WEST hub routes
 <b>UDR to WEST region VNETs (Cross region)</b>
-az network route-table route create --name RT-TO-E-SPK1 -g RG-FW-LAB-W --route-table-name RT-HUB-TO-E--address-prefix 10.11.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.10.0.254
+az network route-table route create --name RT-TO-E-SPK1 -g RG-FW-LAB-W --route-table-name W-HUB-RT --address-prefix 10.11.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.10.0.254
 
-az network route-table route create --name RT-TO-E-SPK2 -g RG-FW-LAB-W --route-table-name RT-HUB-TO-E --address-prefix 10.12.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.10.0.254
+az network route-table route create --name RT-TO-E-SPK2 -g RG-FW-LAB-W --route-table-name W-HUB-RT --address-prefix 10.12.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.10.0.254
+
+West spoke routes
+az network route-table route create --name RT-SPK1-W -g RG-FW-LAB-W --route-table-name W-SPK-RT --address-prefix 10.1.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.0.254
+
+az network route-table route create --name RT-SPK2-W -g RG-FW-LAB-W --route-table-name W-SPK-RT --address-prefix 10.2.0.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.0.254
 
 </pre>
 
