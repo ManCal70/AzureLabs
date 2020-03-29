@@ -227,7 +227,8 @@ set interfaces ge-0/0/0 description UNTRUST
 set interfaces ge-0/0/0 unit 0 family inet dhcp
 set interfaces ge-0/0/1 description TRUST
 set interfaces ge-0/0/1 unit 0 family inet dhcp
-set interfaces fxp0 unit 0
+set interfaces fxp0 unit 0 family inet dhcp
+
 <b>Routing instance configuration</b>
 set routing-instances VR-1 instance-type virtual-router
 set routing-instances VR-1 routing-options static route 168.63.129.16/32 next-hop 10.0.0.1  >><b>LB probe static route</b>
