@@ -360,7 +360,7 @@ set security zones security-zone TRUST interfaces ge-0/0/0.0
 set interfaces ge-0/0/0 description VNETSUB
 set interfaces ge-0/0/0 unit 0 family inet dhcp
 set interfaces ge-0/0/1 disable
-set interfaces fxp0 unit 0
+set interfaces fxp0 unit 0 family inet dhcp
 
 set routing-instances VR1 instance-type virtual-router
 set routing-instances VR1 routing-options static route 168.63.129.16/32 next-hop 10.10.0.1
@@ -408,7 +408,8 @@ set security zones security-zone TRUST interfaces ge-0/0/0.0
 set interfaces ge-0/0/0 description VNETSUB
 set interfaces ge-0/0/0 unit 0 family inet dhcp
 set interfaces ge-0/0/1 disable
-set interfaces fxp0 unit 0
+set interfaces fxp0 unit 0 family inet dhcp
+
 set routing-instances VR1 instance-type virtual-router
 set routing-instances VR1 routing-options static route 168.63.129.16/32 next-hop 10.0.0.1
 set routing-instances VR1 routing-options static route 0.0.0.0/0 next-hop 10.0.0.1
