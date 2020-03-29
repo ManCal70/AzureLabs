@@ -284,7 +284,7 @@ set interfaces ge-0/0/0 description UNTRUST
 set interfaces ge-0/0/0 unit 0 family inet dhcp
 set interfaces ge-0/0/1 description TRUST
 set interfaces ge-0/0/1 unit 0 family inet dhcp
-set interfaces fxp0 unit 0
+set interfaces fxp0 unit 0 family inet dhcp
 
 <b>Security zones</b>
 set security zones security-zone TRUST address-book address 10.80.99.10/32 10.80.99.10/32
