@@ -325,6 +325,7 @@ az network route-table route show -g RG-FW-LAB-E --name RT-2-LB-E --route-table-
 
 delete security
 
+<b>Explicit denies after each permit policy are important in single vNIC desgins.</b>
 set security policies from-zone TRUST to-zone TRUST policy E-SPK1-TO-E-SPK2 match source-address E-SPK1
 set security policies from-zone TRUST to-zone TRUST policy E-SPK1-TO-E-SPK2 match destination-address E-SPK2
 set security policies from-zone TRUST to-zone TRUST policy E-SPK1-TO-E-SPK2 match application <specific apps>
