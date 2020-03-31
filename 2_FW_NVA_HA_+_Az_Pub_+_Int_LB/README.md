@@ -248,7 +248,7 @@ az network LB address-pool create --lb-name AZ-PUB-LB --name PLB-BEPOOL --resour
 az network LB probe create --resource-group RG-LB-TEST --name BE-PROBE1 --protocol tcp --port 22 --interval 30 --threshold 2 --lb-name AZ-PUB-LB
 </pre>
 
-### Create a PLB LB rule
+### Create a PLB LB rule (Floating IP)
 <pre lang= >
 az network lb rule create --resource-group RG-LB-TEST --name LB-RULE-1 --backend-pool-name PLB-BEPOOL --probe-name BE-PROBE1 --protocol Tcp --frontend-port 80 --backend-port 80 --lb-name AZ-PUB-LB --floating-ip true --output table
 </pre>
