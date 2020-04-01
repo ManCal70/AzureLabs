@@ -17,16 +17,17 @@
 <b>8-</b> Create control plane (management) and data plane Network Security Groups (UNTRUST & TRUST) (NSGs)
 <b>9-</b> Associate the vNICs with their correponding NSGs
 <b>10-</b> Create the firewall and Test web server
-<b>11-</b> Create the Azure public load balancer
+<b>11-</b> Create the Azure <b>Internal</b> load balancer
+  - Backend pool
+  - Probe
+  - LB rule - with <b>HA ports</b>
+  - Associate the firewall TRUST vNICs with the internal LB backendpool
+<b>12-</b> Create the Azure <b>Public</b> load balancer
   - Backend poool
   - Probe
   - LB rule - with <b>floating IP</b>
   - Associate the firewall UNTRUST vNICs with the LB backendpool
-<b>12-</b> Create the Azure internal load balancer
-  - Backend poool
-  - Probe
-  - LB rule - with <b>HA ports</b>
-  - Associate the firewall TRUST vNICs with the internal LB backendpool
+
 <b>13-</b> Create the spoke UDR + Route which will route traffic to the internal LB VIP
 <b>14-</b> Associate the UDR with the spoke subnet
 <b>15-</b> Configure the firewalls and test web servers
@@ -197,42 +198,6 @@ az network nic ip-config update --resource-group RG-LB-TEST --nic-name VSRX1-ge1
 az network nic ip-config update --resource-group RG-LB-TEST --nic-name VSRX2-ge1 --name ipconfig1 --lb-address-pool ILB-BEPOOL --vnet-name HUB-VNET --subnet TRUST --lb-name ILB-1
 </pre>
 
-### Need to create UDR to apply to the VMWORKLOADS subnet - UDR will route 0/0 to the internal LB VIP
-<pre lang= >
-Create the UDR
-az network route-table create  --name UDR-TO-ILB --resource-group RG-LB-TEST -l eastus
-
-Create the route
-az network route-table route create --name DEF-TO-ILB -g RG-LB-TEST --route-table-name UDR-TO-ILB --address-prefix 0.0.0.0/0 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.1.254
-
-Route creation check
-az network route-table route show -g RG-LB-TEST --name DEF-TO-ILB --route-table-name UDR-TO-ILB --output table
-
-AddressPrefix    Name        NextHopIpAddress    NextHopType       ProvisioningState    ResourceGroup
----------------  ----------  ------------------  ----------------  -------------------  ---------------
-0.0.0.0/0        DEF-TO-ILB  10.0.1.254          VirtualAppliance  Succeeded            RG-LB-TEST
-
-</pre>
-
-### Once the UDR is created, associate it or apply it to the VMWORKLOADS subnet.
-<pre lang= >
-az network vnet subnet update --vnet-name SPOKE-VNET --name VMWORKLOADS --resource-group RG-LB-TEST --route-table UDR-TO-ILB
-</pre>
-
-### Check web server effective route table to ensure UDR is applied
-<pre lang= >
-az network nic show-effective-route-table --name WEB-eth0 --resource-group RG-LB-TEST --output table
-
-Source    State    Address Prefix    Next Hop Type    Next Hop IP
---------  -------  ----------------  ---------------  -------------
-Default   Active   10.80.0.0/16      VnetLocal
-Default   Active   10.0.0.0/16       VNetPeering
-Default   Active   0.0.0.0/0         Internet
-Default   Active   10.0.0.0/8        None
-Default   Active   100.64.0.0/10     None
-Default   Active   192.168.0.0/16    None
-</pre>
-
 ### Creating the Azure public load balancer (PLB)
 <pre lang= >
 az network lb create --resource-group RG-LB-TEST --name AZ-PUB-LB --sku Standard --public-ip-address AZ-PUB-LB-PIP --no-wait
@@ -270,6 +235,43 @@ az network public-ip show -g RG-LB-TEST --name VSRX1-PIP-1 --output table
 ## At this point, all Azure elements have been deployed and configured.
 
 ### Since we are utilizing both a public and internal load balancer, you have to be mindful of flow symmetry/affinity. In order to preserve flow symmetry, you have to configure source NAT (SNAT) for egress flows. This ensures that traffic which egress a specific firewall VM, returns to that same firewall. 
+
+### Need to create UDR to apply to the VMWORKLOADS subnet - UDR will route 0/0 to the internal LB VIP
+<pre lang= >
+Create the UDR
+az network route-table create  --name UDR-TO-ILB --resource-group RG-LB-TEST -l eastus
+
+Create the route
+az network route-table route create --name DEF-TO-ILB -g RG-LB-TEST --route-table-name UDR-TO-ILB --address-prefix 0.0.0.0/0 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.1.254
+
+Route creation check
+az network route-table route show -g RG-LB-TEST --name DEF-TO-ILB --route-table-name UDR-TO-ILB --output table
+
+AddressPrefix    Name        NextHopIpAddress    NextHopType       ProvisioningState    ResourceGroup
+---------------  ----------  ------------------  ----------------  -------------------  ---------------
+0.0.0.0/0        DEF-TO-ILB  10.0.1.254          VirtualAppliance  Succeeded            RG-LB-TEST
+
+</pre>
+
+### Once the UDR is created, associate it or apply it to the VMWORKLOADS subnet.
+<pre lang= >
+az network vnet subnet update --vnet-name SPOKE-VNET --name VMWORKLOADS --resource-group RG-LB-TEST --route-table UDR-TO-ILB
+</pre>
+
+### Check web server effective route table to ensure UDR is applied
+<pre lang= >
+az network nic show-effective-route-table --name WEB-eth0 --resource-group RG-LB-TEST --output table
+
+Source    State    Address Prefix    Next Hop Type    Next Hop IP
+--------  -------  ----------------  ---------------  -------------
+Default   Active   10.80.0.0/16      VnetLocal
+Default   Active   10.0.0.0/16       VNetPeering
+Default   Active   0.0.0.0/0         Internet
+Default   Active   10.0.0.0/8        None
+Default   Active   100.64.0.0/10     None
+Default   Active   192.168.0.0/16    None
+</pre>
+
 
 ### Firewall configs
 <pre lang= >
