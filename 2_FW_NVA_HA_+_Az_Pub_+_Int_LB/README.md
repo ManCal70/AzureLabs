@@ -1,4 +1,4 @@
-#### Azure Network Security Lab #2 - In this lab, we will deploy 2 firewalls (Juniper vSRX NVAs) with both a Public and Internal load balancer. This provides HA for both inbound and outbound connections. 
+#### Azure Network Security Lab - In this lab, we will deploy 2 firewalls (Juniper vSRX NVAs) with both a Public and Internal load balancer. This provides HA for both inbound and outbound connections. 
 
 #### Topology
 <table><tr><td>
@@ -20,12 +20,12 @@
 <b>11-</b> Create the Azure public load balancer
   - Backend poool
   - Probe
-  - LB rule - with floating IP
+  - LB rule - with <b>floating IP</b>
   - Associate the firewall UNTRUST vNICs with the LB backendpool
 <b>12-</b> Create the Azure internal load balancer
   - Backend poool
   - Probe
-  - LB rule - with HA ports
+  - LB rule - with <b>HA ports</b>
   - Associate the firewall TRUST vNICs with the internal LB backendpool
 <b>13-</b> Create the spoke UDR + Route which will route traffic to the internal LB VIP
 <b>14-</b> Associate the UDR with the spoke subnet
