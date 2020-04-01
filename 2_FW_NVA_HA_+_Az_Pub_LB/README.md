@@ -1,6 +1,6 @@
 <p align="left">
 <b>Azure Network Security Lab - In this lab we will deploy 2 firewalls (Juniper vSRX NVAs) in HA design with an Azure public load balancer. This desing provides high availability (HA) for Internet (public) inbound connections.</center></b>
-<p align="left"><b>This design is vendor agonostic and can be inplemented identically across different NVAs</p></b>
+<p align="left"><b>This design is vendor agonostic and can be inplemented identically across different NVAs.</p></b>
 </p>
 <p align="left"><b>Azure Configuration Elements</p></b>
 <pre lang= >
