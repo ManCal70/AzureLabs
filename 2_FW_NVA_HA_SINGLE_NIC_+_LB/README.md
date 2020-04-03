@@ -311,10 +311,10 @@ az network vnet subnet update --vnet-name SPK2-EAST --name SPK2-EAST-SUB --resou
 ### view the UDR
 <pre lang= >
 WEST
-az network route-table route show -g RG-FW-LAB-W --name RT-2-LB-W --route-table-name RT-2-LB-W --output table
+az network route-table route show -g RG-FW-LAB-W --name RT-SPK1-W --route-table-name W-SPK-RT --output table
 
 EAST
-az network route-table route show -g RG-FW-LAB-E --name RT-2-LB-E --route-table-name RT-2-LB-E --output table
+az network route-table route show -g RG-FW-LAB-E --name RT-SPK1-E --route-table-name E-SPK-RT --output table
 </pre>
 
 
