@@ -196,7 +196,7 @@ Test VMs
 az vm create -n E-SPK1-VM -g RG-FW-LAB-E --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics VM1-SPK1-E-eth0 --boot-diagnostics-storage mcbootdiag --no-wait
 az vm create -n E-SPK2-VM -g RG-FW-LAB-E --image UbuntuLTS --admin-username lab-user --admin-password AzLabPass1234 --nics VM1-SPK2-E-eth0 --boot-diagnostics-storage mcbootdiag --no-wait
 
-<b>Once the VM is up and running, run the following to update and install apache2:</b>
+<b>Once the test VMs is up and running, run the following to update and install apache2:</b>
 1- sudo apt update
 2- sudo apt upgrade -y
 3- sudo apt install apache2 -y
@@ -253,7 +253,7 @@ az network route-table create --name E-SPK-RT -g RG-FW-LAB-E --location eastus -
 WEST hub
 az network route-table create --name W-HUB-RT -g RG-FW-LAB-W --location westus --disable-bgp-route-propagation true
 
-EAST spokes
+WEST spokes
 az network route-table create --name W-SPK-RT -g RG-FW-LAB-W --location westus --disable-bgp-route-propagation true
 </pre>
 
