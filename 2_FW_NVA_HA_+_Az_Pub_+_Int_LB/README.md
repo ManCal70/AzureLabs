@@ -1,4 +1,4 @@
-#### Azure Network Security Lab - In this lab, we will deploy 2 firewalls (Juniper vSRX NVAs) deployed between both a Public and Internal load balancer. This design provides high availability (HA) for both outbound and inbound connections. 
+#### Azure Network Security Lab - In this lab, we will deploy 2 firewalls (Juniper vSRX NVAs) between both a Public and Internal load balancer. This design provides Active/Active high availability (HA) for both outbound and inbound connections. 
 
 #### Topology
 <table><tr><td>
