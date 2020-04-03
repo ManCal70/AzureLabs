@@ -328,7 +328,7 @@ delete security
 <b>Explicit denies after each permit policy are important in single vNIC desgins.</b>
 set security policies from-zone TRUST to-zone TRUST policy E-SPK1-TO-E-SPK2 match source-address E-SPK1
 set security policies from-zone TRUST to-zone TRUST policy E-SPK1-TO-E-SPK2 match destination-address E-SPK2
-set security policies from-zone TRUST to-zone TRUST policy E-SPK1-TO-E-SPK2 match application <specific apps>
+set security policies from-zone TRUST to-zone TRUST policy E-SPK1-TO-E-SPK2 match application any
 set security policies from-zone TRUST to-zone TRUST policy E-SPK1-TO-E-SPK2 then permit
 
 set security policies from-zone TRUST to-zone TRUST policy E-SPK1-TO-E-SPK2-DROP match source-address E-SPK1
@@ -338,7 +338,7 @@ set security policies from-zone TRUST to-zone TRUST policy E-SPK1-TO-E-SPK2-DROP
 
 set security policies from-zone TRUST to-zone TRUST policy E-SPK2-TO-E-SPK1 match source-address E-SPK2
 set security policies from-zone TRUST to-zone TRUST policy E-SPK2-TO-E-SPK1 match destination-address E-SPK1
-set security policies from-zone TRUST to-zone TRUST policy E-SPK2-TO-E-SPK1 match application <specific apps>
+set security policies from-zone TRUST to-zone TRUST policy E-SPK2-TO-E-SPK1 match application any
 set security policies from-zone TRUST to-zone TRUST policy E-SPK2-TO-E-SPK1 then permit
 
 set security policies from-zone TRUST to-zone TRUST policy E-SPK2-TO-E-SPK1-DROP match source-address E-SPK2
@@ -350,7 +350,7 @@ set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS matc
 set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS match source-address E-SPK2
 set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS match destination-address W-SPK1
 set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS match destination-address W-SPK2
-set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS match application <specific apps>
+set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS match application any
 set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS then permit
 
 set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS match source-address E-SPK1
@@ -364,7 +364,7 @@ set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS then
 
 set security policies from-zone TRUST to-zone TRUST policy E-SPK1-INTERNET match source-address E-SPK1
 set security policies from-zone TRUST to-zone TRUST policy E-SPK1-INTERNET match destination-address any
-set security policies from-zone TRUST to-zone TRUST policy E-SPK1-INTERNET match application <specific apps/ports>
+set security policies from-zone TRUST to-zone TRUST policy E-SPK1-INTERNET match application any
 set security policies from-zone TRUST to-zone TRUST policy E-SPK1-INTERNET then permit
 
 set security policies from-zone TRUST to-zone TRUST policy E-SPK2-INTERNET match source-address E-SPK2
@@ -395,35 +395,35 @@ set routing-instances VR1 interface ge-0/0/0.0
 
 delete security
 
-set security policies from-zone TRUST to-zone TRUST policy W-SPK1-TO-W-SPK2 match sourc-address W-SPK1
+set security policies from-zone TRUST to-zone TRUST policy W-SPK1-TO-W-SPK2 match source-address W-SPK1
 set security policies from-zone TRUST to-zone TRUST policy W-SPK1-TO-W-SPK2 match destination-address W-SPK2
-set security policies from-zone TRUST to-zone TRUST policy W-SPK1-TO-W-SPK2 match application <specific apps>
+set security policies from-zone TRUST to-zone TRUST policy W-SPK1-TO-W-SPK2 match application any
 set security policies from-zone TRUST to-zone TRUST policy W-SPK1-TO-W-SPK2 then permit
 
-set security policies from-zone TRUST to-zone TRUST policy W-SPK1-TO-W-SPK2-DROP match sourc-address W-SPK1
+set security policies from-zone TRUST to-zone TRUST policy W-SPK1-TO-W-SPK2-DROP match source-address W-SPK1
 set security policies from-zone TRUST to-zone TRUST policy W-SPK1-TO-W-SPK2-DROP match destination-address W-SPK2
 set security policies from-zone TRUST to-zone TRUST policy W-SPK1-TO-W-SPK2-DROP match application any
 set security policies from-zone TRUST to-zone TRUST policy W-SPK1-TO-W-SPK2-DROP then deny
 
-set security policies from-zone TRUST to-zone TRUST policy W-SPK2-TO-W-SPK1 match sourc-address W-SPK2
+set security policies from-zone TRUST to-zone TRUST policy W-SPK2-TO-W-SPK1 match source-address W-SPK2
 set security policies from-zone TRUST to-zone TRUST policy W-SPK2-TO-W-SPK1 match destination-address W-SPK1
-set security policies from-zone TRUST to-zone TRUST policy W-SPK2-TO-W-SPK1 match application <specific apps>
+set security policies from-zone TRUST to-zone TRUST policy W-SPK2-TO-W-SPK1 match application any
 set security policies from-zone TRUST to-zone TRUST policy W-SPK2-TO-W-SPK1 then permit
 
-set security policies from-zone TRUST to-zone TRUST policy W-SPK2-TO-W-SPK1-DROP match sourc-address W-SPK2
+set security policies from-zone TRUST to-zone TRUST policy W-SPK2-TO-W-SPK1-DROP match source-address W-SPK2
 set security policies from-zone TRUST to-zone TRUST policy W-SPK2-TO-W-SPK1-DROP match destination-address W-SPK1
 set security policies from-zone TRUST to-zone TRUST policy W-SPK2-TO-W-SPK1-DROP match application any
 set security policies from-zone TRUST to-zone TRUST policy W-SPK2-TO-W-SPK1-DROP then deny
 
-set security policies from-zone TRUST to-zone TRUST policy W-SPKS-TO-E-SPKS-DROP match sourc-address W-SPK1
-set security policies from-zone TRUST to-zone TRUST policy W-SPKS-TO-E-SPKS-DROP match sourc-address W-SPK2
+set security policies from-zone TRUST to-zone TRUST policy W-SPKS-TO-E-SPKS-DROP match source-address W-SPK1
+set security policies from-zone TRUST to-zone TRUST policy W-SPKS-TO-E-SPKS-DROP match source-address W-SPK2
 set security policies from-zone TRUST to-zone TRUST policy W-SPKS-TO-E-SPKS-DROP match destination-address E-SPK1
 set security policies from-zone TRUST to-zone TRUST policy W-SPKS-TO-E-SPKS-DROP match destination-address E-SPK2
-set security policies from-zone TRUST to-zone TRUST policy W-SPKS-TO-E-SPKS-DROP match application <specific apps>
+set security policies from-zone TRUST to-zone TRUST policy W-SPKS-TO-E-SPKS-DROP match application any
 set security policies from-zone TRUST to-zone TRUST policy W-SPKS-TO-E-SPKS-DROP then permit
 
-set security policies from-zone TRUST to-zone TRUST policy W-SPKS-TO-E-SPKS-DROP match sourc-address W-SPK1
-set security policies from-zone TRUST to-zone TRUST policy W-SPKS-TO-E-SPKS-DROP match sourc-address W-SPK2
+set security policies from-zone TRUST to-zone TRUST policy W-SPKS-TO-E-SPKS-DROP match source-address W-SPK1
+set security policies from-zone TRUST to-zone TRUST policy W-SPKS-TO-E-SPKS-DROP match source-address W-SPK2
 set security policies from-zone TRUST to-zone TRUST policy W-SPKS-TO-E-SPKS-DROP match destination-address E-SPK1
 set security policies from-zone TRUST to-zone TRUST policy W-SPKS-TO-E-SPKS-DROP match destination-address E-SPK2
 set security policies from-zone TRUST to-zone TRUST policy W-SPKS-TO-E-SPKS-DROP match application any
@@ -431,15 +431,15 @@ set security policies from-zone TRUST to-zone TRUST policy W-SPKS-TO-E-SPKS-DROP
 set security policies from-zone TRUST to-zone TRUST policy W-SPKS-TO-E-SPKS-DROP then session-init
 set security policies from-zone TRUST to-zone TRUST policy W-SPKS-TO-E-SPKS-DROP then session-close
 
-set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS match sourc-address E-SPK1
-set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS match sourc-address E-SPK2
+set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS match source-address E-SPK1
+set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS match source-address E-SPK2
 set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS match destination-address W-SPK1
 set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS match destination-address W-SPK2
-set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS match application <specific apps>
+set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS match application any
 set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS then permit
 
-set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS-DROP match sourc-address E-SPK1
-set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS-DROP match sourc-address E-SPK2
+set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS-DROP match source-address E-SPK1
+set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS-DROP match source-address E-SPK2
 set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS-DROP match destination-address W-SPK1
 set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS-DROP match destination-address W-SPK2
 set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS-DROP match application any
@@ -447,14 +447,14 @@ set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS-DROP
 set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS-DROP then log session-init
 set security policies from-zone TRUST to-zone TRUST policy E-SPKS-TO-W-SPKS-DROP then log session-close
 
-set security policies from-zone TRUST to-zone TRUST policy W-SPK1-INTERNET match sourc-address W-SPK1
+set security policies from-zone TRUST to-zone TRUST policy W-SPK1-INTERNET match source-address W-SPK1
 set security policies from-zone TRUST to-zone TRUST policy W-SPK1-INTERNET match destination-address any
-set security policies from-zone TRUST to-zone TRUST policy W-SPK1-INTERNET match application <specific apps>
+set security policies from-zone TRUST to-zone TRUST policy W-SPK1-INTERNET match application any
 set security policies from-zone TRUST to-zone TRUST policy W-SPK1-INTERNET then permit
 
-set security policies from-zone TRUST to-zone TRUST policy W-SPK2-INTERNET match sourc-address W-SPK2
+set security policies from-zone TRUST to-zone TRUST policy W-SPK2-INTERNET match source-address W-SPK2
 set security policies from-zone TRUST to-zone TRUST policy W-SPK2-INTERNET match destination-address any
-set security policies from-zone TRUST to-zone TRUST policy W-SPK2-INTERNET match application <specific apps>
+set security policies from-zone TRUST to-zone TRUST policy W-SPK2-INTERNET match application any
 set security policies from-zone TRUST to-zone TRUST policy W-SPK2-INTERNET then permit
 
 set security zones security-zone TRUST address-book address W-SPK1 10.1.0.0/24
