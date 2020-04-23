@@ -13,6 +13,6 @@
 
 <pre lang= >
 <b>In a WVD enviroment where forced tunneling is required, this introduces two challenges:
-1- Control plane destined traffic will take the default route via the on-prem connection, which is not efficient, or outright slow.
+1- <b>Control Plane</b> destined traffic will take the default route via the on-prem connection, which is not efficient, or outright slow.
 2- Office365 destined traffic will also take the default route via the on-prem connection. This can also introduce unwanted latency.
 </pre>
