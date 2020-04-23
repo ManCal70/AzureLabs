@@ -6,7 +6,13 @@
 1- The control plane - Web access, Gateway, Broker, LB, Management, Diagonostics-
 2- The data plane - VNET traffic where desktops are deployed
 </pre>
+### Typical Azure WVD Enviroment
 <table><tr><td>
     <img src="https://github.com/ManCalAzure/AzureLabs/blob/master/O365_IP_ADDRESSES_TO_UDR/wvd1.png" lt="" title="Lab Topology" width="850" height="500"  />
 </td></tr></table>
 
+<pre lang= >
+<b>In a WVD enviroment, there are two components you should take into account:</b>
+1- The control plane - Web access, Gateway, Broker, LB, Management, Diagonostics-
+2- The data plane - VNET traffic where desktops are deployed
+</pre>
