@@ -17,6 +17,6 @@ In a WVD enviroment, where <b>forced tunneling</b> is required, this introduces 
 2- <b>Office365</b> destined traffic will also take the default route via the on-prem connection. This can also introduce unwanted latency.
 </pre>
 <table><tr><td>
-    <img src="https://github.com/ManCalAzure/AzureLabs/blob/master/O365_IP_ADDRESSES_TO_UDR/wvd1.png" lt="" title="Lab Topology" width="850" height="500"  />
+    <img src="https://github.com/ManCalAzure/AzureLabs/blob/master/O365_IP_ADDRESSES_TO_UDR/wvd2.png" lt="" title="Lab Topology" width="850" height="500"  />
 </td></tr></table>
 
