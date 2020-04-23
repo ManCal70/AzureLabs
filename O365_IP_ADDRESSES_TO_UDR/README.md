@@ -7,6 +7,6 @@
 2- The data plane - VNET traffic where desktops are deployed
 </pre>
 <table><tr><td>
-    <img src="https://github.com/ManCalAzure/AzureLabs/blob/master/O365_IP_ADDRESSES_TO_UDR/single-vnic-topo.png" lt="" title="Lab Topology" width="850" height="500"  />
+    <img src="https://github.com/ManCalAzure/AzureLabs/blob/master/O365_IP_ADDRESSES_TO_UDR/wvd1.png" lt="" title="Lab Topology" width="850" height="500"  />
 </td></tr></table>
 
