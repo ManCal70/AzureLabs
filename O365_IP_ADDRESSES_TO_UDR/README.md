@@ -20,4 +20,7 @@ The second half of this challange, is that Windows Virtual Desktop service requi
 8- Updates the VNET with the new subnet and configuration
 </pre>
 
-### 
+### These are the results of the script:
+### Since my subnet is called wvd, a route table was created 'wvd-RT'
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/O365_IP_ADDRESSES_TO_UDR/img-1.png)</kbd>
+
