@@ -1,22 +1,11 @@
-#### This lab addresses Azure Windows Virtual Desktop and force tunneling of traffic challenges with Office365:
-#### There are different ways to address some of these challenges, this is one example.
-
-<pre lang= >
-<b>In a WVD enviroment, there are two components you should take into account:</b>
-1- The control plane - Web access, Gateway, Broker, LB, Management, Diagonostics-
-2- The data plane - VNET traffic where desktops are deployed
-</pre>
-### Typical Azure WVD Enviroment
-<table><tr><td>
-    <img src="https://github.com/ManCalAzure/AzureLabs/blob/master/O365_IP_ADDRESSES_TO_UDR/wvd1.png" lt="" title="Lab Topology" width="850" height="500"  />
-</td></tr></table>
-
-#### In a WVD enviroment, where <b>forced tunneling</b> is required, this introduces two challenges:
-##### 1- <b>Control Plane</b> destined traffic will take the default route via the on-prem connection, which is not efficient, or outright slow.
-##### 2- <b>Office365</b> destined traffic will also take the default route via the on-prem connection. This can also introduce unwanted latency.
-
-<b>*As shows Below:</b>
-<table><tr><td>
-    <img src="https://github.com/ManCalAzure/AzureLabs/blob/master/O365_IP_ADDRESSES_TO_UDR/wvd2.png" lt="" title="Lab Topology" width="850" height="500"  />
-</td></tr></table>
+### Automation script to import all Office365 IP addresses into a UDR with NextHop 'Internet'
+#### Here is what it does in order
+1- Downloads all Office 365 IP addresses and stores them in a variable ($flatIp4s)
+2- Checks the specific VNET in question for existing subnets
+3- Create the route table names for each subnet with the subnet name + '-RT'
+4- Creates a new route table if one does not already exit
+5- Creates the routing configuration. Route table names and prefixes based on variable $flatIp4s
+6- Add the Microsoft Windows Activation (KMS) service route as well
+7- Applies route table to the subnet
+8- Updates the VNET with the new subnet and configuration
 
