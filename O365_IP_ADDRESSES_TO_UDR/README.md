@@ -7,6 +7,10 @@ In a Windows Virtual Desktop environment, routing Office365 traffic to on-premis
 
 The second half of this challange, is that Windows Virtual Desktop service requires that all desktops maintain a heartbeat/connection TCP 443 to the 'Broker' & 'Gateway' which is hosted in Azures ASE. Force tunneling would route these connections to on-prem introducing unwanted latency, or even stop working outright. This challenge can be addressed by routing traffic to either Azure firewall or a 3rd party NVA (VM) to make the routing decisions locally via the Azure fabric. 
 
+###  Diagram below shows the Microsoft Windows Virtual Desktop environment. Control plane and Desktops (VNET).
+
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/O365_IP_ADDRESSES_TO_UDR/wvd1.png)</kbd>
+
 
 <pre lang= >
 <b>What the Office365 script does in order:</b>
@@ -24,3 +28,10 @@ The second half of this challange, is that Windows Virtual Desktop service requi
 ### Since my subnet is called wvd, a route table was created 'wvd-RT'
 <kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/O365_IP_ADDRESSES_TO_UDR/img-1.png)</kbd>
 
+### The new route table 'wvd-RT' has all of the Office365 routes populated with NextHop 'Internet'
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/O365_IP_ADDRESSES_TO_UDR/img-2.png)</kbd>
+
+### The new route table 'wvd-RT' was associated with the subnet 'wvd'
+<kbd>![alt text](https://github.com/ManCalAzure/AzureLabs/blob/master/O365_IP_ADDRESSES_TO_UDR/img-3.png)</kbd>
+
+### This lab will be updated continually, as more features become available. Such as, UDR service tags ....
