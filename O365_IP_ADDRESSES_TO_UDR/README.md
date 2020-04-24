@@ -1,7 +1,7 @@
 ### Automation script to import all Office365 IP addresses into a UDR with NextHop 'Internet'
 
 ### Why did I publish this script? 
-One use case which has become more common of late due to Covid-19, is in a Windows Virtual Desktop enviroment where customers are wanting to force tunnel traffic. This means on-prem advertises a default, and all traffic is routed to on-prem. For security reasons, some Enterprises require force tunneling. This introduces some challenges with the desktops and also Office365.
+One use case which has become more common of late due to Covid-19, is in a Windows Virtual Desktop enviroment where customers are wanting to force tunnel traffic. This means on-prem advertises a default route into Azure, and all traffic is routed to on-prem. For security reasons, some Enterprises require force tunneling. This introduces some challenges with the desktops and also Office365.
 
 In a Windows Virtual Desktop environment, routing Office365 traffic to on-premises will create unwanted latency and maybe even cause some services to fail. This issue is the main focus of this lab. Today, there are no Office365 service tags, nor do UDRs support service tags. To keep Office365 traffic local (or stay in Azure) can be done by automation scripts. This script would download all Office365 public IP addresses and port them into a UDR, which would then be applied to the desktop subnet. This is half of the challenge.  
 
