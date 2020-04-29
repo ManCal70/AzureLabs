@@ -1,4 +1,5 @@
-### Automation script to import all Office365 IP addresses into a UDR with NextHop 'Internet'
+### Automation script to import all Office365 IP addresses into a UDR with NextHop 'Internet'.
+### The script shows what is possible in its simplest form, with more time and planning it can be more elaborate.
 
 ### Why did I publish this script? 
 One use case which has become more common of late due to Covid-19, is in a Windows Virtual Desktop enviroment where customers are wanting to force tunnel traffic. This means on-prem advertises a default route into Azure, and all traffic is routed to on-prem. For security reasons, some Enterprises require force tunneling. This introduces some challenges with the desktops and also Office365.
