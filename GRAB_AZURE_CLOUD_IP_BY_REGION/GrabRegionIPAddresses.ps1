@@ -1,10 +1,8 @@
-#$VerbosePreference = 'Continue'
 ### Needs Automation Account, [Needs modules Az.Profile, Az.Networking, Az.Resources], Runbook to execute this script
-### Populate script variables
-$resourceGroupName = 'RG-MANNY-INFRA'
-$resourceLocation = 'centralus'
-$vNetName = 'VNET1'
-$azureRegion = 'centralus'
+### Script can be more elaborate, but this is its simplest form.
+### Populate script variables - Specify a region.
+### Enter the region below. In this example, you will pull all Azure clould IPs for East US region
+$azureRegion = 'eastus'
 $azureRegionSearch = '*' + $azureRegion + '*'
 
 ### Authenticate with Azure Automation account
