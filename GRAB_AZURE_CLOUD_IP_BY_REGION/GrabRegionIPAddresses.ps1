@@ -3,8 +3,9 @@
 ### Populate script variables - Specify a region.
 ### Enter the region below. In this example, you will pull all Azure clould IPs for East US region
 $azureRegion = 'eastus'
-$azureRegionSearch = '*' + $azureRegion + '*'
 
+### Azure Region search 
+$azureRegionSearch = '*' + $azureRegion + '*'
 ### Authenticate with Azure Automation account
 $credential = "AzureRunAsConnection"
 try {
@@ -27,10 +28,10 @@ catch {
  throw $_.Exception
  }
 }
-### Localtions Array
+### Locations Array
 [array]$locations = Get-AzLocation | Where-Object {$_.Location -like $azureRegionSearch}
 
-### Create and populate an array with the IP ranges of each datacenter in the specified variable $azureRegionSearch
+### Create and populate the array with the IP ranges of each datacenter in the specified variable $azureRegionSearch
 $IPRanges = @()
 foreach($location in $locations){
  $IPRanges += Get-MicrosoftAzureDatacenterIPRange -AzureRegion $location.DisplayName
