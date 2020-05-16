@@ -92,16 +92,16 @@ az network nic create --resource-group RG-LB-TEST --location eastus --name WEB-e
 
 ### Create NSGs - Since I selected to use 'Standard' SKU public IP addresses explicitly defined NSG is required. It is also a good idea to plan subnet security and apply NSGs as a general best practice for security.
 <pre lang= >
-Contral Plane NSG
+Contral Plane NSG (This NSG is assigned to the vSRX out-of-band management interrace (fxp0)
 az network nsg create --resource-group RG-LB-TEST --name CP-NSG --location eastus
 az network nsg rule create -g RG-LB-TEST --nsg-name CP-NSG -n ALLOW-SSH --priority 300 --source-address-prefixes Internet --destination-address-prefixes 10.0.254.0/24 --destination-port-ranges 22 --access Allow --protocol Tcp --description "Allow SSH to Management Subnet"
 az network nsg rule create -g RG-LB-TEST --nsg-name CP-NSG -n ALLOW-ICMP --priority 301 --source-address-prefixes Internet --destination-address-prefixes 10.0.54.0/24 --destination-port-ranges * --protocol Icmp --description "Allow ICMP to FW OOB interface"
 
-Untrust Subnet NSG
+Untrust Subnet NSG (NSG applied to the untrusted transit subnet)
 az network nsg create --resource-group RG-LB-TEST --name UNTRUST-NSG --location eastus
 az network nsg rule create -g RG-LB-TEST --nsg-name UNTRUST-NSG -n ALLOW-HTTP --priority 200 --source-address-prefixes * --source-port-ranges * --destination-address-prefixes * --destination-port-ranges 80 --access Allow --protocol Tcp --description "Allow HTTP to Untrust Subnet"
 
-Trust Subnet NSG
+Trust Subnet NSG (NGS applied to the trusted transit subnet)
 az network nsg create --resource-group RG-LB-TEST --name TRUST-NSG --location eastus
 az network nsg rule create -g RG-LB-TEST --nsg-name TRUST-NSG -n ALLOW-ALL --priority 200 --source-address-prefixes * --source-port-ranges * --destination-address-prefixes * --destination-port-ranges * --access Allow --protocol * --description "Allow All to Trust Subnet"
 
